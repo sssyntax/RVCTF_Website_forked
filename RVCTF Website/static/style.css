@@ -1,0 +1,49 @@
+body {
+    background-color:#b7e9f7;
+}
+#cca_name {
+    width: 30%;
+    height: auto;
+    margin-left: 25%;
+}
+
+#IG_logo {
+    width: 4%;
+    height: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    top: -20px;
+}
+
+#discord_logo {
+    width: 4%;
+    height: auto;
+    position: relative;
+    margin-left: 10px;
+    top: -20px;
+}
+
+div {
+    display: inline;
+}
+
+#header {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 25px;
+    font-weight: bolder;
+    float: right;
+    margin-right: 40px;
+    margin-top: 30px;
+}
+#chals_header {
+    text-decoration: underline;
+    color: black;
+}
+#res_header_link {
+    text-decoration:none;
+    color: rgb(84, 84, 84);
+}
+#res_header_link:hover {
+    color: black;
+}
