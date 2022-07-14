@@ -16,14 +16,17 @@
             </div>
             <div>
                 <label for = "password">Password</label>
-                <input id = "password" class = "nospace notempty"  name = "password" type = "password" maxlength = "512">
+                <input id = "password" class = "nospace notempty"  name = "teampassword" type = "password" maxlength = "512">
                 <br>*Do share with your teammates
             </div>
-            <input name = "email" type = "hidden" onload = "this.value = localStorage.getItem('useremail')">
-            <input name = "password" type = "hidden" onload = "this.value = localStorage.getItem('userpassword')">
+            <input id = "email" name = "email" type = "hidden">
+            <input id = "userpassword" type = "hidden" name = "password">
             <input type = "submit"  value = "Register" onClick="return empty()">
         </form>
-
+        <script>
+            document.getElementById("email").value = localStorage.getItem("useremail")
+            document.getElementById("userpassword").value = localStorage.getItem("userpassword")
+        </script>
         <script src="./static/js/teampages/teamcreation.js?<?php echo time(); ?>"></script>
     </body>
 </html> 

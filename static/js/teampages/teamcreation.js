@@ -11,12 +11,12 @@ function empty() {
 
 nospace = document.getElementsByClassName("nospace")
 for (let i of nospace){
-    i.onkeypress(function (evt) {
+    i.onkeypress = function (evt) {
         var keycode = evt.charCode || evt.keyCode;
         if (keycode  == 32) { 
         return false;
         }
-    });
+    };
 }
 
 const queryString = window.location.search;

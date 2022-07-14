@@ -10,7 +10,7 @@ switch ($_GET['filename']) {
         include('templates/teampages/teamcreation.tpl.php');  
     break;
     default:
-        if ($_GET['filename'] == '') {
+        if ($_GET['filename'] == ''||$_GET['filename']=="home") {
             include('tpl/home.tpl.php');
         }
         // else {
