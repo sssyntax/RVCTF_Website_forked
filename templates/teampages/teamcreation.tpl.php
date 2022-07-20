@@ -19,13 +19,11 @@
                 <input id = "password" class = "nospace notempty"  name = "teampassword" type = "password" maxlength = "512">
                 <br>*Do share with your teammates
             </div>
-            <input id = "email" name = "email" type = "hidden">
-            <input id = "userpassword" type = "hidden" name = "password">
+            <input id = "info" name = "info" type = "hidden">
             <input type = "submit"  value = "Register" onClick="return empty()">
         </form>
         <script>
-            document.getElementById("email").value = localStorage.getItem("useremail")
-            document.getElementById("userpassword").value = localStorage.getItem("userpassword")
+            document.getElementById("info").value = localStorage.getItem("sessioninfo")
         </script>
         <script src="./static/js/teampages/teamcreation.js?<?php echo time(); ?>"></script>
     </body>

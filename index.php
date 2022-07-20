@@ -9,8 +9,14 @@ switch ($_GET['filename']) {
     case 'teamcreation':
         include('templates/teampages/teamcreation.tpl.php');  
     break;
+    case 'teamjoin':
+        include('templates/teampages/teamjoin.tpl.php');  
+    break;
+    case 'teamfail':
+        include('templates/teampages/teamjoinfail.tpl.php');  
+    break;
     default:
-        if ($_GET['filename'] == ''||$_GET['filename']=="home") {
+        if ($_GET['filename'] == ''||$_GET['filename']=="home"||$_GET['filename']=="challenge") {
             include('tpl/home.tpl.php');
         }
         // else {

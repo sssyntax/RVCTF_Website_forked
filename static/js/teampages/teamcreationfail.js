@@ -27,4 +27,3 @@ for (let i of errors){
     const ele = document.getElementById(i)
     ele.style.display = "initial"
 }}
-
