@@ -5,7 +5,6 @@ body {
     background-attachment: fixed;
     background-color: rgb(0, 0, 4);
 }
-<<<<<<< HEAD
 /*COOL STARS ANIMATION*/
 .star_anim {
     display:block;
@@ -70,8 +69,6 @@ body {
       transform: translateY(-2000px);
     }
 }
-=======
->>>>>>> 7f96d7925e468fa69dd4e9fdf523d4b0f56158eb
 
 #cca_name {
     width: 30%;
