@@ -48,6 +48,9 @@ div {
     text-decoration:none;
     color: rgb(180, 180, 180);
 }
+#sep {
+    color: rgb(210, 210, 210);
+}
 #res_header_link:hover {
     color: rgb(255, 255, 255);
 }
