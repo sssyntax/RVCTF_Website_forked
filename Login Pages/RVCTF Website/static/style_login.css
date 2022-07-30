@@ -6,6 +6,9 @@ body {
     background-color: rgb(0, 0, 4);
 }
 /*COOL STARS ANIMATION*/
+html {
+    overflow: hidden;
+}
 .star_anim {
     display:block;
 }
