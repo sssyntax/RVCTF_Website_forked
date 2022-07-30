@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
+    <div id='stars' class="star_anim"></div>
+    <div id='stars2' class="star_anim"></div>
+    <div id='stars3' class="star_anim"></div>
     <a href="https://www.instagram.com/rv.ctf/"><img src="../static/images/instagram.png" id="IG_logo"></a>
     <a href="https://discord.gg/uagKpY6c"><img src="../static/images/discord.png" id="discord_logo"></a>
     <img src="../static/images/RVCTF Neon Logo.png" id="cca_name">
@@ -17,46 +20,22 @@
     </div>
     <h1 class="topic_header">Forensics</h1>
     <div class="challenge_container">
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
-        <table class="challenge_widget">
-            <tr class="name_div"><td class="name">NAME</td></tr>
-            <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
-            <tr class="author_div"><td class="author">AUTHOR</td></tr>
-        </table>
+        <button class="challenge_btn" id="chal_btn_test">
+            <table class="challenge_widget">
+                <tr class="name_div"><td class="name">NAME</td></tr>
+                <tr class="points_div"><td class="points">POINTS | DIFFICULTY</td></tr>
+                <tr class="author_div"><td class="author">AUTHOR</td></tr>
+            </table>
+        </button>
+        
+        <div class="popup" id="popup_test">
+            <table class="popup_content">
+                <tr class="popup_header_tr"><td class="popup_header">HEADER<span class="close">&times;</span></td></tr>
+                <tr class="popup_desc_tr"><td class="popup_desc">CHALLENGE DESC</td></tr>
+                <tr class="popup_input_tr"><td class="popup_input">FLAG INPUT BOX</td></tr>
+            </table>
+        </div>
+
     </div>
     <h1 class="topic_header">Cryptography</h1>
     <div class="challenge_container">
