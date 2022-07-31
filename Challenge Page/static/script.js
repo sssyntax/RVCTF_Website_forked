@@ -11,7 +11,6 @@ add_chal_close.onclick = function(){
 }
 
 for (let i=0; i<chal_popups.length; i++) {
-  console.log(chal_popups[i])
   chal_btns[i].onclick = function() {
     chal_popups[i].style.display = "block";
   }

@@ -175,16 +175,18 @@ div {
 }
 .name_div {
     height:50px;
+    width: 100%;
     border: 1px solid black;
 }
 @font-face {
     font-family: name_author;
-    src: url(fonts/MajorMonoDisplay-Regular.ttf);
+    src: url(fonts/SpaceMono-Regular.ttf);
 }
 .name {
     font-size:15px;
     font-family:name_author;
     text-align: center;
+    font-weight: 600;
     margin-top:2px;
     color:#aeaeae;
     border-bottom:0.5px solid black;
@@ -213,6 +215,7 @@ div {
 .author {
     font-size: 10px;
     font-family:name_author;
+    font-weight: 500;
     text-align: center;
     vertical-align:center;
     color:#aeaeae;
@@ -316,6 +319,7 @@ input:focus, textarea {
     font-size: 15px;
     border-radius: 5px;
 }
+
 
 .add_chal_btn {
     position: fixed;
