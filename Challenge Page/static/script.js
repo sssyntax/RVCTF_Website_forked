@@ -1,25 +1,19 @@
 "use strict";
 
-var chal_test = document.getElementById("popup_test");
+var chal_popups = document.getElementsByClassName("popup");
+var chal_btns = document.getElementsByClassName("challenge_btn");
+var span = document.getElementsByClassName("close");
 
-var chal_btn = document.getElementById("chal_btn_test");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-chal_btn.onclick = function() {
-    chal_test.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  chal_test.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == chal_test) {
-    chal_test.style.display = "none";
+for (let i=0; i<chal_popups.length; i++) {
+  chal_btns[i].onclick = function() {
+    chal_popups[i].style.display = "block";
   }
+  span[i].onclick = function() {
+    chal_popups[i].style.display = "none";
+  }
+  window.addEventListener("click", function(event) {
+    if (event.target == chal_popups[i]) {
+      chal_popups[i].style.display = "none";
+    }
+  });
 }

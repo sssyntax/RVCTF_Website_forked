@@ -146,7 +146,7 @@ div {
     border: 2px solid #1F51FF;
     border-radius:10px;
     width: 200px;
-    height:150px;
+    height:auto;
     background-color:#344047;
     box-shadow: 0px 0px 10px 2px rgb(255, 255, 255);
     margin-left:5px;
@@ -159,7 +159,7 @@ div {
     border: 2px solid #1F51FF;
     border-radius:10px;
     width: 200px;
-    height:150px;
+    height:auto;
     background-color:#20272d;
     box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
     margin-left:5px;
@@ -167,6 +167,11 @@ div {
     margin-bottom: 5px;
     margin-top: 5px;
     display:inline-block;
+}
+.widget_body {
+    width:100%;
+    height: 100%;
+    display: table;
 }
 .name_div {
     height:50px;
@@ -177,12 +182,13 @@ div {
     src: url(fonts/MajorMonoDisplay-Regular.ttf);
 }
 .name {
-    font-size:30px;
+    font-size:15px;
     font-family:name_author;
     text-align: center;
     margin-top:2px;
     color:#aeaeae;
     border-bottom:0.5px solid black;
+    word-wrap:break-word; /*not working*/
 }
 .points_div {
     height:70px;
@@ -200,12 +206,15 @@ div {
     border-bottom:0.5px solid black;
 }
 .author_div {
-    height:15px;
+    height:20px;
+    width: auto;
+    vertical-align: center;
 }
 .author {
     font-size: 10px;
     font-family:name_author;
     text-align: center;
+    vertical-align:center;
     color:#aeaeae;
 }
 
