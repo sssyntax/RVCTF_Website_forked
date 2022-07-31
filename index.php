@@ -1,8 +1,11 @@
 <?php
+session_start(); // Start session once the page is loaded 
 switch ($_GET['filename']) {
     case 'signup':
         include('templates/signup.tpl.php');  
     break;
+    case 'login':
+        include('templates/login.tpl.php');
     case 'teamsignup':
         include('templates/teampages/teamsignup.tpl.php');  
     break;

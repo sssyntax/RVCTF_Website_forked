@@ -36,16 +36,22 @@ else{
     $encrypted = password_hash($password, PASSWORD_DEFAULT);
     $res = prepared_query($conn,$sql,[$email,$encrypted],"ss");
     mysqli_stmt_close($res);
+    // Get userID from users db
     $sql = "SELECT `id` FROM `users` WHERE `email` = ?";
     $res = prepared_query($conn,$sql,[$email],"s");
     $res -> bind_result($id);
     $res -> fetch();
     mysqli_stmt_close($res);
+    // Store UserID and UserEmail in session storage
+    $_SESSION['userID'] = $id;
+    $_SESSION['userEmail'] = $email;
+    // Generate Session & Session Key
     $randomkey = generate_string($permitted_chars,20);
     $hashed = hash('sha1',$randomkey);
     $sql = "INSERT INTO `keys`(`userid`,`sessionkey`) VALUES (?,?)";
     $res = prepared_query($conn,$sql,[$id,$hashed],"is");
     mysqli_stmt_close($res);
+    // Fetch KeyID from the keys db
     $sql = "SELECT COUNT(*),`keyid` FROM `keys` WHERE `userid` = ?";
     $res = prepared_query($conn,$sql,[$id],"i");
     $res -> bind_result($count,$keyid);
