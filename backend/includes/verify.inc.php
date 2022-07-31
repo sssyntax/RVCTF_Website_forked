@@ -7,14 +7,18 @@ function verify_account($conn,$email,$password){
     mysqli_stmt_close($result);
     return password_verify($password,$encrypted);
 }
-function verify_session($conn,$data){
-    $sql = "SELECT `sessionkey`,`userid` FROM `keys` WHERE `keyid` = ?";
-    $result = prepared_query($conn,$sql,[$data['keyid']],"i");
-    $result -> bind_result($encrypted,$userid);
-    $result -> fetch();
-    mysqli_stmt_close($result);
-    return (hash('sha1',$data['sessionkey'])==$encrypted && $userid == $data['userid']);
+// function verify_session($conn,$data){
+//     $sql = "SELECT `sessionkey`,`userid` FROM `keys` WHERE `keyid` = ?";
+//     $result = prepared_query($conn,$sql,[$data['keyid']],"i");
+//     $result -> bind_result($encrypted,$userid);
+//     $result -> fetch();
+//     mysqli_stmt_close($result);
+//     return (hash('sha1',$data['sessionkey'])==$encrypted && $userid == $data['userid']);
 
+// }
+
+function verify_session($data){
+    return $_SESSION['userID'] == $data['userid'];
 }
 
 function verify_team($conn,$teamname,$password){
