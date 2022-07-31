@@ -410,7 +410,7 @@ input:focus, textarea {
 } 
 
 #add_chal_desc_tr {
-    height: 50%;
+    height: 45%;
 }
 
 #add_chal_submit_btn:hover {
