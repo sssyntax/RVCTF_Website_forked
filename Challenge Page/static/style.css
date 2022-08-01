@@ -322,7 +322,6 @@ input:focus, textarea {
 
 
 .add_chal_btn {
-    position: fixed;
     background-color: #1F51FF;
     color: aliceblue;
     position: fixed;
@@ -339,7 +338,6 @@ input:focus, textarea {
 }
 
 .add_chal_btn:hover {
-    position: fixed;
     background-color: #1F51FF;
     color: aliceblue;
     position: fixed;
