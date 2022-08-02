@@ -405,10 +405,20 @@ input:focus, textarea {
     font-size: 20px;
     border-radius: 10px;
     margin: 1% 1%;
-} 
+}
 
 #add_chal_desc_tr {
     height: 45%;
+}
+
+#add_chal_submit_btn {
+    font-family: code_mono;
+    border: transparent;
+    width: 90%;
+    height: 90%;
+    font-size: 20px;
+    border-radius: 10px;
+    margin: 1% 1%;
 }
 
 #add_chal_submit_btn:hover {
