@@ -5,25 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenges</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="./../css/challenge.css">
 </head>
 <body>
-    <div id='stars' class="star_anim"></div>
-    <div id='stars2' class="star_anim"></div>
-    <div id='stars3' class="star_anim"></div>
-    <a href="https://www.instagram.com/rv.ctf/"><img src="../static/images/instagram.png" id="IG_logo"></a>
-    <a href="https://discord.gg/uagKpY6c"><img src="../static/images/discord.png" id="discord_logo"></a>
-    <img src="../static/images/RVCTF Neon Logo.png" id="cca_name">
-
-    <div id="header">
-        <div id="chals_header">Challenges</div> <div id="sep">|</div> <div id="res_header"><a href="https://www.google.com" id="res_header_link">Resources</a></div>
+    <?php include 'stars.php';?>
+    <div id = "header">
+        <div id = "socialMedia">
+            <a href="https://www.instagram.com/rv.ctf/"><img src="../images/instagram.png" id="IG_logo"></a>
+            <a href="https://discord.gg/uagKpY6c"><img src="../images/discord.png" id="discord_logo"></a>
+        </div>
+        <img src="../images/RVCTF Neon Logo.png" id="cca_name">
+        <div id = "links">
+            <div id="chals_header" class = "linkEle">Challenges</div> 
+            <div class = "linkEle">|</div> 
+            <div id="res_header" class = "linkEle"><a href="https://www.google.com" id="res_header_link">Resources</a></div>
+            <div class = "linkEle">|</div> 
+            <div class = "linkEle">Points: </div>
+        </div>
     </div>
+    
     <h1 class="topic_header">Forensics</h1>
     <div class="challenge_container" id="forensics">
         <button class="challenge_btn">
             <table class="challenge_widget">
                 <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1 Lorem ipsum dolor sit </td></tr>
+                    <tr class="name_div"><td class="name">Challenge 1 Lorem ipsum dolor sit dadadad</td></tr>
                     <tr class="points_div"><td class="points">10 points | Easy</td></tr>
                     <tr class="author_div"><td class="author">CommunistChiken</td></tr>
                 </tbody>
@@ -33,7 +39,11 @@
             <table class="popup_content">
                 <tr class="popup_header_tr"><td class="popup_header">Challenge 1<span class="close">&times;</span></td></tr>
                 <tr class="popup_desc_tr"><td class="popup_desc">The following file has been corrupted! Help me find the flag</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
+                <tr class="popup_input_tr"><td class="popup_input">
+                    <form action="challenge.php">
+                        Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}">
+                    </form>
+                </td></tr>
             </table>
         </div>
 
@@ -224,6 +234,6 @@
         </table>
     </div>
     
-    <script src="../static/script.js"></script>
+    <script src="./../js/challenge.js"></script>
 </body>
 </html>

@@ -5,23 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources</title>
-    <link rel="stylesheet" href="../static/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link rel="stylesheet" href="../css/resources.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
+    <?php include "stars.php" ?>
     <div id="header">
-       
         <div id="res_header"><a href="https://www.google.com" id="res_header_link">Challenges</a></div> <div id="sep">|</div> <div id="chals_header">Resources</div>
-    </div>
-    
-      <div id='stars' class="star_anim"></div>
-      <div id='stars2' class="star_anim"></div>
-      <div id='stars3' class="star_anim"></div>
-      <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="../static/images/instagram.png" id="IG_logo"></a>
-      <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="../static/images/discord.png" id="discord_logo"></a>
-      <img src="../static/images/RVCTF Neon Logo.png" id="cca_name">
+    </div> 
+      <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="../images/instagram.png" id="IG_logo"></a>
+      <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="../images/discord.png" id="discord_logo"></a>
+      <img src="../images/RVCTF Neon Logo.png" id="cca_name">
 
         <div class="menu">
         <input type="checkbox" id="toggle" />

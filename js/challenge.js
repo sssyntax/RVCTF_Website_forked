@@ -49,7 +49,11 @@ function submitChal(){
             <table class="popup_content">\
                 <tr class="popup_header_tr"><td class="popup_header">'+ins[0].value+'<span class="close">&times;</span></td></tr>\
                 <tr class="popup_desc_tr"><td class="popup_desc">'+ins[5].value+'</td></tr>\
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>\
+                <tr class="popup_input_tr"><td class="popup_input">\
+                <form action="challenge.php">\
+                Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}">\
+                </form>\
+                </td></tr>\
             </table>\
         </div>'
   console.log(txt);
