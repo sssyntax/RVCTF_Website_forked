@@ -1,5 +1,5 @@
 body {
-    background-image: url(images/map_background.jpg);
+    background-image: url(../images/map_background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -351,7 +351,6 @@ input:focus, textarea {
     background-color: #91a7c0; 
 }
 
-body {overflow: hidden; background: #212121}
 input {position: absolute; display: none}
 
 * {

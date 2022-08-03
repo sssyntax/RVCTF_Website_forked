@@ -1,5 +1,5 @@
 <head>
-    <link rel = "stylesheet" href = "../css/stars.css">
+    <link rel = "stylesheet" href = "../../css/stars.css">
 </head>
 <body>
     <div id='stars' class="star_anim"></div>

@@ -5,20 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenges</title>
-    <link rel="stylesheet" href="./../css/challenge.css">
+    <link rel="stylesheet" href="../../css/challenge.css">
 </head>
 <body>
-    <?php include 'stars.php';?>
+    <?php include '../stars.php';?>
     <div id = "header">
         <div id = "socialMedia">
-            <a href="https://www.instagram.com/rv.ctf/"><img src="../images/instagram.png" id="IG_logo"></a>
-            <a href="https://discord.gg/uagKpY6c"><img src="../images/discord.png" id="discord_logo"></a>
+            <a href="https://www.instagram.com/rv.ctf/"><img src="../../images/instagram.png" id="IG_logo"></a>
+            <a href="https://discord.gg/uagKpY6c"><img src="../../images/discord.png" id="discord_logo"></a>
         </div>
-        <img src="../images/RVCTF Neon Logo.png" id="cca_name">
+        <img src="../../images/RVCTF Neon Logo.png" id="cca_name">
         <div id = "links">
             <div id="chals_header" class = "linkEle">Challenges</div> 
             <div class = "linkEle">|</div> 
-            <div id="res_header" class = "linkEle"><a href="https://www.google.com" id="res_header_link">Resources</a></div>
+            <div id="res_header" class = "linkEle"><a href="resources_page.tpl.php" id="res_header_link">Resources</a></div>
             <div class = "linkEle">|</div> 
             <div class = "linkEle">Points: </div>
         </div>
@@ -234,6 +234,6 @@
         </table>
     </div>
     
-    <script src="./../js/challenge.js"></script>
+    <script src="../../js/challenge.js"></script>
 </body>
 </html>
