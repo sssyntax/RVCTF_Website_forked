@@ -223,11 +223,11 @@
                 <td class="add_chal_td">Description:</td>
                 <td class="add_chal_td_input"><input class="add_chal_input" id="add_chal_desc" type="text" placeholder="Description to be shown to members"></td>
             </tr>
-            <tr class="add_chal_tr" id="add_chal_link_tr">
-                <td class="add_chal_td">Link:</td>
-                <td class="add_chal_td_input"><input class="add_chal_input" id="add_chal_link" type="text" placeholder="Link to solution"></td>
+            <tr class="add_chal_tr" id="add_chal_flag_tr">
+                <td class="add_chal_td">Flag:</td>
+                <td class="add_chal_td_input"><input class="add_chal_input" id="add_chal_flag" type="text" placeholder="Answer Flag:"></td>
             </tr>
-            <tr class="add_chal_tr" id="add_chal_link_tr">
+            <tr class="add_chal_tr" id="add_chal_submit_tr">
                 <td class="add_chal_td"><button id="add_chal_submit_btn" onclick="submitChal()">Submit</button></td>
             </tr>
 
