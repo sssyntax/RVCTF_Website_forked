@@ -4,16 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>RVCTF Register</title>
-        <link rel="stylesheet" href="../../css/register.css">
+        <link rel="stylesheet" href="css/register.css">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Register</div>
     <div style="height: 500px;">
     <table class="centre_box">
-        <form method = "POST" action = "../../backend/signup.php">
+        <form method = "POST" action = "backend/signup.php">
             <tr>
                 <td>
                 <label for = "email">Email</label>
@@ -45,6 +45,6 @@
     </table>
     </div>
     <p>Made in collaboration with Rdev</p>
-    <script src="../../js/signup.js?<?php echo time(); ?>"></script>
+    <script src="js/signup.js?<?php echo time(); ?>"></script>
 </body>
 </html>

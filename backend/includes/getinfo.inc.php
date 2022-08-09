@@ -16,7 +16,7 @@ function getteaminfo_id($conn,$teamid){
     return ["teamname"=>$teamname,"points"=>$points,"teammates"=>$teammates];
 }
 function getteaminfo_name($conn,$teamname){
-    $sql = "SELECT `id`,`points`,`teammates` FROM `teams` WHERE `teamname` = ?";
+    $sql = "SELECT `teamid`,`points`,`teammates` FROM `teams` WHERE `teamname` = ?";
     $res = prepared_query($conn,$sql,[$teamname],"s");
     $res -> bind_result($teamid,$points,$teammates);
     $res -> fetch();

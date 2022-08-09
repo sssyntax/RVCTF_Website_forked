@@ -1,14 +1,13 @@
 <?php
+session_start();    
 require "includes/connect.inc.php";
 require "includes/getinfo.inc.php";
 require "includes/verify.inc.php";
-$teamname = $_POST["teamname"];
-$teampassword = $_POST["teampassword"];
-$info = json_decode($_POST["info"],true);
-$userid = $info["userid"];
-$keyid = $info["keyid"];
-$sessionkey = $info["sessionkey"];
-if (!verify_session($conn,$info)){
+$teamname = $_POST["team_name"];
+$teampassword = $_POST["team_password"];
+$userid = $_SESSION["userID"];
+$email = $_SESSION["userEmail"];
+if (!verify_session()){
     header("Location: ../index.php?filename=login&criticalerror=true");
     exit();
 }

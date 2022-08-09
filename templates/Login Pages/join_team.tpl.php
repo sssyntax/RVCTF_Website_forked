@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <head>
     <title>RVCTF Join Team</title>
-    <link rel="stylesheet" href="../../css/register.css">
+    <link rel="stylesheet" href="static/css/register.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Join Team</div>
     <div style="height: 500px;">
     <table class="centre_box">
-        <form method = "POST" action = "../../backend/teamjoin.php">
+        <form method = "POST" action = "backend/teamjoin.php">
             <tr>
                 <td>Team Name: <input type="text" name="team_name" width="auto" height="auto"></td>
             </tr>

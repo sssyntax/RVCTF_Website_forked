@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <head>
     <title>RVCTF Create Team</title>
-    <link rel="stylesheet" href="../../css/register.css">
+    <link rel="stylesheet" href="static/css/register.css">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Create Team</div>
     <div style="height: 500px;">
     <table class="centre_box">
-        <form method = "POST" action = "./backend/teamcreation.php">
+        <form method = "POST" action = "backend/teamcreation.php">
             <tr>
                 <td>Team Name: <input type="text" name="register_team_name" width="auto" height="auto"></td>
             </tr>

@@ -1,27 +1,26 @@
 <?php
+session_start();
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
 require "includes/getinfo.inc.php";
-$teamname = $_POST["teamname"];
-$teampassword = $_POST["teampassword"];
-$info = json_decode($_POST["info"],true);
-$userid = $info["userid"];
-$keyid = $info["keyid"];
-$sessionkey = $info["sessionkey"];
+$teamname = $_POST["register_team_name"];
+$teampassword = $_POST["register_team_password"];
+$email = $_SESSION["userEmail"];
+$userid = $_SESSION["userID"];
+
 
 $errorlst = array();
-$sql = "SELECT COUNT(*),`` FROM `teams` WHERE LOWER(TRIM(' 'FROM`teamname`)) = ?";
+$sql = "SELECT COUNT(*),`teamleader` FROM `teams` WHERE LOWER(TRIM(' 'FROM`teamname`)) = ?";
 $res = prepared_query($conn,$sql,[$teamname],"s");
-$res -> bind_result($count);
+$res -> bind_result($count,$teamleader);
 $res -> fetch();
 mysqli_stmt_close($res);
 if ($count >= 1){
     //This is if there is an existing team
-    header("Location: ../index.php?filename=teamcreationfail&teamleader=");
+    header("Location: ../index.php?filename=teamcreationfail&teamleader=".$teamleader);
     exit();
 }
 $userinfo = getinfo($conn,$userid);
-$email = $userinfo["email"];
 $sql = "SELECT `teamname` FROM `users` WHERE `id` = ?";
 $res = prepared_query($conn,$sql,[$userid],"i");
 $res -> bind_result($testname);
@@ -29,27 +28,25 @@ $res -> fetch();
 mysqli_stmt_close($res);
 if ($testname != null){
     //this happens when the user already has a team
-    header("Location: ../index.php?filename=&alrhave=true");
+    header("Location: ../index.php?filename=challenge&alrhave=true");
     exit();
 }
-if (!verify_session($conn,$info)){
+if (!verify_session()){
     //this happens when the user somehow changed their information
     header("Location: ../index.php?filename=login&criticalerror=true");
     exit();
 }
 else{
+    echo "Ran";
     //This is when everything is successful
-    $sql = "INSERT INTO `teams`(`teamname`,`teampassword`,`teammates`) VALUES (?,?,?)";
+    $sql = "INSERT INTO `teams`(`teamname`,`teampassword`,`teammates`,`teamleader`) VALUES (?,?,?,?)";
     $encryptedteam = password_hash($teampassword, PASSWORD_DEFAULT);
-    $res = prepared_query($conn,$sql,[$teamname,$encryptedteam,json_encode([$email],JSON_FORCE_OBJECT)],"sss");
+    $res = prepared_query($conn,$sql,[$teamname,$encryptedteam,json_encode([$email]),$email],"ssss");
     mysqli_stmt_close($res);
     $sql = "UPDATE `users` SET `teamname` = ? WHERE `id` = ?";
     $res = prepared_query($conn,$sql,[$teamname,$userid],"si");
-    mysqli_stmt_close($res);
-    echo "<script>
-        localStorage.setItem('userteam','$teamname');
-        window.location.href = '../index.php?filename=challenge';</script>
-    ";
+    mysqli_stmt_close($res);    
+    header("Location: ../index.php?filename=challenge");
 }
 
 

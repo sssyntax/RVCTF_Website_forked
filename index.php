@@ -1,31 +1,38 @@
 <?php
 session_start(); // Start session once the page is loaded 
+require_once "backend/includes/verify.inc.php";
+$loggedin = verify_session();
 switch ($_GET['filename']) {
     case 'signup':
-        include('templates/signup.tpl.php');  
+        include('templates/Login Pages/signup.tpl.php');  
     break;
     case 'login':
-        include('templates/login.tpl.php');
+        include('templates/Login Pages/login.tpl.php');
+    break;
     case 'teamsignup':
-        include('templates/teampages/teamsignup.tpl.php');  
+        include('templates/Login Pages/teamsignup.tpl.php');  
     break;
     case 'teamcreation':
-        include('templates/teampages/teamcreation.tpl.php');  
+        include('templates/Login Pages/create_team.tpl.php');  
     break;
     case 'teamjoin':
-        include('templates/teampages/teamjoin.tpl.php');  
+        include('templates/Login Pages/join_team.tpl.php');  
     break;
     case 'teamfail':
-        include('templates/teampages/teamjoinfail.tpl.php');  
+        include('templates/Login Pages/create_team_msg.tpl.php');  
     break;
     default:
-        if ($_GET['filename'] == ''||$_GET['filename']=="home"||$_GET['filename']=="challenge") {
-            include('tpl/home.tpl.php');
+        if ($_GET['filename'] == ''||$_GET['filename']=="home"||$_GET['filename']=="challenge" && $loggedin) {
+            include('backend/challenge.php');
+            include('templates/User Pages/challenge_page.tpl.php');
         }
         // else {
         //     header('HTTP/1.0 404 Not Found');
         //     include('tpl/page_not_found.tpl.php');
         // }
+        else{
+            include('templates/Login Pages/login.tpl.php');
+        }
     break;
 }
 ?>

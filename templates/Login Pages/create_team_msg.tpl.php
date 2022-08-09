@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
     <title>RVCTF Create Team</title>
-    <link rel="stylesheet" href="../../css/register.css">
+    <link rel="stylesheet" href="static/css/register.css">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Create Team</div>
     <div style="height: 500px;">
     <table class="centre_box">

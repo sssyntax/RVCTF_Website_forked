@@ -17,8 +17,8 @@ function verify_account($conn,$email,$password){
 
 // }
 
-function verify_session($data){
-    return $_SESSION['userID'] == $data['userid'];
+function verify_session(){
+    return !(!isset($_SESSION['loggedin'])||$_SESSION['loggedin']!=true);
 }
 
 function verify_team($conn,$teamname,$password){
