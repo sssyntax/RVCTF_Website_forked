@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <title>RVCTF Login</title>
-    <link rel="stylesheet" href="static/css/style_login.css">
+    <link rel="stylesheet" href="static/css/login.css">
 </head>
 <body style="padding-top:50px">
-    <?php include "stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
     <div style="height:500px; min-height:100%; margin-top: 50px;">
         <table class="content">
@@ -26,8 +26,8 @@
                             </tr>
                             <tr style="text-align: center;">
                                 <td>
-                                <button type="submit" value="register" style="margin-right: 10%;">Register</button>
-                                <button type="submit" value="login">Enter</button>
+                                    <button name = "action" type="submit" value="register" style="margin-right: 10%;">Register</button>
+                                    <button name = "action" type="submit" value="login">Login</button>
                                 </td>
                             </tr>
                         </form>
