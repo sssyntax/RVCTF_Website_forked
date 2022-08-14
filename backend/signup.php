@@ -1,4 +1,6 @@
 <?php
+// Start session to give aceess to session variables
+session_start();
 // Get the db connection 
 require "includes/connect.inc.php";
 // Redirect user to login page if they wish to login again
@@ -46,8 +48,6 @@ else{
     $res -> bind_result($id, $email, $admin);
     $res -> fetch();
     mysqli_stmt_close($res);
-    // Tell user that sign in is successful via alert
-    echo '<script>alert("Signup sucessful! Please login to access the site :)")</script>';
     // Store UserID and UserEmail in session storage
     $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $id;

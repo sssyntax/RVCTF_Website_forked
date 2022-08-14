@@ -9,7 +9,6 @@
 </head>
 <body>
     <?php include 'templates/stars.php';?>
-    <?php echo sprintf("Curr ID: %s", $userid) ;?>
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
@@ -29,7 +28,7 @@
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
         <?php foreach ($lstofvalues as $value){ ?>
-        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" data-title = "<?php echo $value['title']; ?>">
+        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" data-title = "<?php echo $value['title']; ?>" data-id = "<?php echo $value['id']; ?>">
             <table class="challenge_widget">
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value['title']; ?></td></tr>
@@ -37,8 +36,7 @@
                     <tr class="author_div"><td class="author"><?php echo $value['author']; ?></td></tr>
                 </tbody>
             </table>
-        </button>
-       
+        </button>        
         <?php }?>
         </div>
     <?php
@@ -46,12 +44,17 @@
      <div class="popup" id = "popup">
             <table class="popup_content">
                 <tr class="popup_header_tr"><td class="popup_header"><span id = "title_popup"></span><span class="close" id = "close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc"><span id = "desc_popup"></span></td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">
+                <tr class="popup_desc_tr">
+                    <td class="popup_desc"><span id = "desc_popup"></span></td>
+                </tr>
+                <tr class="popup_input_tr">
+                    <td class="popup_input">
                     <form onsubmit = "submitAnswer(this,event)">
+                        <input type="hidden" name="id" id = 'challengeID'>
                         Input Flag: <input class="flag_input" id="flag_input_test" type="text" name = "answer" placeholder="RVCTF{flag}">
                     </form>
-                </td></tr>
+                    </td>
+                </tr>
             </table>
         </div>
     <!-- <h1 class="topic_header">Forensics</h1>

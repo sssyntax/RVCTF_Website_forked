@@ -1,8 +1,11 @@
 "use strict";
 
+// Document elements for popup
 var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
+var id_popup = document.getElementById("challengeID");
+// Document elements for challenge
 var chal_btns = document.getElementsByClassName("challenge_btn");
 var closespan = document.getElementById("close");
 var add_chal_box = document.getElementById("add_chal_box");
@@ -14,12 +17,17 @@ add_chal_close.onclick = function(){
 closespan.onclick = function(){
   chal_popup.style.display = "none";
 }
+
+// Set event listener for all challenge buttons
 for (let i=0; i<chal_btns.length; i++) {
   chal_btns[i].onclick = function() {
+    // Display challenge popup
     chal_popup.style.display = "block";
+    // Set challenge title and description
     desc_popup.innerText = this.dataset.desc
     title_popup.innerText = this.dataset.title
-    console.log("Ran")
+    // pass ID value into form for submission
+    id_popup.value = this.dataset.id 
   }
 
 }
@@ -32,12 +40,30 @@ function addChal(){
 function submitAnswer(form,event){
   event.preventDefault()
   var formdata = new FormData(form)
-  fetch("backend/setlive.php", { method: "POST", body: formdata })
+  fetch("backend/submitchallenge.php", { method: "POST", body: formdata })
+  .then(response => response.json())
+  .then(result => {
+    alert(result) 
+    // answer is correct
+    if (result == "Answer is correct, well done :)") {
+      // disable challenge for user
+      // Search for correct button to disable
+      for (let i=0; i<chal_btns.length; i++) {
+        // Check if the button's title is the sameas the popup's title
+        if (chal_btns[i].dataset.title == title_popup) {
+          // Challenge disable button
+          chal_btns[i].disabled = true;
+          }
+      }
+    }
+  
+  })
   return false  
   
 }
 
 function submitChallenge(form,event){
+  // Handle output when new challenge is created
   event.preventDefault()
   var formdata = new FormData(form)
   fetch("backend/addchallenge.php", { method: "POST", body: formdata })

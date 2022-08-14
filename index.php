@@ -1,8 +1,6 @@
 <?php
-if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
-    // start session if it isn't started
-    session_start();
-}
+// start session
+session_start();
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_session();
 if (isset($_GET['filename'])){
@@ -11,6 +9,7 @@ if (isset($_GET['filename'])){
 else{
     $filename = "";
 }
+echo sprintf("Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s", $_SESSION['userID'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
 switch ($filename) {
     case 'signup':
         include('templates/Login Pages/signup.tpl.php');  

@@ -6,6 +6,13 @@
 </head>
 <body style="padding-top:50px">
     <?php include "templates/stars.php" ?>
+    <?php 
+    // Reset session details to log user out
+        $_SESSION['loggedin'] = false;
+        $_SESSION['userID'] = null;
+        $_SESSION['userEmail'] = null;
+        $_SESSION['admin'] = null;
+    ?>
     <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
     <div style="height:500px; min-height:100%; margin-top: 50px;">
         <table class="content">

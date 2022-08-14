@@ -49,7 +49,7 @@ else{
     mysqli_stmt_close($res);
     // Update the team of the user
     $sql = "UPDATE `users` SET `teamname` = ? WHERE `id` = ?";
-    $res = prepared_query($conn,$sql,[$teamname,$userid],"si");
+    $res = prepared_query($conn,$sql,[$teamname, $userid],"si");
     mysqli_stmt_close($res);    
     // Log the user into the site
     header("Location: ../index.php?filename=challenge");
