@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div id="header">
         <div id="res_header"><a href="index.php" id="res_header_link">Challenges</a></div> <div id="sep">|</div> <div id="chals_header">Resources</div>
     </div> 

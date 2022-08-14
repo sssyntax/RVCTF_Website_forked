@@ -1,5 +1,8 @@
 <?php
-session_start(); // Start session once the page is loaded 
+if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
+    // start session if it isn't started
+    session_start();
+}
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_session();
 if (isset($_GET['filename'])){
@@ -32,10 +35,6 @@ switch ($filename) {
             include('backend/challenge.php');
             include('templates/User Pages/challenge_page.tpl.php');
         }
-        // else {
-        //     header('HTTP/1.0 404 Not Found');
-        //     include('tpl/page_not_found.tpl.php');
-        // }
         else if ($filename == 'resources' && $loggedin) {
             include('templates/User Pages/resources_page.tpl.php');
         }

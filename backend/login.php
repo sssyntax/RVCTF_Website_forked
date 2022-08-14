@@ -41,20 +41,21 @@ else{
     // Get userID from users db
     $sql = "SELECT users.id,password,COUNT(loginattempts.id),admin FROM `users` LEFT JOIN `loginattempts` ON users.id=userid AND timestamp>? WHERE `email` = ?  GROUP BY users.id";
     $hourago = time() - 60*60;
-    // $hourago = 0;
     $res = prepared_query($conn,$sql,[$hourago,$email],"is");
     $res -> bind_result($id,$passwordhashed,$loginattempts,$admin);
     $res -> fetch();
     mysqli_stmt_close($res);
     if ($res !== false){
-        // login attempts exceeded --> go back to login page
+        // User exists in database
         if ($loginattempts>$maxattempts){
+            // login attempts exceeded --> go back to login page
             array_push($errorlst,"lockederror");
             header("Location: ../index.php?filename=login&error=".json_encode($errorlst));
         }
         else{
-            // User Login Successful
+            // Login attempts not exceeded yet
             if (password_verify($password,$passwordhashed)){
+                // User Login Successful (Password correct)
                 // Remove any login attempt entries from the db
                 $sql = "DELETE FROM `loginattempts` WHERE `userid` = ?";
                 $res = prepared_query($conn,$sql,[$id],"i");
@@ -67,11 +68,13 @@ else{
                 header("Location: ../index.php?filename=challenge");
             }
             else{
+                // User Login Unsucessful (Password wrong)
+                // Add a loginattempt into database
                 $sql = "INSERT INTO `loginattempts` (`userid`,`timestamp`) VALUES (?,?)";
-                print_r($id);
                 $res = prepared_query($conn,$sql,[$id,time()],"ii");
                 mysqli_stmt_close($res);
-                header("Location: ../index.php?filename=login&attemptsleft=".($maxattempts-$loginattempts-1));
+                // Send user back to login page
+                header(sprintf("Location: ../index.php?filename=login&attemptsleft=%s", $maxattempts-$loginattempts-1));
 
             }
             

@@ -24,6 +24,20 @@
                             <tr style="text-align: center;">
                                 <td>Password: <input type="password" name="login_password" width="auto" height="auto"></td>
                             </tr>
+                            <?php 
+                            if (isset($_GET["error"]) && strpos($_GET["error"], "notfounderror") != false) {
+                                echo '
+                            <tr>
+                                <td class = "error_msg">Account does not exist, please register to access the site.</td>
+                            </tr>';
+                            }
+                            else if (isset($_GET['attemptsleft'])) {
+                                echo '
+                                <tr>
+                                    <td class = "error_msg">Incorrect password, please try again</td>
+                                </tr>';
+                            }
+                            ?>
                             <tr style="text-align: center;">
                                 <td>
                                     <button name = "action" type="submit" value="register" style="margin-right: 10%;">Register</button>

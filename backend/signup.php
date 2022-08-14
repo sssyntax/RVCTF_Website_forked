@@ -40,20 +40,21 @@ else{
     $encrypted = password_hash($password, PASSWORD_DEFAULT);
     $res = prepared_query($conn,$sql,[$email,$encrypted],"ss");
     mysqli_stmt_close($res);
+    // Get User data from database
+    $sql = "SELECT `id`,`email`,`admin` FROM `users` WHERE `email` = ?";
+    $res = prepared_query($conn,$sql,[$email],"s");
+    $res -> bind_result($id, $email, $admin);
+    $res -> fetch();
+    mysqli_stmt_close($res);
     // Tell user that sign in is successful via alert
     echo '<script>alert("Signup sucessful! Please login to access the site :)")</script>';
+    // Store UserID and UserEmail in session storage
+    $_SESSION['loggedin'] = true;
+    $_SESSION['userID'] = $id;
+    $_SESSION['userEmail'] = $email;
+    $_SESSION['admin'] = $admin;
     // Send user to team register page to join a team
     header("Location: ../index.php?filename=teamsignup");
-    // // Get new user data from db
-    // $sql = "SELECT `id` FROM `users` WHERE `email` = ?";
-    // $res = prepared_query($conn,$sql,[$email],"s");
-    // $res -> bind_result($id);
-    // $res -> fetch();
-    // mysqli_stmt_close($res);
-    // // Store UserID and UserEmail in session storage
-    // $_SESSION['loggedin'] = true;
-    // $_SESSION['userID'] = $id;
-    // $_SESSION['userEmail'] = $email;
 }
 
 

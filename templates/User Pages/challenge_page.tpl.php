@@ -9,6 +9,7 @@
 </head>
 <body>
     <?php include 'templates/stars.php';?>
+    <?php echo sprintf("Curr ID: %s", $userid) ;?>
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>

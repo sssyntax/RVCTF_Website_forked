@@ -38,6 +38,11 @@
                     <input id = "confirmpassword" class = "notempty" name = "confirmpassword" type = "password">
                 </td>
             </tr>
+            <?php if (isset($_GET['error']) && strpos($_GET["error"], "inuseerror") != false) {
+                echo '<tr>
+                        <td class = "error_msg">Account already exists, please login.</td>
+                    </tr>';
+            }?>
             <tr>
                 <td>
                     <button name = "action" type="submit" value="login" style = 'margin-right: 2rem;'>Login</button>
