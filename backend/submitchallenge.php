@@ -27,12 +27,13 @@ if (verify_session()) {
             // Sucess variable tracks any errors, changed when errors encountered
             $success = true;
             // Add completion record to completion database
-            $sql = "INSERT INTO `completedchallenges`(`userid`, `challengeid`, `timestamp`) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO `completedchallenges`(`userid`, `challengeid`, `timestamp`) VALUES (?, ?, ?)";
             $res =  prepared_query($conn,$sql,[$userID, $id, time()],'iii');
             // Query is unsucessful
             if (!$res){
-                echo json_encode("Database error, please try again");
+                echo json_encode("Database error");
                 $success = false;
+                exit();
             }
             mysqli_stmt_close($res);
             // Award the user the points
@@ -40,17 +41,18 @@ if (verify_session()) {
             $res =  prepared_query($conn,$sql,[$points, $userID],'ii');
             // Query is unsucessful
             if (!$res){
-                echo json_encode("Database error, please try again");
+                echo json_encode("Database error");
                 $success = false;
+                exit();
             }
             mysqli_stmt_close($res);
             // No errors encountered
-            if ($sucess) {
-                echo json_encode("Answer is correct, well done :)");
+            if ($success) {
+                echo json_encode("Correct answer");
             }
         } 
         else {
-            echo json_encode("Wrong answer");
+            echo json_encode('Wrong answer');
         }
     }
     // Not all fields filled, return error

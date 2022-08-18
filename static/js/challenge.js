@@ -5,22 +5,38 @@ var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
 var id_popup = document.getElementById("challengeID");
+var input_popup_uncompleted = document.getElementById('popup_input_uncompleted') // input td for user to input flag
+var input_popup_completed = document.getElementById('popup_input_completed') // td to indicate user has completed challenge
 // Document elements for challenge
 var chal_btns = document.getElementsByClassName("challenge_btn");
 var closespan = document.getElementById("close");
 var add_chal_box = document.getElementById("add_chal_box");
-var add_chal_close = document.getElementById('add_chal_close')
+var add_chal_close = document.getElementById('add_chal_close');
 
-add_chal_close.onclick = function(){
-  add_chal_box.style.display = 'none';
+if (add_chal_close != null) {
+  add_chal_close.onclick = function(){
+    add_chal_box.style.display = 'none';
+  }
 }
+
 closespan.onclick = function(){
   chal_popup.style.display = "none";
+  input_popup_uncompleted.style.display = 'none';
+  input_popup_completed.style.display = 'none';
 }
 
 // Set event listener for all challenge buttons
 for (let i=0; i<chal_btns.length; i++) {
   chal_btns[i].onclick = function() {
+    // check if the challenge is completed
+    if (this.dataset.completed == 1) {
+      // show the td indicating completion 
+      input_popup_completed.style.display = 'block';
+    }
+    else {
+      // show the input td
+      input_popup_uncompleted.style.display = 'block';
+    }
     // Display challenge popup
     chal_popup.style.display = "block";
     // Set challenge title and description
@@ -37,26 +53,33 @@ function addChal(){
 }
 
 
+
 function submitAnswer(form,event){
   event.preventDefault()
   var formdata = new FormData(form)
   fetch("backend/submitchallenge.php", { method: "POST", body: formdata })
-  .then(response => response.json())
-  .then(result => {
+  .then(response => response.json()) // wait for the asynchronous fetch 
+  .then(result => { // wait for the asynchronous json() method
+    // reset all buttons and popups
+    chal_popup.style.display = "none"
+    input_popup_uncompleted.style.display = 'none'; // reset the input td
+    input_popup_completed.style.display = 'none'; // reset the completion td
+    // Alert user that they got the answer correct
     alert(result) 
     // answer is correct
-    if (result == "Answer is correct, well done :)") {
+    if (result == "Correct answer") {
       // disable challenge for user
       // Search for correct button to disable
       for (let i=0; i<chal_btns.length; i++) {
-        // Check if the button's title is the sameas the popup's title
-        if (chal_btns[i].dataset.title == title_popup) {
-          // Challenge disable button
-          chal_btns[i].disabled = true;
+        // Check if the button's title is the same as the popup's title
+        console.log(chal_btns[i].dataset.title)
+        if (chal_btns[i].dataset.title == title_popup.textContent) {
+          // indicate under data that challenge is compeleted
+          chal_btns[i].dataset.completed = 1;
           }
       }
     }
-  
+      
   })
   return false  
   
@@ -73,10 +96,9 @@ function submitChallenge(form,event){
     if (result == "Success"){
       // RDev ppl can do the add in new challenges here!
   let ins = document.getElementsByClassName("add_chal_input");
-  console.log(document.getElementById("add_chal_cat"))
+  // console.log(document.getElementById("add_chal_cat"))
   let cat = document.getElementById("add_chal_cat").value;
   // console.log(cat);
-  console.log(cat);
   let container = document.getElementById(cat);
   // console.log(container);
   difficultylst = ["Easy","Medium","Hard"]
@@ -92,15 +114,13 @@ function submitChallenge(form,event){
         `
   container.innerHTML = container.innerHTML + txt;
 
-  // reset all buttons and popups
-  chal_popup.style.display = "none"
-
-  for (let i of ins){
-    ins.value = '';
-  }
-
-  add_chal_box.style.display = "none";
+    // reset all buttons and popups
+    chal_popup.style.display = "none"
+    for (let i of ins){
+      ins.value = '';
     }
+    add_chal_box.style.display = "none";
+      }
   })
 
   

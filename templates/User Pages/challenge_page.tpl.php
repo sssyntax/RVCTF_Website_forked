@@ -9,12 +9,13 @@
 </head>
 <body>
     <?php include 'templates/stars.php';?>
+    
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
             <a href="https://discord.gg/uagKpY6c"><img src="static/images/discord.png" id="discord_logo"></a>
         </div>
-        <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
+        <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
         <div id = "links">
             <div id="chals_header" class = "linkEle">Challenges</div> 
             <div class = "linkEle">|</div> 
@@ -28,12 +29,15 @@
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
         <?php foreach ($lstofvalues as $value){ ?>
-        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" data-title = "<?php echo $value['title']; ?>" data-id = "<?php echo $value['id']; ?>">
+        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" 
+                                    data-title = "<?php echo $value['title']; ?>" 
+                                    data-id = "<?php echo $value['id']; ?>" 
+                                    data-completed = <?php if (is_null($value['userid'])) {echo 0;} else {echo 1;}  ?>>
             <table class="challenge_widget">
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value['title']; ?></td></tr>
                     <tr class="points_div"><td class="points"><?php echo $value['points']; ?> points | <?php echo $difficultylst[$value['difficulty']]; ?> </td></tr>
-                    <tr class="author_div"><td class="author"><?php echo $value['author']; ?></td></tr>
+                    <tr class="author_div"><td class="author"><?php echo $value['author'];?></td></tr>
                 </tbody>
             </table>
         </button>        
@@ -48,11 +52,14 @@
                     <td class="popup_desc"><span id = "desc_popup"></span></td>
                 </tr>
                 <tr class="popup_input_tr">
-                    <td class="popup_input">
+                    <td class="popup_input" id = "popup_input_uncompleted" style = 'display: none;'>
                     <form onsubmit = "submitAnswer(this,event)">
                         <input type="hidden" name="id" id = 'challengeID'>
                         Input Flag: <input class="flag_input" id="flag_input_test" type="text" name = "answer" placeholder="RVCTF{flag}">
                     </form>
+                    </td>
+                    <td class="popup_input" id = "popup_input_completed" style = 'display: none;'>
+                        Completed
                     </td>
                 </tr>
             </table>
@@ -223,8 +230,8 @@
             <table class="add_chal_content">
                 <tr class="add_chal_tr" id="add_chal_title_tr">
                     <td class="add_chal_td">Title:</td>
-                    <td class="add_chal_td_input"><input name = "title" class="add_chal_input" id="add_chal_title" type="text" placeholder="What is it called?"><span id="add_chal_close">&times;</td>
-                    </tr>
+                    <td class="add_chal_td_input"><input name = "title" class="add_chal_input" id="add_chal_title" type="text" placeholder="What is it called?"><span id="add_chal_close">&times;</span></td>
+                </tr>
                 <tr class="add_chal_tr" id="add_chal_author_tr">
                     <td class="add_chal_td">Author:</td>
                     <td class="add_chal_td_input"><input name = "author" class="add_chal_input" id="add_chal_author" type="text" placeholder="Who did this?"></td>
