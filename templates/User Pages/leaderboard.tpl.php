@@ -29,7 +29,14 @@
                       echo "decoration3";
                     } ?>>
                       <span class='list_num'><?php echo $index; ?></span>
-                      <h2><?php echo $user['email']; ?><span class="number"><?php echo $user['points']; ?></span></h2>
+                      <h2>
+                        <?php 
+                        // Only get the front part of the email as username
+                        echo substr($user['email'], 0, strpos($user['email'], "@")); ?>
+                        <span class="number">
+                          <?php echo $user['points']; ?>
+                        </span>
+                      </h2>
                   </li>
                 <?php $index++;}?>
     </ul>

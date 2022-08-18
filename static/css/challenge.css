@@ -68,12 +68,12 @@ div {
     text-decoration: underline;
     color: rgb(210, 210, 210);
 }
-#res_header_link {
+.res_header_link {
     text-decoration:none;
     color: rgb(180, 180, 180);
 }
 
-#res_header_link:hover {
+.res_header_link:hover {
     color: rgb(255, 255, 255);
 }
 

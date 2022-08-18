@@ -57,12 +57,22 @@ switch ($filename) {
             include('templates/Login Pages/login.tpl.php');
         }
     break;
+    case 'logout':
+        // End the old session
+        session_destroy();
+        // start a new session
+        session_start();
+        include('templates/Login Pages/login.tpl.php');
     default:
         if (($filename == ''||$filename=="home"||$filename=="challenge") && $loggedin) {
             include('backend/challenge.php');
             include('templates/User Pages/challenge_page.tpl.php');
         }
         else{
+            // Terminate the previous session
+            session_destroy();
+            // Start a new session
+            session_start();
             include('templates/Login Pages/login.tpl.php');
         }
     break;

@@ -19,8 +19,9 @@
         <div id = "links">
             <div id="chals_header" class = "linkEle">Challenges</div> 
             <div class = "linkEle">|</div> 
-            <div id="res_header" class = "linkEle"><a href="index.php?filename=resources" id="res_header_link">Resources</a></div>
+            <div id="res_header" class = "linkEle"><a href="index.php?filename=resources" class="res_header_link">Resources</a></div>
             <div class = "linkEle">|</div> 
+            <div class="linkEle"><a class = "res_header_link" href = "index.php?filename=logout">logout</a></div>
             <div class = "linkEle">Points: <?php echo $points ?></div>
         </div>
     </div>
