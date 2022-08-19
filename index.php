@@ -10,12 +10,12 @@ else{
     $filename = "";
 }
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
-try {
-    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", $_SESSION['userID'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
-}
-catch(Exception $e) {
-    echo "<script>console.log('Session not started')</script>";
-}
+// try {
+//     echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", $_SESSION['userID'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
+// }
+// catch(Exception $e) {
+//     echo "<script>console.log('Session not started')</script>";
+// }
 
 switch ($filename) {
     case 'signup':
@@ -77,4 +77,5 @@ switch ($filename) {
         }
     break;
 }
+include('templates/footer.tpl.php');
 ?>
