@@ -24,6 +24,5 @@
         </tr>
     </table>
     </div>
-    <p>Made in collaboration with Rdev</p>
 </body>
 </html>

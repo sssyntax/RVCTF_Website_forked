@@ -52,7 +52,6 @@
         </form>
     </table>
     </div>
-    <p>Made in collaboration with Rdev</p>
     <script src="js/signup.js?<?php echo time(); ?>"></script>
 </body>
 </html>

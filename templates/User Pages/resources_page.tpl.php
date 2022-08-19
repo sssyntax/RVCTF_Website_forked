@@ -51,4 +51,6 @@
             </div>
         </label>
         </div>
+        <!-- Make a div of height 100% to simluate that theres text in the middle -->
+        <div style = "height: 80%;display: block;"></div>
     </body>

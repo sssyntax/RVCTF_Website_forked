@@ -57,6 +57,5 @@
             </tr>
         </table>
     </div>
-    <p style="color: white;">Made in collaboration with Rdev</p>
 </body>
 </html>

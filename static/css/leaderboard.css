@@ -31,8 +31,8 @@ body {
 
 .table {
     display: table;
+    margin-top: 3rem;
     width: 100%;
-    position: absolute;
     height: 100%;
 }
 

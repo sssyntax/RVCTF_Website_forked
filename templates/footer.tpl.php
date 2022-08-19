@@ -1,17 +1,24 @@
 <style>
     @font-face {
-        font-family: CutiveMono;
-        src: url('static/fonts/CutiveMono-Regular.ttf');
+        font-family: bodyText;
+        src: url('static/fonts/VT323-Regular.ttf');
     }
     .rdev-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .rdev-footer-text {
         color: white;
-        font-family: CutiveMono;
+        font-family: bodyText;
         font-size: 1.5rem;
         text-align: center;
-        width: 100%;
     }
+    
 </style>
-
-<p class = 'rdev-footer'>
-    Made in collaboration with <a href="https://rdev.x10.mx/"><img style = 'width: 3rem;vertical-align:center;' src = 'static/images/RdeV-logo.webp' alt = "Rdev"></a>
-</p>
+<div class = 'rdev-footer'>
+    <p class = 'rdev-footer-text'>Made in collaboration with </p>
+    <a href="https://rdev.x10.mx/" style = 'text-align: center;' target="_blank">
+    <img style = 'width: 3rem;vertical-align:center;' src = 'static/images/RdeV-logo.webp' alt = "Rdev"></a>
+</div>
