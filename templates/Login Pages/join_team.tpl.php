@@ -17,6 +17,9 @@
                 <td>Password: <input type="password" name="team_password" width="auto" height="auto">
                     <br><span style="font-size: 50%">*please request from team leader</span>
                 </td>
+            </tr>     
+            <tr>
+                <td class = 'error_msg'><?php if (isset($_GET['error']) && strpos($_GET['error'], 'passworderror') == true) {echo "Password incorrect, try again";}?></td>
             </tr>
             <tr>
                 <td><button class="button" type="submit">Enter</button></td>

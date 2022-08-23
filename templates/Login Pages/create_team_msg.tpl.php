@@ -8,14 +8,16 @@
     <div class="header">Create Team</div>
     <div style="height: 500px;">
     <table class="centre_box">
-        <form action="index.php">
             <tr>
-                <td>Team has already been created. Do request for the password from the team leader (name) and join the team</td>
+                <td>Team has already been created. Do request for the password from the team leader <?php if (isset($_GET['teamleader'])) {echo "(".$_GET['teamleader'].")";}?> and join the team</td>
             </tr>
             <tr>
-                <td><button class="button" type="submit">Join Team</button></td>
+                <td>
+                    <a href = "./index.php?filename=teamjoin">
+                    <button class="button" type="submit">Join Team</button>
+                    </a>
+                </td>
             </tr>
-        </form>
     </table>
     </div>
 </body>

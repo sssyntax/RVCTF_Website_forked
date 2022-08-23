@@ -11,13 +11,23 @@
 
 <body>
     <?php include "templates/stars.php" ?>
-    <div id="header">
-        <div id="res_header"><a href="index.php" id="res_header_link">Challenges</a></div> <div id="sep">|</div> <div id="chals_header">Resources</div>
+    <div id="header"> 
+        <div>
+            <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="static/images/instagram.png" id="IG_logo"></a>
+            <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="static/images/discord.png" id="discord_logo"></a>
+        </div>
+        <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
+        <div>
+            <div id="res_header">
+                <a href="index.php" class="res_header_link">Challenges</a>
+            </div> 
+            <div id="sep">|</div> 
+            <div id="chals_header">Resources</div>
+            <div id="sep">|</div> 
+            <div class="linkEle"><a class = "res_header_link" href = "index.php?filename=logout">logout</a></div>
+            <div id="sep"><?php if (isset($_SESSION['points'])) {echo strval($_SESSION['points'])." Points";} ?> </div>
+        </div>
     </div> 
-      <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="static/images/instagram.png" id="IG_logo"></a>
-      <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="static/images/discord.png" id="discord_logo"></a>
-      <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
-
         <div class="menu">
         <input type="checkbox" id="toggle" />
         <label id="show-menu" for="toggle">
@@ -52,5 +62,5 @@
         </label>
         </div>
         <!-- Make a div of height 100% to simluate that theres text in the middle -->
-        <div style = "height: 80%;display: block;"></div>
+        <div style = "margin-top: 40%;display: block;"><br></div>
     </body>

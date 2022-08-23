@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <head>
     <title>RVCTF Join Team</title>
-    <link rel="stylesheet" href="../../css/register.css">
+    <link rel="stylesheet" href="static/css/register.css">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Join Team</div>
     <div style="height: 500px;">
     <table class="centre_box">
         <tr>
-            <td>Team has not been created.<br>Create team?</td>
+            <td>Team has not been created.<br>Plase create the team.</td>
         </tr>
         <tr>
             <td>

@@ -19,7 +19,7 @@ mysqli_stmt_close($res);
 // There is an existing team with this name
 if ($count >= 1){
     // Direct user to fail message
-    header("Location: ../index.php?filename=teamcreationfail&teamleader=".$teamleader);
+    header("Location: ../index.php?filename=teamexists&teamleader=".$teamleader);
     exit();
 }
 // Get the data of the user creating the team 
@@ -51,6 +51,8 @@ else{
     $sql = "UPDATE `users` SET `teamname` = ? WHERE `id` = ?";
     $res = prepared_query($conn,$sql,[$teamname, $userid],"si");
     mysqli_stmt_close($res);    
+    // log the user into the session
+    $_SESSION["loggedin"] = true;
     // Log the user into the site
     header("Location: ../index.php?filename=challenge");
 }

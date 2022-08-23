@@ -16,7 +16,7 @@ switch ($filename) {
         include('templates/Login Pages/login.tpl.php');
     break;
     case 'teamsignup':
-        include('templates/Login Pages/teamsignup.tpl.php');  
+        include('templates/Login Pages/team_choice.tpl.php');  
     break;
     case 'teamcreation':
         include('templates/Login Pages/create_team.tpl.php');  
@@ -24,21 +24,29 @@ switch ($filename) {
     case 'teamjoin':
         include('templates/Login Pages/join_team.tpl.php');  
     break;
-    case 'teamfail':
+    case 'teamexists':
         include('templates/Login Pages/create_team_msg.tpl.php');  
     break;
+    case 'teamdosentexist':
+        include('templates/Login Pages/join_team_msg.tpl.php');  
+    break;
     default:
-        if ($filename == ''||$filename=="home"||$filename=="challenge" && $loggedin) {
+        if ($filename == 'leaderboard' && $loggedin && isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+            include('backend/leaderboard.php');
+            include('templates/User Pages/leaderboard.tpl.php');  
+        }
+        else if ($filename == 'resources' && $loggedin) {
+            include('templates/User Pages/resources_page.tpl.php');  
+        }
+        else if ($filename == ''||$filename=="home"||$filename=="challenge" && $loggedin) {
             include('backend/challenge.php');
             include('templates/User Pages/challenge_page.tpl.php');
         }
-        // else {
-        //     header('HTTP/1.0 404 Not Found');
-        //     include('tpl/page_not_found.tpl.php');
-        // }
         else{
             include('templates/Login Pages/login.tpl.php');
         }
     break;
 }
+// Rdev footer
+include('templates/footer.tpl.php');
 ?>

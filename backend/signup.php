@@ -43,16 +43,17 @@ else{
     $res = prepared_query($conn,$sql,[$email,$encrypted],"ss");
     mysqli_stmt_close($res);
     // Get User data from database
-    $sql = "SELECT `id`,`email`,`admin` FROM `users` WHERE `email` = ?";
+    $sql = "SELECT `id`,`email`,`admin`, `points` FROM `users` WHERE `email` = ?";
     $res = prepared_query($conn,$sql,[$email],"s");
-    $res -> bind_result($id, $email, $admin);
+    $res -> bind_result($id, $email, $admin, $points);
     $res -> fetch();
     mysqli_stmt_close($res);
     // Store UserID and UserEmail in session storage
-    $_SESSION['loggedin'] = false;
+    $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $id;
     $_SESSION['userEmail'] = $email;
     $_SESSION['admin'] = $admin;
+    $_SESSION['points'] = $points;
     // Send user to team register page to join a team
     header("Location: ../index.php?filename=teamsignup");
 }
