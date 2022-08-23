@@ -9,17 +9,19 @@
 </head>
 <body>
     <?php include 'templates/stars.php';?>
+    
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
             <a href="https://discord.gg/uagKpY6c"><img src="static/images/discord.png" id="discord_logo"></a>
         </div>
-        <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
+        <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
         <div id = "links">
             <div id="chals_header" class = "linkEle">Challenges</div> 
             <div class = "linkEle">|</div> 
-            <div id="res_header" class = "linkEle"><a href="resources_page.tpl.php" id="res_header_link">Resources</a></div>
+            <div id="res_header" class = "linkEle"><a href="index.php?filename=resources" class="res_header_link">Resources</a></div>
             <div class = "linkEle">|</div> 
+            <div class="linkEle"><a class = "res_header_link" href = "index.php?filename=logout">logout</a></div>
             <div class = "linkEle">Points: <?php echo $points ?></div>
         </div>
     </div>
@@ -28,16 +30,18 @@
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
         <?php foreach ($lstofvalues as $value){ ?>
-        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" data-title = "<?php echo $value['title']; ?>">
+        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" 
+                                    data-title = "<?php echo $value['title']; ?>" 
+                                    data-id = "<?php echo $value['id']; ?>" 
+                                    data-completed = <?php if (is_null($value['userid'])) {echo 0;} else {echo 1;}  ?>>
             <table class="challenge_widget">
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value['title']; ?></td></tr>
                     <tr class="points_div"><td class="points"><?php echo $value['points']; ?> points | <?php echo $difficultylst[$value['difficulty']]; ?> </td></tr>
-                    <tr class="author_div"><td class="author"><?php echo $value['author']; ?></td></tr>
+                    <tr class="author_div"><td class="author"><?php echo $value['author'];?></td></tr>
                 </tbody>
             </table>
-        </button>
-       
+        </button>        
         <?php }?>
         </div>
     <?php
@@ -45,173 +49,22 @@
      <div class="popup" id = "popup">
             <table class="popup_content">
                 <tr class="popup_header_tr"><td class="popup_header"><span id = "title_popup"></span><span class="close" id = "close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc"><span id = "desc_popup"></span></td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">
+                <tr class="popup_desc_tr">
+                    <td class="popup_desc"><span id = "desc_popup"></span></td>
+                </tr>
+                <tr class="popup_input_tr">
+                    <td class="popup_input" id = "popup_input_uncompleted" style = 'display: none;'>
                     <form onsubmit = "submitAnswer(this,event)">
+                        <input type="hidden" name="id" id = 'challengeID'>
                         Input Flag: <input class="flag_input" id="flag_input_test" type="text" name = "answer" placeholder="RVCTF{flag}">
                     </form>
-                </td></tr>
+                    </td>
+                    <td class="popup_input" id = "popup_input_completed" style = 'display: none;'>
+                        Completed
+                    </td>
+                </tr>
             </table>
         </div>
-    <!-- <h1 class="topic_header">Forensics</h1>
-    <div class="challenge_container" id="forensics">
-        <button class="challenge_btn">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1 Lorem ipsum dolor sit dadadad</td></tr>
-                    <tr class="points_div"><td class="points">10 points | Easy</td></tr>
-                    <tr class="author_div"><td class="author">CommunistChiken</td></tr>
-                </tbody>
-            </table>
-        </button>
-        <div class="popup">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">Challenge 1<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">The following file has been corrupted! Help me find the flag</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">
-                    <form action="challenge.php">
-                        Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}">
-                    </form>
-                </td></tr>
-            </table>
-        </div>
-
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 2</td></tr>
-                    <tr class="points_div"><td class="points">50 points | Medium</td></tr>
-                    <tr class="author_div"><td class="author">CommunistChiken</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">Challenge 2<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">I managed to capture a pcap file from my neighbour's wifi router. Help me find out what he has been doing!</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    <h1 class="topic_header">Cryptography</h1>
-    <div class="challenge_container" id="crypto">
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1</td></tr>
-                    <tr class="points_div"><td class="points">20 points | Easy</td></tr>
-                    <tr class="author_div"><td class="author">RVCTF ExCo</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">Challenge 1<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">HHFCSNDCJNOSWIDJIOWYHUEIGWIDNJWIDHNIUWGDUIDBA</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    <h1 class="topic_header">Web Exploit</h1>
-    <div class="challenge_container" id="web">
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1</td></tr>
-                    <tr class="points_div"><td class="points">100 points | Hard</td></tr>
-                    <tr class="author_div"><td class="author">RVCTF ExCo</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">Challenge 1<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">Hack into the following website, and steal the flag</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    <h1 class="topic_header">Reverse Engineering</h1>
-    <div class="challenge_container" id="re">
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1</td></tr>
-                    <tr class="points_div"><td class="points">100 points | Hard</td></tr>
-                    <tr class="author_div"><td class="author">CommunistChiken</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">Challenge 1<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">This file has been encrypted! But I've managed to obtain the encryption programme file. Help me obtain the original text!</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    <h1 class="topic_header">PWN</h1>
-    <div class="challenge_container" id="pwn">
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1</td></tr>
-                    <tr class="points_div"><td class="points">50 points | Medium</td></tr>
-                    <tr class="author_div"><td class="author">RVCTF ExCo</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">CHALLENGE NAME<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">CHALLENGE DESCRIPTIONS</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    <h1 class="topic_header">OSINT</h1>
-    <div class="challenge_container" id="osint">
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 1</td></tr>
-                    <tr class="points_div"><td class="points">20 points | Easy</td></tr>
-                    <tr class="author_div"><td class="author">RVCTF ExCo</td></tr>
-                </tbody>
-                
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">CHALLENGE NAME<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">CHALLENGE DESCRIPTIONS</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-
-        <button class="challenge_btn" id="chal_btn_test">
-            <table class="challenge_widget">
-                <tbody class="widget_body">
-                    <tr class="name_div"><td class="name">Challenge 2</td></tr>
-                    <tr class="points_div"><td class="points">60 points | Medium</td></tr>
-                    <tr class="author_div"><td class="author">CommunistChiken</td></tr>
-                </tbody>
-            </table>
-        </button>
-        <div class="popup" id="popup_test">
-            <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header">CHALLENGE NAME<span class="close">&times;</span></td></tr>
-                <tr class="popup_desc_tr"><td class="popup_desc">CHALLENGE DESCRIPTIONS</td></tr>
-                <tr class="popup_input_tr"><td class="popup_input">Input Flag: <input class="flag_input" id="flag_input_test" type="text" placeholder="RVCTF{flag}"></td></tr>
-            </table>
-        </div>
-    </div>
-    -->
     <?php if (isset($_SESSION['admin'])){if($_SESSION['admin']){ ?>
     <button class='add_chal_btn' id="add_chal" onclick="addChal()">+</button>
     <form onsubmit = "submitChallenge(this,event)">
@@ -219,8 +72,8 @@
             <table class="add_chal_content">
                 <tr class="add_chal_tr" id="add_chal_title_tr">
                     <td class="add_chal_td">Title:</td>
-                    <td class="add_chal_td_input"><input name = "title" class="add_chal_input" id="add_chal_title" type="text" placeholder="What is it called?"><span id="add_chal_close">&times;</td>
-                    </tr>
+                    <td class="add_chal_td_input"><input name = "title" class="add_chal_input" id="add_chal_title" type="text" placeholder="What is it called?"><span id="add_chal_close">&times;</span></td>
+                </tr>
                 <tr class="add_chal_tr" id="add_chal_author_tr">
                     <td class="add_chal_td">Author:</td>
                     <td class="add_chal_td_input"><input name = "author" class="add_chal_input" id="add_chal_author" type="text" placeholder="Who did this?"></td>
@@ -268,7 +121,6 @@
     </div> 
     </form>
     <?php }}?>
-    
     <script src="static/js/challenge.js"></script>
 </body>
 </html>

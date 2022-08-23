@@ -3,6 +3,7 @@ session_start();
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
 if (verify_session()){
+    // Check if fields are filled
     if (isset($_POST['title'])&&isset($_POST['author'])&&isset($_POST['points'])&&isset($_POST['difficulty'])&&isset($_POST['category'])&&isset($_POST['desc'])&&isset($_POST['solution'])){
         $title = $_POST['title'];
         $author =$_POST['author'];
@@ -18,7 +19,7 @@ if (verify_session()){
         $res -> fetch();
         mysqli_stmt_close($res);
         if ($admin){
-            $salt = "3Y_J2ACWccfmI8ve?(q_fkLl";//DO NOT SHARE THIS SALT
+            $salt = "3Y_J2ACWccfmI8ve?(q_fkLl"; //DO NOT SHARE THIS SALT
             $encrypted = sha1($salt.$solution);
             $sql = "INSERT INTO `challenges` (`title`, `author`, `points`, `difficulty`, `category`, `description`, `solution`) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $res =  prepared_query($conn,$sql,[$title,$author,$points,$difficulty,$category,$desc,$encrypted],'ssiisss');
@@ -34,6 +35,7 @@ if (verify_session()){
             echo json_encode("Not Admin");
         }
     }
+    // Not all fields filled
     else{
         echo json_encode("Error1");
     }

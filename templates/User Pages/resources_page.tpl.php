@@ -10,13 +10,13 @@
 </head>
 
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div id="header">
         <div id="res_header"><a href="index.php" id="res_header_link">Challenges</a></div> <div id="sep">|</div> <div id="chals_header">Resources</div>
     </div> 
       <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="static/images/instagram.png" id="IG_logo"></a>
       <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="static/images/discord.png" id="discord_logo"></a>
-      <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
+      <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
 
         <div class="menu">
         <input type="checkbox" id="toggle" />
@@ -51,4 +51,6 @@
             </div>
         </label>
         </div>
+        <!-- Make a div of height 100% to simluate that theres text in the middle -->
+        <div style = "height: 80%;display: block;"></div>
     </body>

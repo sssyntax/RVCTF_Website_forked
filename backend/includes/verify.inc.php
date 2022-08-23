@@ -18,6 +18,8 @@ function verify_account($conn,$email,$password){
 // }
 
 function verify_session(){
+    // check if loggedin variable is stored in session
+    // check if loggedin varibale is set to true
     return !(!isset($_SESSION['loggedin'])||$_SESSION['loggedin']!=true);
 }
 

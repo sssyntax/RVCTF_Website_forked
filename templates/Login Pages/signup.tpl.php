@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>RVCTF Register</title>
-        <link rel="stylesheet" href="css/register.css">
+        <link rel="stylesheet" href="static/css/register.css">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <?php include "templates/stars.php" ?>
-    <div class="header">Register</div>
+    <div class="header">Registration</div>
     <div style="height: 500px;">
     <table class="centre_box">
         <form method = "POST" action = "backend/signup.php">
@@ -38,13 +38,20 @@
                     <input id = "confirmpassword" class = "notempty" name = "confirmpassword" type = "password">
                 </td>
             </tr>
+            <?php if (isset($_GET['error']) && strpos($_GET["error"], "inuseerror") != false) {
+                echo '<tr>
+                        <td class = "error_msg">Account already exists, please login.</td>
+                    </tr>';
+            }?>
             <tr>
-                <td><input type = "submit"  value = "Register" onClick="return empty()"></td>
+                <td>
+                    <button name = "action" type="submit" value="login" style = 'margin-right: 2rem;'>Login</button>
+                    <button name = "action" type = 'submit' value = 'register'>Register</button>
+                </td>
             </tr>
         </form>
     </table>
     </div>
-    <p>Made in collaboration with Rdev</p>
     <script src="js/signup.js?<?php echo time(); ?>"></script>
 </body>
 </html>

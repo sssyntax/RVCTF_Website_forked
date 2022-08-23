@@ -1,4 +1,5 @@
 <?php
+// Start session to access session data
 session_start();    
 require "includes/connect.inc.php";
 require "includes/getinfo.inc.php";

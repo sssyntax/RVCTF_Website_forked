@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
     <title>RVCTF Team Choice</title>
-    <link rel="stylesheet" href="../../css/register.css">
+    <link rel="stylesheet" href="static/css/register.css">
 </head>
 <body>
-    <?php include "../stars.php" ?>
+    <?php include "templates/stars.php" ?>
     <div class="header">Do you have a team?</div>
     <div style="height: 500px;">
     <table class="centre_box">  
@@ -24,6 +24,5 @@
         </tr>
     </table>
     </div>
-    <p>Made in collaboration with Rdev</p>
 </body>
 </html>

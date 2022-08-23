@@ -50,16 +50,23 @@ body {
     width: 100%;
 }
 
-button {
+button, a {
     border: 2px solid transparent;
     font-family: header_font;
     color: white;
     font-size: 150%;
     background-color: transparent;
     cursor: pointer;
+    text-decoration: none;
 }
 
-button:hover {
+button:hover, a:hover {
     border: 2px solid black;
     border-radius: 5px;
+}
+
+.error_msg {
+    color: #ff3131;
+    font-size: 1.5rem;
+    text-align: center;
 }
