@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2022 at 12:37 PM
+-- Generation Time: Aug 22, 2022 at 03:26 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -55,7 +55,10 @@ INSERT INTO `challenges` (`id`, `title`, `author`, `points`, `difficulty`, `cate
 (10, 'a', 'a', 60, 0, 'Forensics', 'da', 'a7633fdcef488104c60365429f3561ce7835450f'),
 (11, 'a', 'a', 60, 0, 'Forensics', 'dadadada', 'a7633fdcef488104c60365429f3561ce7835450f'),
 (12, 'a', 'a', 69, 0, 'Forensics', 'd', 'a7633fdcef488104c60365429f3561ce7835450f'),
-(13, '1', '2', 3, 0, 'Forensics', '4', '3da6f1b21872868b0acc10611250a223a0fc5423');
+(13, '1', '2', 3, 0, 'Forensics', '4', '3da6f1b21872868b0acc10611250a223a0fc5423'),
+(14, 'your mom', 'me', 69, 0, 'Forensics', 'fuck you', 'b3d68079cfb8c8d3bee8575bd172b290e843711b'),
+(15, '你妈妈', 'me', 69, 0, 'PWN', '', '79af5839c42aa970923018f5a1c2b5bad56234d9'),
+(16, 'JP', 'Me', 69, 0, 'Reverse Engineering', 'The answer is JP', '846400caf36e29558d2fb4cafdf1ccc706917b5c');
 
 -- --------------------------------------------------------
 
@@ -69,6 +72,14 @@ CREATE TABLE `completedchallenges` (
   `challengeid` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `completedchallenges`
+--
+
+INSERT INTO `completedchallenges` (`completionid`, `userid`, `challengeid`, `timestamp`) VALUES
+(64, 23, 15, 1660581136),
+(69, 23, 16, 1660583423);
 
 -- --------------------------------------------------------
 
@@ -111,7 +122,9 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`teamid`, `teamname`, `teampassword`, `teammates`, `teamleader`, `points`) VALUES
-(3, 'Zhongbob Team', '$2y$10$zRf9uDI3SfaOEnqW/18oneqN18Ph.AP9cOVV2HQSPBI6vkyvFlYAK', '[\"czhongding@gmail.com\"]', 'czhongding@gmail.com', 0);
+(3, 'Zhongbob Team', '$2y$10$zRf9uDI3SfaOEnqW/18oneqN18Ph.AP9cOVV2HQSPBI6vkyvFlYAK', '[\"czhongding@gmail.com\"]', 'czhongding@gmail.com', 0),
+(11, 'ilyJP', '$2y$10$.xgdzMHLtcQp5YkjUgnH/.JtjhayjoWnzigsrAEHI9dglnGV3JjG.', '[\"nqheng@gmail.com\",\"ngqiheng952@gmail.com\"]', 'nqheng@gmail.com', 0),
+(12, 'test@gmail.com', '$2y$10$9gfoJBTTE3sBQvxou5rd7.8jFnpSIx5znSOnRY2SlrUehWqN3OPG2', '[\"test@gmail.com\"]', 'test@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -133,7 +146,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `teamname`, `points`, `admin`) VALUES
-(1, 'czhongding@gmail.com', '$2y$10$Es8DXHt0nr54YuIigP1CCuE.RY6wNsSBkGASwwLYib2/hfJYCTnJ2', 'Zhongbob Team', 0, 1);
+(1, 'czhongding@gmail.com', '$2y$10$Es8DXHt0nr54YuIigP1CCuE.RY6wNsSBkGASwwLYib2/hfJYCTnJ2', 'Zhongbob Team', 0, 1),
+(23, 'nqheng@gmail.com', '$2y$10$fFiO5KhoZoNBBESmPBk4oOH6HsDuaXPkdQ/EdCSlbZllbsudk7.3S', 'ilyJP', 4692, 1),
+(24, 'ngqiheng952@gmail.com', '$2y$10$JyZ.eLoO7sJ5cjChqmEsl.6Wm2NlKpm2R2QfyK9TM.HzjVhqw0TO.', 'ilyJP', 69, 0),
+(25, 'test@gmail.com', '$2y$10$SLNoU6bUuZ4jn48f7mhxue3C/iLhxH6CiMmohl1xFiWYCP9zFhnZO', 'test@gmail.com', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -179,13 +195,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `challenges`
 --
 ALTER TABLE `challenges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `completedchallenges`
 --
 ALTER TABLE `completedchallenges`
-  MODIFY `completionid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `completionid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `loginattempts`
@@ -197,13 +213,13 @@ ALTER TABLE `loginattempts`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `teamid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `teamid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -69,7 +69,6 @@ switch ($filename) {
             session_start();
             include('templates/Login Pages/login.tpl.php');
         }
-    break;
 }
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
 try {
