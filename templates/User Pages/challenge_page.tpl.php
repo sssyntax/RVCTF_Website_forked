@@ -30,15 +30,15 @@
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
         <?php foreach ($lstofvalues as $value){ ?>
-        <button class="challenge_btn" data-desc = "<?php echo $value['description']; ?>" 
-                                    data-title = "<?php echo $value['title']; ?>" 
-                                    data-id = "<?php echo $value['id']; ?>" 
-                                    data-completed = <?php if (is_null($value['userid'])) {echo 0;} else {echo 1;}  ?>>
+        <button class="challenge_btn" data-desc = "<?php echo $value[6]; ?>" 
+                                    data-title = "<?php echo $value[1]; ?>" 
+                                    data-id = "<?php echo $value[0]; ?>" 
+                                    data-completed = <?php if (is_null($value[7])) {echo 0;} else {echo 1;}  ?>>
             <table class="challenge_widget">
                 <tbody class="widget_body">
-                    <tr class="name_div"><td class="name"><?php echo $value['title']; ?></td></tr>
-                    <tr class="points_div"><td class="points"><?php echo $value['points']; ?> points | <?php echo $difficultylst[$value['difficulty']]; ?> </td></tr>
-                    <tr class="author_div"><td class="author"><?php echo $value['author'];?></td></tr>
+                    <tr class="name_div"><td class="name"><?php echo $value[1]; ?></td></tr>
+                    <tr class="points_div"><td class="points"><?php echo $value[3]; ?> points | <?php echo $difficultylst[$value[4]]; ?> </td></tr>
+                    <tr class="author_div"><td class="author"><?php echo $value[2];?></td></tr>
                 </tbody>
             </table>
         </button>        
