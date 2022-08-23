@@ -2,7 +2,13 @@
 session_start(); // Start session once the page is loaded 
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_session();
-switch ($_GET['filename']) {
+if (isset($_GET['filename'])){
+    $filename = $_GET['filename']; 
+}
+else{
+    $filename = "";
+}
+switch ($filename) {
     case 'signup':
         include('templates/Login Pages/signup.tpl.php');  
     break;
@@ -22,7 +28,7 @@ switch ($_GET['filename']) {
         include('templates/Login Pages/create_team_msg.tpl.php');  
     break;
     default:
-        if ($_GET['filename'] == ''||$_GET['filename']=="home"||$_GET['filename']=="challenge" && $loggedin) {
+        if ($filename == ''||$filename=="home"||$filename=="challenge" && $loggedin) {
             include('backend/challenge.php');
             include('templates/User Pages/challenge_page.tpl.php');
         }
