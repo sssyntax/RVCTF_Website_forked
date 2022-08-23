@@ -8,21 +8,21 @@ $sql = "SELECT `id`, `title`, `author`, `points`, `difficulty`, `category`, `des
 $res = prepared_query($conn, $sql, [$userid], "i");
 try {
     // Check if binding was successful
-    $result = $res->get_result();
-    while ($row = mysqli_fetch_assoc($result)){
-        if (array_key_exists($row['category'],$challenges)){
-            array_push($challenges[$row['category']],$row);
+    $result = iimysqli_stmt_get_result($res);
+    while ($row = iimysqli_result_fetch_array($result)){
+        if (array_key_exists($row[5],$challenges)){
+            array_push($challenges[$row[5]],$row);
         }
         else{
-            $challenges[$row['category']]=[$row];
+            $challenges[$row[5]]=[$row];
         }
     }
     foreach ($challenges as $key => $array){
-        usort($array,function($a,$b){if ($a['difficulty']-$b['difficulty'] == 0){
-            return $a['points']-$b['points'];
+        usort($array,function($a,$b){if ($a[4]-$b[4] == 0){
+            return $a[3]-$b[3];
         }
         else{
-            return $a['difficulty']-$b['difficulty'];
+            return $a[4]-$b[4];
         }
         
     });
