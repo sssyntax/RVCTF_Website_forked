@@ -37,7 +37,7 @@
             <table class="challenge_widget">
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value[1]; ?></td></tr>
-                    <tr class="points_div"><td class="points"><?php echo $value[3]; ?> points | <?php echo $difficultylst[$value[4]]; ?> </td></tr>
+                    <tr class="points_div"><td class="points"><?php echo $value[4]; ?> points | <?php echo $difficultylst[$value[3]]; ?> </td></tr>
                     <tr class="author_div"><td class="author"><?php echo $value[2];?></td></tr>
                 </tbody>
             </table>

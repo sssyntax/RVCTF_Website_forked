@@ -59,6 +59,7 @@ switch ($filename) {
     break;
     default:
         if (($filename == ''||$filename=="home"||$filename=="challenge") && $loggedin) {
+
             include('backend/challenge.php');
             include('templates/User Pages/challenge_page.tpl.php');
         }

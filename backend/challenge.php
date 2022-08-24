@@ -17,15 +17,15 @@ while ($row = iimysqli_result_fetch_array($result)){
 mysqli_stmt_close($res);
 // Get all challenges in the database
 $sql = "SELECT `id`, `title`, `author`, `difficulty`, `points`, `category`, `description` FROM `challenges` ORDER BY `category`; ";
-$res = mysqli_prepare($conn, $sql); 
+$res = mysqli_query($conn, $sql); 
 // $res = prepared_query($conn, $sql, [], "");
 
 try {
     // Check if binding was successful
-    $result = iimysqli_stmt_get_result($res);
+    // $result = iimysqli_stmt_get_result($res);
     // Iterate through all the challenges
     // Upon reaching the end, $row == Null and the loop is terminated
-    while ($row = iimysqli_result_fetch_array($result)){
+    while ($row = mysqli_fetch_row($res)){
         // Check if challenge has been completed
         if (in_array($row, $completed)) {
             // Flag the challenge as completed
@@ -69,7 +69,6 @@ try {
 catch(Exception $e) {
     echo $e;
 }
-mysqli_stmt_close($res);
 
 // Get the users current number of points
 $sql = "SELECT `points` FROM `ctf_users` WHERE `id` = ?";

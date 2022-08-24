@@ -4,6 +4,10 @@ $servername = "localhost"; // for default: 127.0.0.1
 $username = "pjjabycm_ctfdb"; // for x10: pjjabycm_ctfdb | for others: root
 $password = "q6sFckv3"; // for x10: q6sFckv3 
 $db_name = "pjjabycm_ctfdb"; // for x10: pjjabycm_ctfdb 
+// $servername = "127.0.0.1"; // for default: 127.0.0.1 
+// $username = "root"; // for x10: pjjabycm_ctfdb | for others: root
+// $password = ""; // for x10: q6sFckv3 
+// $db_name = "ctfdb"; // for x10: pjjabycm_ctfdb 
 $conn = new mysqli($servername,$username,$password,$db_name);
 function prepared_query($mysqli, $sql, $params, $types = "")
 {
