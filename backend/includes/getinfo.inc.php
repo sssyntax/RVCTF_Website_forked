@@ -1,6 +1,6 @@
 <?php
 function getinfo($conn,$userid){
-    $sql = "SELECT `email`,`teamname`,`points` FROM `users` WHERE `id` = ?";
+    $sql = "SELECT `email`,`teamname`,`points` FROM `ctf_users` WHERE `id` = ?";
     $res = prepared_query($conn,$sql,[$userid],"i");
     $res -> bind_result($email,$teamname,$points);
     $res -> fetch();

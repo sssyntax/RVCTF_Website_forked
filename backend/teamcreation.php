@@ -24,7 +24,7 @@ if ($count >= 1){
 }
 // Get the data of the user creating the team 
 $userinfo = getinfo($conn,$userid);
-$sql = "SELECT `teamname` FROM `users` WHERE `id` = ?";
+$sql = "SELECT `teamname` FROM `ctf_users` WHERE `id` = ?";
 $res = prepared_query($conn,$sql,[$userid],"i");
 $res -> bind_result($testname);
 $res -> fetch();
@@ -48,7 +48,7 @@ else{
     $res = prepared_query($conn,$sql,[$teamname,$encryptedteam,json_encode([$email]),$email],"ssss");
     mysqli_stmt_close($res);
     // Update the team of the user
-    $sql = "UPDATE `users` SET `teamname` = ? WHERE `id` = ?";
+    $sql = "UPDATE `ctf_users` SET `teamname` = ? WHERE `id` = ?";
     $res = prepared_query($conn,$sql,[$teamname, $userid],"si");
     mysqli_stmt_close($res);    
     // Log the user into the site

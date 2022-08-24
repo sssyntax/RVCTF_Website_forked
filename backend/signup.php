@@ -22,7 +22,7 @@ else if ($email == "" || $password == "") {
     array_push($errorlst, "nullerror");
 }
 // Check for any users with the same email
-$sql = "SELECT COUNT(*) FROM `users` WHERE `email` = ?";
+$sql = "SELECT COUNT(*) FROM `ctf_users` WHERE `email` = ?";
 $res = prepared_query($conn,$sql,[$email],"s");
 $res -> bind_result($count);
 $res -> fetch();
@@ -38,12 +38,12 @@ if (count($errorlst)!=0){
 // No current users with this email
 else{
     // Insert new user into the database
-    $sql = "INSERT INTO `users`(`email`,`password`) VALUES (?,?)";
+    $sql = "INSERT INTO `ctf_users`(`email`,`password`) VALUES (?,?)";
     $encrypted = password_hash($password, PASSWORD_DEFAULT);
     $res = prepared_query($conn,$sql,[$email,$encrypted],"ss");
     mysqli_stmt_close($res);
     // Get User data from database
-    $sql = "SELECT `id`,`email`,`admin` FROM `users` WHERE `email` = ?";
+    $sql = "SELECT `id`,`email`,`admin` FROM `ctf_users` WHERE `email` = ?";
     $res = prepared_query($conn,$sql,[$email],"s");
     $res -> bind_result($id, $email, $admin);
     $res -> fetch();

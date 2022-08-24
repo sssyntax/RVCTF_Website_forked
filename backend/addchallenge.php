@@ -10,10 +10,11 @@ if (verify_session()){
         $points = $_POST['points'];
         $difficulty = $_POST['difficulty'];
         $category = $_POST['category'];
-        $desc = $_POST['desc'];
+        $desc = htmlspecialchars($_POST['desc']);
         $solution = $_POST['solution'];
 
-        $sql = "SELECT `admin` FROM `users` WHERE `id` = ?";
+        // Check the db if the user is an admin
+        $sql = "SELECT `admin` FROM `ctf_users` WHERE `id` = ?";
         $res =  prepared_query($conn,$sql,[$_SESSION['userID']],'i');
         $res -> bind_result($admin);
         $res -> fetch();

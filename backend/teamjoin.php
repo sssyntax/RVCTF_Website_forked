@@ -38,7 +38,7 @@ else{
         $res = prepared_query($conn,$sql,[json_encode($teammates),$teamname],"ss");
         mysqli_stmt_close($res);
 
-        $sql = "UPDATE `users` SET `teamname` = ? WHERE `id` = ?";
+        $sql = "UPDATE `ctf_users` SET `teamname` = ? WHERE `id` = ?";
         $res = prepared_query($conn,$sql,[$teamname,$userid],"si");
         header("Location: ../index.php?filename=challenge");
     }

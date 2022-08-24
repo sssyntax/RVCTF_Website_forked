@@ -37,7 +37,7 @@ if (verify_session()) {
             }
             mysqli_stmt_close($res);
             // Award the user the points
-            $sql = "UPDATE `users` SET `points` = `points` + ? WHERE `id` = ?";
+            $sql = "UPDATE `ctf_users` SET `points` = `points` + ? WHERE `id` = ?";
             $res =  prepared_query($conn,$sql,[$points, $userID],'ii');
             // Query is unsucessful
             if (!$res){

@@ -18,7 +18,7 @@ $password = $_POST["login_password"];
 $maxattempts = 5;
 $errorlst = array();
 // Find the user in the database
-$sql = "SELECT COUNT(*) FROM `users` WHERE `email` = ?";
+$sql = "SELECT COUNT(*) FROM `ctf_users` WHERE `email` = ?";
 $res = prepared_query($conn,$sql,[$email],"s");
 // Error connecting
 if ($res === false){
@@ -39,7 +39,7 @@ if (count($errorlst) != 0){
 // User in the database
 else{
     // Get userID from users db
-    $sql = "SELECT users.id,password,COUNT(loginattempts.id),admin FROM `users` LEFT JOIN `loginattempts` ON users.id=userid AND timestamp>? WHERE `email` = ?  GROUP BY users.id";
+    $sql = "SELECT ctf_users.id,password,COUNT(loginattempts.id),admin FROM `ctf_users` LEFT JOIN `loginattempts` ON ctf_users.id=loginattempts.userid AND timestamp>? WHERE `email` = ?  GROUP BY ctf_users.id";
     $hourago = time() - 60*60;
     $res = prepared_query($conn,$sql,[$hourago,$email],"is");
     $res -> bind_result($id,$passwordhashed,$loginattempts,$admin);

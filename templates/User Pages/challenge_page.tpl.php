@@ -33,7 +33,7 @@
         <button class="challenge_btn" data-desc = "<?php echo $value[6]; ?>" 
                                     data-title = "<?php echo $value[1]; ?>" 
                                     data-id = "<?php echo $value[0]; ?>" 
-                                    data-completed = <?php if (is_null($value[7])) {echo 0;} else {echo 1;}  ?>>
+                                    data-completed = <?php echo $value[7]; ?>>
             <table class="challenge_widget">
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value[1]; ?></td></tr>
