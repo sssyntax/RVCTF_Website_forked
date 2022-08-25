@@ -27,7 +27,10 @@ switch ($filename) {
         include('templates/Login Pages/join_team.tpl.php');  
     break;
     case 'teamfail':
-        include('templates/Login Pages/create_team_msg.tpl.php');  
+        include('templates/Login Pages/join_team_msg.tpl.php');  
+    break;
+    case 'teamcreationfail':
+        include('templates/Login Pages/create_team_msg.tpl.php');
     break;
     case 'resources':
         if ($loggedin) {

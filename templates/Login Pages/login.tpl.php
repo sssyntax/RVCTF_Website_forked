@@ -44,6 +44,12 @@
                                     <td class = "error_msg">Incorrect password, please try again</td>
                                 </tr>';
                             }
+                            else if (isset($_GET['criticalerror'])) {
+                                echo '
+                                <tr>
+                                    <td class = "error_msg">Session ended, please log in again</td>
+                                </tr>';
+                            }
                             ?>
                             <tr style="text-align: center;">
                                 <td>

@@ -18,6 +18,14 @@
                     <br><span style="font-size: 50%">*please request from team leader</span>
                 </td>
             </tr>
+            <?php 
+                            if (isset($_GET["error"]) && strpos($_GET["error"], "passworderror") != false) {
+                                echo '
+                            <tr>
+                                <td class = "error_msg">Password incorrect, please try again</td>
+                            </tr>';
+                            }
+                            ?>
             <tr>
                 <td><button class="button" type="submit">Enter</button></td>
             </tr>

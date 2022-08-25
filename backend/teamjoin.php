@@ -19,6 +19,7 @@ else{
         header("Location: ../index.php?filename=&alrhave=true");
         exit();
     }
+    // if the team does not exist
     $verifyresult = verify_team($conn,$teamname,$teampassword);
     if ($verifyresult === "noexist"){
         header("Location: ../index.php?filename=teamfail");

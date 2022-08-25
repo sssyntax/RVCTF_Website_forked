@@ -49,13 +49,12 @@ else{
     $res -> fetch();
     mysqli_stmt_close($res);
     // Store UserID and UserEmail in session storage
-    $_SESSION['loggedin'] = false;
+    $_SESSION['loggedin'] = true;
     $_SESSION['userID'] = $id;
     $_SESSION['userEmail'] = $email;
     $_SESSION['admin'] = $admin;
     // Send user to team register page to join a team
     header("Location: ../index.php?filename=teamsignup");
 }
-
 
 ?>
