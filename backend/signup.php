@@ -14,13 +14,14 @@ $password = $_POST["password"];
 $confirm = $_POST["confirmpassword"];
 $errorlst = array();
 // The password and confirm password do not match
-if ($password != $confirm){
-    array_push($errorlst,"matchingerror");
-}
 // Check if either the email or password is null
-else if ($email == "" || $password == "") {
+if ($email == "" || $password == "" || $confirm == "") {
     array_push($errorlst, "nullerror");
 }
+else if ($password != $confirm){
+    array_push($errorlst,"matchingerror");
+}
+
 // Check for any users with the same email
 $sql = "SELECT COUNT(*) FROM `ctf_users` WHERE `email` = ?";
 $res = prepared_query($conn,$sql,[$email],"s");

@@ -2,6 +2,7 @@
 session_start();
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
+$difficultylst = ["Easy","Medium","Hard"];
 if (verify_session()){
     // Check if fields are filled
     if (isset($_POST['title'])&&isset($_POST['author'])&&isset($_POST['points'])&&isset($_POST['difficulty'])&&isset($_POST['category'])&&isset($_POST['desc'])&&isset($_POST['solution'])){

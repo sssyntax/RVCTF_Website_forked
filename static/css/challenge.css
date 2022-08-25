@@ -93,6 +93,7 @@ div {
     background: none;
     border: none;
 }
+
 .challenge_widget {
     border: 2px solid #1F51FF;
     border-radius:10px;
@@ -107,6 +108,11 @@ div {
     margin-top: 5px;
     display:inline-block;
 }
+
+.challenge_widget[data-completed="1"] {
+    background-color:#065b3c;
+}
+
 .challenge_widget:hover {
     border: 2px solid #1F51FF;
     border-radius:10px;

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <?php include "templates/stars.php" ?>
     <div class="header">Join Team</div>
     <div style="height: 500px;">
     <table class="centre_box">

@@ -8,8 +8,6 @@
     <link rel="stylesheet" href="static/css/challenge.css">
 </head>
 <body>
-    <?php include 'templates/stars.php';?>
-    
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
@@ -34,7 +32,7 @@
                                     data-title = "<?php echo $value[1]; ?>" 
                                     data-id = "<?php echo $value[0]; ?>" 
                                     data-completed = <?php echo $value[7]; ?>>
-            <table class="challenge_widget">
+            <table class="challenge_widget" data-completed = <?php echo $value[7]; ?>>
                 <tbody class="widget_body">
                     <tr class="name_div"><td class="name"><?php echo $value[1]; ?></td></tr>
                     <tr class="points_div"><td class="points"><?php echo $value[4]; ?> points | <?php echo $difficultylst[$value[3]]; ?> </td></tr>
@@ -107,7 +105,9 @@
                 </tr>
                 <tr class="add_chal_tr" id="add_chal_desc_tr">
                     <td class="add_chal_td">Description:</td>
-                    <td class="add_chal_td_input"><input name = "desc" class="add_chal_input" id="add_chal_desc" type="text" placeholder="Description to be shown to members"></td>
+                    <td class="add_chal_td_input">
+                        <textarea name = "desc" class="add_chal_input" id="add_chal_desc" type="text" placeholder = "Description to be shown to members" cols="30" rows="10"></textarea>
+                    </td>
                 </tr>
                 <tr class="add_chal_tr" id="add_chal_link_tr">
                     <td class="add_chal_td">Solution:</td>

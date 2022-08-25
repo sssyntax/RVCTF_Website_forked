@@ -63,6 +63,7 @@ function submitAnswer(form,event){
     // reset all buttons and popups
     chal_popup.style.display = "none"
     input_popup_uncompleted.style.display = 'none'; // reset the input td
+    input_popup_uncompleted.children[0].children[1].value = ""; // reset the flag input's value to ""
     input_popup_completed.style.display = 'none'; // reset the completion td
     // Alert user that they got the answer correct
     alert(result) 
@@ -72,10 +73,11 @@ function submitAnswer(form,event){
       // Search for correct button to disable
       for (let i=0; i<chal_btns.length; i++) {
         // Check if the button's title is the same as the popup's title
-        console.log(chal_btns[i].dataset.title)
         if (chal_btns[i].dataset.title == title_popup.textContent) {
           // indicate under data that challenge is compeleted
           chal_btns[i].dataset.completed = 1;
+          // For the css to register the change
+          chal_btns[i].children[0].dataset.completed = 1;
           }
       }
     }
@@ -95,34 +97,29 @@ function submitChallenge(form,event){
     alert(result)
     if (result == "Success"){
       // RDev ppl can do the add in new challenges here!
-  let ins = document.getElementsByClassName("add_chal_input");
-  // console.log(document.getElementById("add_chal_cat"))
-  let cat = document.getElementById("add_chal_cat").value;
-  // console.log(cat);
-  let container = document.getElementById(cat);
-  // console.log(container);
-  difficultylst = ["Easy","Medium","Hard"]
-  let txt = `<button class="challenge_btn" data-desc = ${ins[5].value} data-title = ${ins[0].value}>\
-            <table class="challenge_widget">\
-                <tbody class="widget_body">\
-                    <tr class="name_div"><td class="name">${ins[0].value}</td></tr>\
-                    <tr class="points_div"><td class="points">${ins[2].value} | ${difficultylst[ins[3].value]}</td></tr>\
-                    <tr class="author_div"><td class="author">${ins[1].value}</td></tr>\
-                </tbody>\
-            </table>\
-        </button>\
-        `
-  container.innerHTML = container.innerHTML + txt;
-
+    // Array of all inputs
+    let ins = document.getElementsByClassName("add_chal_input");
+    let cat = document.getElementById("add_chal_cat").value;
+    let container = document.getElementById(cat);
+    let difficultylst = ["Easy","Medium","Hard"]
+    let txt = `<button class="challenge_btn" data-desc = ${ins[5].value} data-title = ${ins[0].value}>\
+              <table class="challenge_widget">\
+                  <tbody class="widget_body">\
+                      <tr class="name_div"><td class="name">${ins[0].value}</td></tr>\
+                      <tr class="points_div"><td class="points">${ins[2].value} | ${difficultylst[ins[3].value]}</td></tr>\
+                      <tr class="author_div"><td class="author">${ins[1].value}</td></tr>\
+                  </tbody>\
+              </table>\
+          </button>\
+          `
+    container.innerHTML = container.innerHTML + txt;
     // reset all buttons and popups
-    chal_popup.style.display = "none"
-    for (let i of ins){
-      ins.value = '';
+    chal_popup.style.display = "none";
+    for (let item of ins){
+      item.value = '';
     }
     add_chal_box.style.display = "none";
       }
   })
-
-  
   return false
 }

@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="static/css/login.css">
 </head>
 <body style="padding-top:50px">
-    <?php include "templates/stars.php" ?>
     <?php 
     // Reset session details to log user out
         $_SESSION['loggedin'] = false;
@@ -53,7 +52,7 @@
                             ?>
                             <tr style="text-align: center;">
                                 <td>
-                                    <button name = "action" type="submit" value="register" style="margin-right: 10%;">Register</button>
+                                    <a href="index.php?filename=signup"><button name = "action" type="button" value="register" style="margin-right: 10%;">Register</button></a>
                                     <button name = "action" type="submit" value="login">Login</button>
                                 </td>
                             </tr>

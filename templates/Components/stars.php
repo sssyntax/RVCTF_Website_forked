@@ -1,4 +1,5 @@
-/*COOL STARS ANIMATION*/
+<style>
+    /*COOL STARS ANIMATION*/
 
 .star_anim {
     display:block;
@@ -63,3 +64,7 @@
       transform: translateY(-2000px);
     }
 }
+</style>
+<div id='stars' class="star_anim"></div>
+<div id='stars2' class="star_anim"></div>
+<div id='stars3' class="star_anim"></div>
