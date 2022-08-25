@@ -81,5 +81,5 @@ try {
 catch(Exception $e) {
     echo "<script>console.log('Session not started')</script>";
 }
-include('templates/footer.tpl.php');
+include('templates/Components/footer.tpl.php');
 ?>
