@@ -6,20 +6,21 @@ $challenges = [];
 $completed = [];
 $difficultylst = ["Easy","Medium","Hard"];
 // Get challenges completed by the user
-$sql = "SELECT * FROM `completedchallenges` where `userid` = ?;";
+$sql = "SELECT `challengeid` FROM `completedchallenges` where `userid` = ?;";
 $res = prepared_query($conn, $sql, [$userid], "i");
 // Get result of the query (like csv module in python) 
 $result = iimysqli_stmt_get_result($res);
 // Iterate through all the rows in the result (binded to $row)
 while ($row = iimysqli_result_fetch_array($result)){
-    array_push($completed, $row); 
+    array_push($completed, $row[0]); 
 }
 mysqli_stmt_close($res);
 // Get all challenges in the database
 $sql = "SELECT `id`, `title`, `author`, `difficulty`, `points`, `category`, `description` FROM `challenges` ORDER BY `category`; ";
 $res = mysqli_query($conn, $sql); 
 // $res = prepared_query($conn, $sql, [], "");
-
+print_r($completed);
+echo "\n";
 try {
     // Check if binding was successful
     // $result = iimysqli_stmt_get_result($res);
@@ -27,7 +28,10 @@ try {
     // Upon reaching the end, $row == Null and the loop is terminated
     while ($row = mysqli_fetch_row($res)){
         // Check if challenge has been completed
-        if (in_array($row, $completed)) {
+        print_r($row[0]);
+        echo (in_array($row[0], $completed));
+        echo "\n";
+        if (in_array($row[0], $completed)) {
             // Flag the challenge as completed
             array_push($row, 1);
         }
