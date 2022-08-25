@@ -9,9 +9,11 @@ if (isset($_GET['filename'])){
 else{
     $filename = "";
 }
-// User logged in
+// include stars styling
 include 'templates/Components/stars.php';
 if ($loggedin) {
+    // User logged in components
+    // include 'templates/Components/header.tpl.php';
     // Include components 
     switch ($filename) {
         // Logged in pages
@@ -28,6 +30,7 @@ if ($loggedin) {
                 include('backend/challenge.php');
                 include('templates/User Pages/challenge_page.tpl.php');
             }
+        break;
         case 'logout':
                 // Reset the entire session
                 session_reset();

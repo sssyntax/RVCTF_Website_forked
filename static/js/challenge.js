@@ -4,7 +4,8 @@
 var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
-var id_popup = document.getElementById("challengeID");
+var id_popup = document.getElementsByClassName("challengeID");
+var cat_popup = document.getElementById("challengeCat");
 var input_popup_uncompleted = document.getElementById('popup_input_uncompleted') // input td for user to input flag
 var input_popup_completed = document.getElementById('popup_input_completed') // td to indicate user has completed challenge
 // Document elements for challenge
@@ -19,33 +20,44 @@ if (add_chal_close != null) {
   }
 }
 
-closespan.onclick = function(){
-  chal_popup.style.display = "none";
-  input_popup_uncompleted.style.display = 'none';
-  input_popup_completed.style.display = 'none';
-}
+// Close the challenge popup
+closespan.onclick = popupClose;
 
 // Set event listener for all challenge buttons
 for (let i=0; i<chal_btns.length; i++) {
-  chal_btns[i].onclick = function() {
-    // check if the challenge is completed
-    if (this.dataset.completed == 1) {
-      // show the td indicating completion 
-      input_popup_completed.style.display = 'block';
-    }
-    else {
-      // show the input td
-      input_popup_uncompleted.style.display = 'block';
-    }
-    // Display challenge popup
-    chal_popup.style.display = "block";
-    // Set challenge title and description
-    desc_popup.innerText = this.dataset.desc
-    title_popup.innerText = this.dataset.title
-    // pass ID value into form for submission
-    id_popup.value = this.dataset.id 
-  }
+  chal_btns[i].onclick = popup;
 
+}
+
+function popupClose() {
+  // Hide the popup elements
+  chal_popup.style.display = "none";
+  input_popup_uncompleted.style.display = 'none';
+  input_popup_completed.style.display = 'none';
+  // reset the value of the flag input
+  input_popup_uncompleted.value = '';
+}
+
+function popup() {
+  // check if the challenge is completed
+  if (this.dataset.completed == 1) {
+    // show the td indicating completion 
+    input_popup_completed.style.display = 'block';
+  }
+  else {
+    // show the input td
+    input_popup_uncompleted.style.display = 'block';
+  }
+  // Display challenge popup
+  chal_popup.style.display = "block";
+  // Set challenge title and description
+  desc_popup.innerText = this.dataset.desc
+  title_popup.innerText = this.dataset.title
+  cat_popup.value = this.dataset.cat
+  // pass ID value into form for submission
+  for (let item of id_popup) {
+    item.value = this.dataset.id
+  }
 }
 
 function addChal(){
@@ -92,27 +104,75 @@ function submitChallenge(form,event){
   event.preventDefault()
   var formdata = new FormData(form)
   fetch("backend/addchallenge.php", { method: "POST", body: formdata })
-  .then(response => response.json())
+  .then(response => response.json()) // wait for the asynchronous fetch
   .then(result => {
-    alert(result)
-    if (result == "Success"){
+    alert(result[0])
+    if (result[0] == "Success"){
       // RDev ppl can do the add in new challenges here!
     // Array of all inputs
     let ins = document.getElementsByClassName("add_chal_input");
     let cat = document.getElementById("add_chal_cat").value;
     let container = document.getElementById(cat);
     let difficultylst = ["Easy","Medium","Hard"]
-    let txt = `<button class="challenge_btn" data-desc = ${ins[5].value} data-title = ${ins[0].value}>\
-              <table class="challenge_widget">\
-                  <tbody class="widget_body">\
-                      <tr class="name_div"><td class="name">${ins[0].value}</td></tr>\
-                      <tr class="points_div"><td class="points">${ins[2].value} | ${difficultylst[ins[3].value]}</td></tr>\
-                      <tr class="author_div"><td class="author">${ins[1].value}</td></tr>\
-                  </tbody>\
-              </table>\
-          </button>\
-          `
-    container.innerHTML = container.innerHTML + txt;
+    // Create new button element
+    let btn = document.createElement("button");
+    // Set metadata for button
+    btn.dataset.desc = ins[5].value;
+    btn.dataset.title = ins[0].value;
+    btn.dataset.completed = 0;
+    btn.dataset.id = result[1];
+    btn.classList.add("challenge_btn");
+    btn.onclick = popup;
+
+    // create the table containing all the challenge
+    let table = document.createElement("table");
+    table.classList.add("challenge_widget");
+    let tbody = document.createElement("tbody"); 
+    tbody.classList.add("widget_body");
+
+    // Create name data row
+    let nameRow = document.createElement("tr");
+    nameRow.classList.add("name_div");
+    let nameData = document.createElement("td");
+    nameData.classList.add("name");
+    nameData.textContent = ins[0].value;
+    nameRow.appendChild(nameData);
+
+    // Create points data row
+    let pointsRow = document.createElement("tr");
+    pointsRow.classList.add("points_div");
+    let pointsData = document.createElement("td");
+    pointsData.classList.add("points");
+    pointsData.textContent = `${ins[2].value} | ${difficultylst[ins[3].value]}`
+    pointsRow.appendChild(pointsData);
+
+    // Create author data row
+    let authorRow = document.createElement("tr");
+    authorRow.classList.add("author_div");
+    let authorData = document.createElement("td");
+    authorData.classList.add("author");
+    authorData.textContent = ins[0].value
+    authorRow.appendChild(authorData);
+
+    // Append the 3 rows to the table
+    tbody.appendChild(nameRow);
+    tbody.appendChild(pointsRow);
+    tbody.appendChild(authorRow);
+    table.appendChild(tbody);
+    btn.appendChild(table);
+    container.appendChild(btn);
+    // let txt = `<button class="challenge_btn" data-desc = ${ins[5].value} data-title = ${ins[0].value}>\
+    //           <table class="challenge_widget">\
+    //               <tbody class="widget_body">\
+    //                   <tr class="name_div"><td class="name">${ins[0].value}</td></tr>\
+    //                   <tr class="points_div"><td class="points">${ins[2].value} | ${difficultylst[ins[3].value]}</td></tr>\
+    //                   <tr class="author_div"><td class="author">${ins[1].value}</td></tr>\
+    //               </tbody>\
+    //           </table>\
+    //       </button>\
+    //       `
+      
+    // container.innerHTML = container.innerHTML + txt;
     // reset all buttons and popups
     chal_popup.style.display = "none";
     for (let item of ins){
@@ -122,4 +182,28 @@ function submitChallenge(form,event){
       }
   })
   return false
+}
+
+function deleteChallenge(form, event) {
+  // Handle output when new challenge is created
+  event.preventDefault();
+  var formdata = new FormData(form);
+  fetch("backend/deletechallenge.php", { method: "POST", body: formdata })
+  .then((response) => response.json())
+  .then((result) => {
+    // Close the popup
+    popupClose();
+    alert(result);
+    // Get the category of the challenge to delete
+    console.log(formdata.get("cat"));
+    let category = document.getElementById(formdata.get('cat'));
+    // Iterate through all the challenges in the category
+    for (let challege of category.children) {
+      if (challege.dataset.cat == formdata.get('cat')) {
+        if (challege.dataset.id == formdata.get('id')) {
+          category.removeChild(challege);
+        }
+      }
+    }
+  });
 }

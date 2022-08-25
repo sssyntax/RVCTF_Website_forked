@@ -16,9 +16,9 @@
         <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
         <div id = "links">
             <div id="chals_header" class = "linkEle">Challenges</div> 
-            <div class = "linkEle">|</div> 
+            <div class = "linkEle" style = 'font-family: arial;'>|</div> 
             <div id="res_header" class = "linkEle"><a href="index.php?filename=resources" class="res_header_link">Resources</a></div>
-            <div class = "linkEle">|</div> 
+            <div class = "linkEle" style = 'font-family: arial;'>|</div> 
             <div class="linkEle"><a class = "res_header_link" href = "index.php?filename=logout">logout</a></div>
             <div class = "linkEle">Points: <?php echo $points ?></div>
         </div>
@@ -31,6 +31,7 @@
         <button class="challenge_btn" data-desc = "<?php echo $value[6]; ?>" 
                                     data-title = "<?php echo $value[1]; ?>" 
                                     data-id = "<?php echo $value[0]; ?>" 
+                                    data-cat = "<?php echo $value[5]; ?>" 
                                     data-completed = <?php echo $value[7]; ?>>
             <table class="challenge_widget" data-completed = <?php echo $value[7]; ?>>
                 <tbody class="widget_body">
@@ -46,14 +47,23 @@
     }?>
      <div class="popup" id = "popup">
             <table class="popup_content">
-                <tr class="popup_header_tr"><td class="popup_header"><span id = "title_popup"></span><span class="close" id = "close">&times;</span></td></tr>
+                <tr class="popup_header_tr">
+                    <td class="popup_header"><span id = "title_popup"></span><span class="close" id = "close">&times;</span> 
+                    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1){?>
+                        <form onsubmit="deleteChallenge(this, event)" style = 'display: inline;'>
+                            <input type="hidden" name="id" class = 'challengeID'>
+                            <input type="hidden" name="cat" id = 'challengeCat'>
+                            <button type="submit" style = "background-color: rgb(0,0,0,0); width: 1.5rem;border:none;"><img src="static/images/trash.png" alt="Delete" style = 'width:1.5rem;'></button>
+                        </form>
+                    <?php }; ?></td>
+                </tr>
                 <tr class="popup_desc_tr">
-                    <td class="popup_desc"><span id = "desc_popup"></span></td>
+                    <td class="popup_desc"><div id = "desc_popup" style = 'overflow: scroll;height: 10ch;display:block;'></div></td>
                 </tr>
                 <tr class="popup_input_tr">
                     <td class="popup_input" id = "popup_input_uncompleted" style = 'display: none;'>
                     <form onsubmit = "submitAnswer(this,event)">
-                        <input type="hidden" name="id" id = 'challengeID'>
+                        <input type="hidden" name="id" class = 'challengeID'>
                         Input Flag: <input class="flag_input" id="flag_input_test" type="text" name = "answer" placeholder="RVCTF{flag}">
                     </form>
                     </td>

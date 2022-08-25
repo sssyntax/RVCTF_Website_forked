@@ -56,6 +56,9 @@ if (verify_session()) {
         }
     }
     // Not all fields filled, return error
+    else if (!isset($_POST['id'])) {
+        echo json_encode("Please refresh the page");
+    }
     else {
         echo json_encode("Not all fields filled");
     }

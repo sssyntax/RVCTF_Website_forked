@@ -1,4 +1,5 @@
 <?php 
+session_start();
 // import Db functionality
 require "includes/connect.inc.php";
 // Check if user is not here illegally (its RVCTF, can never be too safe)

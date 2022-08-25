@@ -7,13 +7,12 @@ body {
 }
 
 #cca_name {
-    width: 30%;
+    width: 60%;
     height: auto;
-    margin-left: 25%;
 }
 
 #IG_logo {
-    width: 4%;
+    width: 20%;
     height: auto;
     margin-left: 10px;
     margin-right: 10px;
@@ -22,7 +21,7 @@ body {
 }
 
 #discord_logo {
-    width: 4%;
+    width: 20%;
     height: auto;
     position: relative;
     margin-left: 10px;
@@ -38,9 +37,8 @@ div {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 25px;
     font-weight: bolder;
-    float: right;
-    margin-right: 40px;
-    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 #chals_header {
     text-decoration: underline;

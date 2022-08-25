@@ -25,7 +25,7 @@
                         <form method = "POST" action="backend/login.php">   
                             <tr style="text-align: center;"><td>Login</td></tr>
                             <tr style="text-align: center;">
-                                <td>Username: <input type="text" name="login_username"></td>
+                                <td>Email: <input type="text" name="login_username"></td>
                             </tr>
                             <tr style="text-align: center;">
                                 <td>Password: <input type="password" name="login_password" width="auto" height="auto"></td>
