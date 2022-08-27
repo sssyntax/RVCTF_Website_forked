@@ -45,14 +45,14 @@ body {
 #decoration2,
 #decoration3 {
     /* position: absolute; */
-    background-color: yellow;
+    background-color: gold;
     width: 420px;
     height: 70px;
     border-radius: 10px;
 }
 
 #decoration2 {
-    background-color: grey;
+    background-color: lightgrey;
 }
 
 #decoration3 {
