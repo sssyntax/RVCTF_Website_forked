@@ -45,18 +45,18 @@ body {
 #decoration2,
 #decoration3 {
     /* position: absolute; */
-    background-color: yellow;
+    background-color: #FFD700;
     width: 420px;
     height: 70px;
     border-radius: 10px;
 }
 
 #decoration2 {
-    background-color: magenta;
+    background-color: #C0C0C0;
 }
 
 #decoration3 {
-    background-color: cyan;
+    background-color: #cd7f32;
 }
 
 .leader {
