@@ -39,6 +39,9 @@ if (verify_session()) {
             // Award the user the points
             $sql = "UPDATE `ctf_users` SET `points` = `points` + ? WHERE `id` = ?";
             $res =  prepared_query($conn,$sql,[$points, $userID],'ii');
+            // Award the team the points
+            $sql = "UPDATE `teams` SET `points` = `points` + ? WHERE `teamname` = ?;";
+            $res =  prepared_query($conn,$sql,[$points, $_SESSION['teamname']],'is');
             // Query is unsucessful
             if (!$res){
                 echo json_encode("Database error");

@@ -7,7 +7,7 @@
     <title>Challenges</title>
     <link rel="stylesheet" href="static/css/challenge.css">
 </head>
-<body>
+<body data-admin = <?php echo $_SESSION['admin']; ?>>
     <div id = "header">
         <div id = "socialMedia">
             <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
@@ -131,6 +131,6 @@
     </div> 
     </form>
     <?php }}?>
-    <script src="static/js/challenge.js"></script>
+    <script src="static/js/challenge.js" defer></script>
 </body>
 </html>

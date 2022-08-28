@@ -39,10 +39,10 @@ if (count($errorlst) != 0){
 // User in the database
 else{
     // Get userID from users db
-    $sql = "SELECT ctf_users.id,password,COUNT(loginattempts.id),admin FROM `ctf_users` LEFT JOIN `loginattempts` ON ctf_users.id=loginattempts.userid AND timestamp>? WHERE `email` = ?  GROUP BY ctf_users.id";
+    $sql = "SELECT ctf_users.id, password, COUNT(loginattempts.id), teamname, admin FROM `ctf_users` LEFT JOIN `loginattempts` ON ctf_users.id=loginattempts.userid AND timestamp>? WHERE `email` = ?  GROUP BY ctf_users.id";
     $hourago = time() - 60*60;
     $res = prepared_query($conn,$sql,[$hourago,$email],"is");
-    $res -> bind_result($id,$passwordhashed,$loginattempts,$admin);
+    $res -> bind_result($id, $passwordhashed, $loginattempts, $teamname, $admin);
     $res -> fetch();
     mysqli_stmt_close($res);
     if ($res !== false){
@@ -64,6 +64,7 @@ else{
                 $_SESSION['loggedin'] = true;
                 $_SESSION['userID'] = $id;
                 $_SESSION['userEmail'] = $email;
+                $_SESSION['teamname'] = $teamname;
                 $_SESSION['admin'] = $admin;
                 header("Location: ../index.php?filename=challenge");
             }

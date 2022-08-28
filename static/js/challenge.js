@@ -1,5 +1,6 @@
 "use strict";
-
+// Session variables
+var admin = document.getElementsByTagName("BODY")[0].dataset.admin
 // Document elements for popup
 var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
@@ -13,6 +14,8 @@ var chal_btns = document.getElementsByClassName("challenge_btn");
 var closespan = document.getElementById("close");
 var add_chal_box = document.getElementById("add_chal_box");
 var add_chal_close = document.getElementById('add_chal_close');
+// Get rdev footer element to make sure new categories are inserted before it
+var rdev_footer = document.getElementById('rdev-footer');
 
 if (add_chal_close != null) {
   add_chal_close.onclick = function(){
@@ -53,7 +56,10 @@ function popup() {
   // Set challenge title and description
   desc_popup.innerText = this.dataset.desc
   title_popup.innerText = this.dataset.title
-  cat_popup.value = this.dataset.cat
+  // only admins will see this form feature (for deletion)
+  if (admin == 1) {
+    cat_popup.value = this.dataset.cat
+  }
   // pass ID value into form for submission
   for (let item of id_popup) {
     item.value = this.dataset.id
@@ -69,7 +75,9 @@ function addChal(){
 function submitAnswer(form,event){
   event.preventDefault()
   var formdata = new FormData(form)
-  fetch("backend/submitchallenge.php", { method: "POST", body: formdata })
+  console.log(formdata)
+  try {
+    fetch("backend/submitchallenge.php", { method: "POST", body: formdata })
   .then(response => response.json()) // wait for the asynchronous fetch 
   .then(result => { // wait for the asynchronous json() method
     // reset all buttons and popups
@@ -95,6 +103,10 @@ function submitAnswer(form,event){
     }
       
   })
+  }
+  catch (error) {
+    alert(error)
+  }
   return false  
   
 }
@@ -114,6 +126,19 @@ function submitChallenge(form,event){
     let cat = document.getElementById("add_chal_cat").value;
     let container = document.getElementById(cat);
     let difficultylst = ["Easy","Medium","Hard"]
+    // Check if the category does not exist
+    if (container == null) {
+      // Create a new container
+      let title = document.createElement('h1');
+      title.textContent = cat;
+      title.classList.add('topic_header')
+      // create a new container
+      container = document.createElement('div');
+      container.id = cat;
+      // add the new elements into the DOM
+      document.body.insertBefore(title, rdev_footer);
+      document.body.insertBefore(container, rdev_footer);
+    }
     // Create new button element
     let btn = document.createElement("button");
     // Set metadata for button
@@ -161,18 +186,6 @@ function submitChallenge(form,event){
     table.appendChild(tbody);
     btn.appendChild(table);
     container.appendChild(btn);
-    // let txt = `<button class="challenge_btn" data-desc = ${ins[5].value} data-title = ${ins[0].value}>\
-    //           <table class="challenge_widget">\
-    //               <tbody class="widget_body">\
-    //                   <tr class="name_div"><td class="name">${ins[0].value}</td></tr>\
-    //                   <tr class="points_div"><td class="points">${ins[2].value} | ${difficultylst[ins[3].value]}</td></tr>\
-    //                   <tr class="author_div"><td class="author">${ins[1].value}</td></tr>\
-    //               </tbody>\
-    //           </table>\
-    //       </button>\
-    //       `
-      
-    // container.innerHTML = container.innerHTML + txt;
     // reset all buttons and popups
     chal_popup.style.display = "none";
     for (let item of ins){
@@ -195,9 +208,14 @@ function deleteChallenge(form, event) {
     popupClose();
     alert(result);
     // Get the category of the challenge to delete
-    console.log(formdata.get("cat"));
     let category = document.getElementById(formdata.get('cat'));
-    // Iterate through all the challenges in the category
+    // Check if the number of challenges in the category is 1
+    if (category.children.length == 1) {
+      // Remove the category from the DOM
+      category.parentElement.removeChild(category.previousElementSibling);
+      document.body.removeChild(category)
+    }
+    // Iterate through all the challenges in the category  
     for (let challege of category.children) {
       if (challege.dataset.cat == formdata.get('cat')) {
         if (challege.dataset.id == formdata.get('id')) {

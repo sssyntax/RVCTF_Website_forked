@@ -18,10 +18,7 @@ mysqli_stmt_close($res);
 // Get all challenges in the database
 $sql = "SELECT `id`, `title`, `author`, `difficulty`, `points`, `category`, `description` FROM `challenges` ORDER BY `category`; ";
 $res = mysqli_query($conn, $sql); 
-// $res = prepared_query($conn, $sql, [], "");
 try {
-    // Check if binding was successful
-    // $result = iimysqli_stmt_get_result($res);
     // Iterate through all the challenges
     // Upon reaching the end, $row == Null and the loop is terminated
     while ($row = mysqli_fetch_row($res)){

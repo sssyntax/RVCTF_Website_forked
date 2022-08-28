@@ -51,6 +51,8 @@ else{
     $sql = "UPDATE `ctf_users` SET `teamname` = ? WHERE `id` = ?";
     $res = prepared_query($conn,$sql,[$teamname, $userid],"si");
     mysqli_stmt_close($res);    
+    // store the teamname in session storage
+    $_SESSION['teamname'] = $teamname;
     // Log the user into the site
     header("Location: ../index.php?filename=challenge");
 }

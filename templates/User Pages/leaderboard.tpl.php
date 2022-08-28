@@ -18,7 +18,7 @@
             <ul class="leader">
                 <?php 
                 $index = 1;
-                foreach($users as $user){ ?>
+                foreach($teams as $team){ ?>
                   <li id = 
                   <?php if ($index == 1) {
                     echo "decoration";
@@ -31,9 +31,9 @@
                       <h2>
                         <?php 
                         // Only get the front part of the email as username
-                        echo substr($user['email'], 0, strpos($user['email'], "@")); ?>
+                        echo $team['teamname']; ?>
                         <span class="number">
-                          <?php echo $user['points']; ?>
+                          <?php echo $team['points']; ?>
                         </span>
                       </h2>
                   </li>

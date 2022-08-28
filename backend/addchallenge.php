@@ -9,7 +9,7 @@ if (verify_session()){
         $title = $_POST['title'];
         $author =$_POST['author'];
         $points = $_POST['points'];
-        $difficulty = $_POST['difficulty'];
+        $difficulty = array_search($_POST['difficulty'], $difficultylst);
         $category = $_POST['category'];
         $desc = htmlspecialchars($_POST['desc']);
         $solution = $_POST['solution'];
