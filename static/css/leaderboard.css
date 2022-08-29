@@ -1,26 +1,3 @@
-#cca_name {
-    width: 30%;
-    height: auto;
-    margin-left: 25%;
-}
-
-#IG_logo {
-    width: 4%;
-    height: auto;
-    margin-left: 10px;
-    margin-right: 10px;
-    position: relative;
-    top: -20px;
-}
-
-#discord_logo {
-    width: 4%;
-    height: auto;
-    position: relative;
-    margin-left: 10px;
-    top: -20px;
-}
-
 body {
     background-image: url(../images/map_background.jpg);
     background-size: cover;

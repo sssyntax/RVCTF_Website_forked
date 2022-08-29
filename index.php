@@ -12,22 +12,23 @@ else{
 // include stars styling
 include 'templates/Components/stars.php';
 if ($loggedin) {
-    // User logged in components
-    // include 'templates/Components/header.tpl.php';
     // Include components 
     switch ($filename) {
         // Logged in pages
         case 'resources':
+            include 'templates/Components/header.tpl.php';
             include('templates/User Pages/resources_page.tpl.php');
         break;
         case 'leaderboard':
             if ($_SESSION['admin'] == 1) {
                 include('backend/leaderboard.php');
+                include 'templates/Components/header.tpl.php';
                 include('templates/User Pages/leaderboard.tpl.php');
             }
             else {
                 // Send user to challenge page if they are not admin
                 include('backend/challenge.php');
+                include 'templates/Components/header.tpl.php';
                 include('templates/User Pages/challenge_page.tpl.php');
             }
         break;
@@ -55,6 +56,7 @@ if ($loggedin) {
         break;
         default:
             include('backend/challenge.php');
+            include 'templates/Components/header.tpl.php';
             include('templates/User Pages/challenge_page.tpl.php');
     }
 }

@@ -39,31 +39,6 @@ div {
 
 /* containers in the header */
 
-#socialMedia {
-    justify-self: center;
-}
-
-#cca_name {
-    width: 70%;
-    height: auto;
-    justify-self: center;
-}
-
-#links {
-    justify-self: center;
-}
-
-.linkEle {
-    color: rgb(210, 210, 210);
-    text-decoration:none;
-    font-size: max(1.25rem);
-}
-
-#socialMedia a img {
-    width: 4rem;
-    margin: 1rem;
-}
-
 #chals_header {
     text-decoration: underline;
     color: rgb(210, 210, 210);

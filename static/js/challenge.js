@@ -14,6 +14,8 @@ var chal_btns = document.getElementsByClassName("challenge_btn");
 var closespan = document.getElementById("close");
 var add_chal_box = document.getElementById("add_chal_box");
 var add_chal_close = document.getElementById('add_chal_close');
+// Get points to update it after each challenge is completed
+var points_span = document.getElementById('points');
 // Get rdev footer element to make sure new categories are inserted before it
 var rdev_footer = document.getElementById('rdev-footer');
 
@@ -85,10 +87,10 @@ function submitAnswer(form,event){
     input_popup_uncompleted.style.display = 'none'; // reset the input td
     input_popup_uncompleted.children[0].children[1].value = ""; // reset the flag input's value to ""
     input_popup_completed.style.display = 'none'; // reset the completion td
-    // Alert user that they got the answer correct
-    alert(result) 
+    // Alert user that they got the answer correct (1st item is the msg)
+    alert(result[0]) 
     // answer is correct
-    if (result == "Correct answer") {
+    if (result[0] == "Correct answer :)") {
       // disable challenge for user
       // Search for correct button to disable
       for (let i=0; i<chal_btns.length; i++) {
@@ -100,6 +102,8 @@ function submitAnswer(form,event){
           chal_btns[i].children[0].dataset.completed = 1;
           }
       }
+      // update points 
+      points_span.innerText = parseInt(points_span.innerText) + parseInt(result[1]);
     }
       
   })

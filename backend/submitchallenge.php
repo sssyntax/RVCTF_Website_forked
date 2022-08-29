@@ -31,7 +31,7 @@ if (verify_session()) {
             $res =  prepared_query($conn,$sql,[$userID, $id, time()],'iii');
             // Query is unsucessful
             if (!$res){
-                echo json_encode("Database error");
+                echo json_encode(array("Database error", 0), JSON_FORCE_OBJECT);
                 $success = false;
                 exit();
             }
@@ -44,31 +44,31 @@ if (verify_session()) {
             $res =  prepared_query($conn,$sql,[$points, $_SESSION['teamname']],'is');
             // Query is unsucessful
             if (!$res){
-                echo json_encode("Database error");
+                echo json_encode(array("Database error", 0), JSON_FORCE_OBJECT);
                 $success = false;
                 exit();
             }
             mysqli_stmt_close($res);
             // No errors encountered
             if ($success) {
-                echo json_encode("Correct answer");
+                echo json_encode(array("Correct answer :)", $points), JSON_FORCE_OBJECT);
             }
         } 
         else {
-            echo json_encode('Wrong answer');
+            echo json_encode(array('Wrong answer :(', 0), JSON_FORCE_OBJECT);
         }
     }
     // Not all fields filled, return error
     else if (!isset($_POST['id'])) {
-        echo json_encode("Please refresh the page");
+        echo json_encode(array("Please refresh the page", 0), JSON_FORCE_OBJECT);
     }
     else {
-        echo json_encode("Not all fields filled");
+        echo json_encode(array("Please type in a flag", 0), JSON_FORCE_OBJECT);
     }
 }
 // Prompt user to login
 else{
-    echo json_encode("Relogin");
+    echo json_encode(array("Please log in again", 0), JSON_FORCE_OBJECT);
     header("Location: ../index.php?filename=login");
 }
 ?>

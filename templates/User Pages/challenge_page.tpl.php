@@ -8,22 +8,6 @@
     <link rel="stylesheet" href="static/css/challenge.css">
 </head>
 <body data-admin = <?php echo $_SESSION['admin']; ?>>
-    <div id = "header">
-        <div id = "socialMedia">
-            <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png" id="IG_logo"></a>
-            <a href="https://discord.gg/uagKpY6c"><img src="static/images/discord.png" id="discord_logo"></a>
-        </div>
-        <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
-        <div id = "links">
-            <div id="chals_header" class = "linkEle">Challenges</div> 
-            <div class = "linkEle" style = 'font-family: arial;'>|</div> 
-            <div id="res_header" class = "linkEle"><a href="index.php?filename=resources" class="res_header_link">Resources</a></div>
-            <div class = "linkEle" style = 'font-family: arial;'>|</div> 
-            <div class="linkEle"><a class = "res_header_link" href = "index.php?filename=logout">logout</a></div>
-            <div class = "linkEle">Points: <?php echo $points ?></div>
-        </div>
-    </div>
-    
     <?php foreach ($challenges as $key => $lstofvalues){ ?>
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
