@@ -63,7 +63,7 @@
         <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png"></a>
         <a href="https://discord.gg/uagKpY6c"><img src="static/images/discord.png"></a>
     </div>
-    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {?>
+    <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 && $filename != "leaderboard") {?>
         <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
     <?php } else {?> 
         <a href = "index.php?filename=challenge" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
