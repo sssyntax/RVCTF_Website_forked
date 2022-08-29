@@ -22,18 +22,18 @@ body {
 #decoration2,
 #decoration3 {
     /* position: absolute; */
-    background-color: #FFD700;
+    background-color: #d4af37;
     width: 420px;
     height: 70px;
     border-radius: 10px;
 }
 
 #decoration2 {
-    background-color: #D3D3D3;
+    background-color: #A9B0B4;
 }
 
 #decoration3 {
-    background-color: #cd7f32;
+    background-color: #aa8c2c;
 }
 
 .leader {

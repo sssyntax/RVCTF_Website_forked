@@ -61,7 +61,8 @@ button, a {
 }
 
 button:hover, a:hover {
-    border: 2px solid black;
+    border: 2px solid white;
+    background-color: black;
     border-radius: 5px;
 }
 

@@ -52,7 +52,7 @@
                             ?>
                             <tr style="text-align: center;">
                                 <td>
-                                    <a href="index.php?filename=signup"><button name = "action" type="button" value="register" style="margin-right: 10%;">Register</button></a>
+                                    <a href="index.php?filename=signup" hidden><button name = "action" type="button" value="register" style="margin-right: 10%;">Register</button></a>
                                     <button name = "action" type="submit" value="login">Login</button>
                                 </td>
                             </tr>
