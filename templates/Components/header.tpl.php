@@ -60,8 +60,8 @@
 
 <div id = 'header-container'>
     <div id = 'header-social-media'>
-        <a href="https://www.instagram.com/rv.ctf/"><img src="static/images/instagram.png"></a>
-        <a href="https://discord.gg/uagKpY6c"><img src="static/images/discord.png"></a>
+        <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="static/images/instagram.png"></a>
+        <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="static/images/discord.png"></a>
     </div>
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 && $filename != "leaderboard") {?>
         <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
@@ -87,7 +87,7 @@
         </tr>
         <tr>
             <td>
-                <a class = "header_link" href = "index.php?filename=logout">logout</a>
+                <a class = "header_link" href = "index.php?filename=logout">Logout</a>
             </td>
             <td>
                 Points: <?php if(isset($_SESSION['points'])) {echo $_SESSION['points'];} else {echo "internal error";} ?>
