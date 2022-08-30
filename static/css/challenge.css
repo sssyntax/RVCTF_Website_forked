@@ -101,6 +101,9 @@ div {
     margin-top: 5px;
     display:inline-block;
 }
+.challenge_widget[data-completed="1"]:hover {
+    background-color:#065b3c;
+}
 .widget_body {
     width:100%;
     height: 100%;
