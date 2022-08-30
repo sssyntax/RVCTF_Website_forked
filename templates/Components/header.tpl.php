@@ -61,7 +61,7 @@
 <div id = 'header-container'>
     <div id = 'header-social-media'>
         <a href="https://www.instagram.com/rv.ctf/" target="_blank"><img src="static/images/instagram.png"></a>
-        <a href="https://discord.gg/uagKpY6c" target="_blank"><img src="static/images/discord.png"></a>
+        <a href="https://discord.gg/XPs8DZvt" target="_blank"><img src="static/images/discord.png"></a>
     </div>
     <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == 1 && $filename != "leaderboard") {?>
         <a href = "index.php?filename=leaderboard" style= 'text-align: center;'><img src="static/images/RVCTF Neon Logo.png" id="cca_name"></a>
