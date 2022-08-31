@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="static/css/register.css">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body>
     <div class="header">Registration</div>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard</title>
     <link rel='stylesheet' href='static/css/leaderboard.css'>
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 
 <body>

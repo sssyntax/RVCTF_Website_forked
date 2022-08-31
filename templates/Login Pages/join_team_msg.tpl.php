@@ -2,6 +2,7 @@
 <head>
     <title>RVCTF Join Team</title>
     <link rel="stylesheet" href="static/css/register.css">
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body>
     <div class="header">Join Team</div>

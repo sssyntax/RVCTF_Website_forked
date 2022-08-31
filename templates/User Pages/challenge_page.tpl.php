@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Challenges</title>
     <link rel="stylesheet" href="static/css/challenge.css">
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body data-admin = <?php echo $_SESSION['admin']; ?>>
     <?php foreach ($challenges as $key => $lstofvalues){ ?>

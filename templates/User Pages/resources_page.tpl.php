@@ -7,6 +7,7 @@
     <title>Resources</title>
     <link rel="stylesheet" href="static/css/resources.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 
 <body>

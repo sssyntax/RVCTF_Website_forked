@@ -3,6 +3,7 @@
 <head>
     <title>RVCTF Login</title>
     <link rel="stylesheet" href="static/css/login.css">
+    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body style="padding-top:50px">
     <?php 
