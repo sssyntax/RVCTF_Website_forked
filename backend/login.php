@@ -66,7 +66,15 @@ else{
                 $_SESSION['userEmail'] = $email;
                 $_SESSION['teamname'] = $teamname;
                 $_SESSION['admin'] = $admin;
-                header("Location: ../index.php?filename=challenge");
+                if ($teamname == NULL) {
+                    // User does not currently have a team
+                    header("Location: ../index.php?filename=teamsignup");
+                }
+                else {
+                    // Log user in
+                    header("Location: ../index.php?filename=challenge");
+                }
+                
             }
             else{
                 // User Login Unsucessful (Password wrong)

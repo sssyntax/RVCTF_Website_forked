@@ -17,23 +17,10 @@ body {
     margin-left: 33%;
 }
 
-#IG_logo {
-    width: 25%;
-    height: auto;
-    vertical-align: middle;
-    text-align: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-#discord_logo {
-    vertical-align: middle;
-    align-items: center;
-    justify-content: end; 
-    text-align: center;
+.social-media {
     width: 20%;
-    height: auto;
     cursor: pointer;
+    margin: 2rem;
 }
 
 .centre_box {
@@ -58,6 +45,7 @@ button, a {
     background-color: transparent;
     cursor: pointer;
     text-decoration: none;
+    margin: 0.2rem;
 }
 
 button:hover, a:hover {

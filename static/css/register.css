@@ -7,9 +7,6 @@ body {
     color: white;
     font-family: header_font;
 }
-/* html {
-    overflow: hidden;
-} */
 
 @font-face {
     font-family: header_font;
@@ -48,7 +45,7 @@ button:hover {
 
 
 .error_msg {
-    color:#ff3131;
+    color: #ff3131;
     font-size: 1.5rem;
     text-align: center;
 }

@@ -18,18 +18,12 @@
                 <td>
                 <label for = "email">Email</label>
                 <input id = "email" class = "nospace notempty"  name = "email" type = "email" maxlength = "512">
-                <p id = "inuseerror" class = "errormsg">
-                    Error! Email in use Already!
-                </p>
                 </td> 
             </tr>
             <tr>
                 <td>
                     <label for = "password">Password</label>
                     <input id = "password" class = "notempty" name = "password" type = "password" >
-                    <p id = "matchingerror" class = "errormsg">
-                        Error! Passwords do not match!
-                    </p>
                 </td>
             </tr>
             <tr>

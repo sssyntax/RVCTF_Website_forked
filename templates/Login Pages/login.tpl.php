@@ -17,9 +17,9 @@
     <div style="height:500px; min-height:100%; margin-top: 50px;">
         <table class="content">
             <tr>
-                <td style="text-align:center; width: 25%;">
-                    <img src="static/images/discord.png" id="discord_logo" onclick="location='https://discord.gg/uagKpY6c'"><br/>
-                    <img src="static/images/instagram.png" id="IG_logo"  onclick="location='https://www.instagram.com/rv.ctf/'">
+                <td style="width: 25%; text-align: right;">
+                    <img src="static/images/discord.png" id="discord_logo" class = 'social-media' onclick="location='https://discord.gg/uagKpY6c'"><br/>
+                    <img src="static/images/instagram.png" id="IG_logo" class = 'social-media' onclick="location='https://www.instagram.com/rv.ctf/'">
                 </td>
                 <td>
                     <table class="centre_box">
@@ -53,7 +53,7 @@
                             ?>
                             <tr style="text-align: center;">
                                 <td>
-                                    <a href="index.php?filename=signup" hidden><button name = "action" type="button" value="register" style="margin-right: 10%;">Register</button></a>
+                                    <a href="index.php?filename=signup">Register</a>
                                     <button name = "action" type="submit" value="login">Login</button>
                                 </td>
                             </tr>
