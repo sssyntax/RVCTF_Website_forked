@@ -1,3 +1,4 @@
+<?php require "backend/googleLogin.inc.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,11 +27,10 @@
                         <form method = "POST" action="backend/login.php">   
                             <tr style="text-align: center;"><td class="header">Login</td></tr>
                             <tr style="text-align: center;">
-                                <td>Email: <input type="text" name="login_username"></td>
+                            
+                                <td><div class = "google-login-button" onclick = "window.location.href = '<?php echo $googleUrl ?>'"></div></td>
                             </tr>
-                            <tr style="text-align: center;">
-                                <td>Password: <input type="password" name="login_password" width="auto" height="auto"></td>
-                            </tr>
+
                             <?php 
                             if (isset($_GET["error"]) && strpos($_GET["error"], "notfounderror") != false) {
                                 echo '

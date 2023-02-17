@@ -11,6 +11,21 @@ body {
     background-color: rgb(0, 0, 4);
 }
 
+.google-login-button{
+    width: 6em;
+    aspect-ratio: 4/1;
+    background: url("../../static/images/googleButton.png") no-repeat;
+    background-position: 0% 0%;
+    background-size: 100% 200%;
+    cursor:pointer;
+    margin:auto;
+
+}
+.google-login-button:hover{
+    background-position: 0% 100%;
+    
+}
+
 #cca_name {
     width: 30%;
     height: auto;

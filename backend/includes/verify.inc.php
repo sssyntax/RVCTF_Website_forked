@@ -1,4 +1,5 @@
 <?php
+session_start();
 function verify_account($conn,$email,$password){
     $sql = "SELECT `password` FROM `ctf_users` WHERE `email` = ?";
     $result = prepared_query($conn,$sql,[$email],"s");
@@ -16,13 +17,23 @@ function verify_account($conn,$email,$password){
 //     return (hash('sha1',$data['sessionkey'])==$encrypted && $userid == $data['userid']);
 
 // }
-
-function verify_session(){
-    // check if loggedin variable is stored in session
-    // check if loggedin varibale is set to true
-    return !(!isset($_SESSION['loggedin'])||$_SESSION['loggedin']!=true);
+function verify_login($conn){
+    print_r($_SESSION);
+    print_r("Hi");
+    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']===true && isset($_SESSION['userid'])){
+        print_r("ran");
+        $sql = "SELECT `email`,`teamname`,`points`,`admin` FROM `ctf_users` WHERE `id` = ?";
+        $cursor = prepared_query($conn,$sql,[$_SESSION['id'],],'i');
+        $cursor->bind_result($email,$teamname,$points,$admin);
+        if (!($cursor->fetch())) return false;
+        else return [$email,$teamname,$points,$admin];
+    }
+    else{
+        print_r("Ran");
+        if (rememberMe($conn)) return verify_login($conn);
+        else return false;
+    };
 }
-
 function verify_team($conn,$teamname,$password){
     $sql = "SELECT `teampassword` FROM `teams` WHERE `teamname` = ?";
     $result = prepared_query($conn,$sql,[$teamname],"s");

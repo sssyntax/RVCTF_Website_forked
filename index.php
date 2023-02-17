@@ -1,8 +1,9 @@
 <?php
 // start session
 session_start();
+require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
-$loggedin = verify_session();
+$loggedin = verify_login($conn);
 if (isset($_GET['filename'])){
     $filename = $_GET['filename']; 
 }
@@ -37,8 +38,13 @@ if ($loggedin) {
                 session_reset();
                 include('templates/Login Pages/login.tpl.php');
             break;
+        case 'login':
+            echo "Yes";
+                include('templates/Login Pages/login.tpl.php');
+            break;
         // Team joining & creation
         case 'teamsignup':
+            echo "ran";
             include('templates/Login Pages/team_choice.tpl.php');  
         break;
         case 'teamcreation':
