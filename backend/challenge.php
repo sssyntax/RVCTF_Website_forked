@@ -1,5 +1,5 @@
 <?php
-require "includes/connect.inc.php";
+require_once "includes/connect.inc.php";
 $userid = $_SESSION['userID'];
 // Challenges is an associative array (like dicitonary)
 $challenges = [];
