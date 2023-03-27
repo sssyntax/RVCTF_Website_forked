@@ -23,7 +23,7 @@ function verify_login($conn){
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']===true && isset($_SESSION['userid'])){
         print_r("ran");
         $sql = "SELECT `email`,`teamname`,`points`,`admin` FROM `ctf_users` WHERE `id` = ?";
-        $cursor = prepared_query($conn,$sql,[$_SESSION['id'],],'i');
+        $cursor = prepared_query($conn,$sql,[$_SESSION['userid'],],'i');
         $cursor->bind_result($email,$teamname,$points,$admin);
         if (!($cursor->fetch())) return false;
         else return [$email,$teamname,$points,$admin];

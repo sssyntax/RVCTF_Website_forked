@@ -6,8 +6,7 @@ require "includes/getinfo.inc.php";
 // initialise the values keyed in by the user
 $teamname = $_POST["register_team_name"];
 $teampassword = $_POST["register_team_password"];
-$email = $_SESSION["userEmail"];
-$userid = $_SESSION["userID"];
+$userid = $_SESSION["userid"];
 $errorlst = array();
 
 // Check if a team with the same name already exists
@@ -36,12 +35,14 @@ if ($testname != null){
     exit();
 }
 // User is not valid
-if (!verify_session()){
+if ($logininfo = verify_login($conn)){
     header("Location: ../index.php?filename=login&criticalerror=true");
     exit();
 }
+
 // User is valid and currently has no team
 else{
+    $email = $logininfo[0];
     // Create new team with current user as team leader
     $sql = "INSERT INTO `teams`(`teamname`,`teampassword`,`teammates`,`teamleader`) VALUES (?,?,?,?)";
     $encryptedteam = password_hash($teampassword, PASSWORD_DEFAULT);

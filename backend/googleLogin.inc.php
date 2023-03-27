@@ -26,8 +26,7 @@ function onLogin($conn,$user) {
         'expires'=>time() + (10 * 365 * 24 * 60 * 60),
         'path'=>"/",
         'secure'=>true,
-        'httponly'=>true,
-        'samesite'=>"Strict"]);
+        'httponly'=>true]);
 }
 if(isset($_GET['code'])){
     session_destroy();
@@ -53,7 +52,7 @@ if(isset($_GET['code'])){
         mysqli_stmt_close($res);
         if ($countof>0){
             onLogin($conn,$id);
-            echo "<script>window.location.href = '../../../index.php?filename=Home' </script>";
+            header("Location:index.php?filename=Home");
         }
         else{
             $exploded = explode(" ",rtrim($name," "));
@@ -69,6 +68,7 @@ if(isset($_GET['code'])){
                 print_r("Hello");
                 print_r($id);
                 onLogin($conn,$id);
+                header("Location:index.php?filename=teamsignup");
 
         }
             else{
@@ -79,6 +79,5 @@ if(isset($_GET['code'])){
     }
 
 }
-else header("Location: ../../../index.php?filename=".$origin);
 
 ?>

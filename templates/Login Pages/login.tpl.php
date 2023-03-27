@@ -1,4 +1,3 @@
-<?php require "backend/googleLogin.inc.php";?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

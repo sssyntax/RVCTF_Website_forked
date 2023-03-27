@@ -4,6 +4,7 @@ session_start();
 require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_login($conn);
+print_r($loggedin);
 if (isset($_GET['filename'])){
     $filename = $_GET['filename']; 
 }
@@ -11,6 +12,8 @@ else{
     $filename = "";
 }
 // include stars styling
+require_once "backend/googleLogin.inc.php";
+
 include 'templates/Components/stars.php';
 if ($loggedin) {
     // Include components 
