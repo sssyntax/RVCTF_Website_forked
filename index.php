@@ -63,6 +63,8 @@ if ($loggedin) {
         case 'teamcreationfail':
             include('templates/Login Pages/create_team_msg.tpl.php');
         break;
+        case 'invite':
+            include('templates/Login Pages/team_join_popup.tpl.php');
         default:
             include('backend/challenge.php');
             include 'templates/Components/header.tpl.php';
