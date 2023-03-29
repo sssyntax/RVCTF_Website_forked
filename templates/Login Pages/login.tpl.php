@@ -50,12 +50,12 @@
                                 </tr>';
                             }
                             ?>
-                            <tr style="text-align: center;">
+                            <!-- <tr style="text-align: center;">
                                 <td>
                                     <a href="index.php?filename=signup">Register</a>
                                     <button name = "action" type="submit" value="login">Login</button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </form>
                     </table>
                 </td>

@@ -1,0 +1,35 @@
+body{
+    background-color: rgba(52, 58, 64, 0.9);
+    width:50vw;
+    height:60vw;
+    margin:auto;
+    padding:auto;
+    color:white;
+}
+
+.dropbtn{
+    background-color:darkblue;
+    border-radius: 5px;
+    padding:0.5em;
+    width:10vw;
+    height:1em;
+    margin:0.5em;
+}
+
+.dropdown-content{
+    display:none;
+    background-color:darkblue;
+}
+
+.dropdown:hover.dropdown-content{
+    display:block;
+}
+
+#team_leader{
+    background-color:darkblue;
+    border-radius: 5px;
+    padding:0.5em;
+    width:20vw;
+    height:1em;
+    margin:0.5em;
+}
