@@ -13,7 +13,7 @@ else if ($_SESSION['admin'] != 1) {
     exit();
 }
 // Get user details from session
-$userid = $_SESSION['userID'];
+$userid = $_SESSION['userid'];
 // Grab all users from database
 $teams = [];
 $sql = "SELECT `teamname`, `points` FROM `teams` ORDER BY `points` DESC; ";

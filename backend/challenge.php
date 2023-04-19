@@ -1,6 +1,6 @@
 <?php
 require_once "includes/connect.inc.php";
-$userid = $_SESSION['userID'];
+$userid = $_SESSION['userid'];
 // Challenges is an associative array (like dicitonary)
 $challenges = [];
 $completed = [];
@@ -68,7 +68,7 @@ catch(Exception $e) {
 
 // Get the users current number of points
 $sql = "SELECT `points` FROM `ctf_users` WHERE `id` = ?";
-$res = prepared_query($conn,$sql,[$_SESSION['userID']],"i");
+$res = prepared_query($conn,$sql,[$_SESSION['userid']],"i");
 try {
     // Check if result failed
     $res -> bind_result($points);

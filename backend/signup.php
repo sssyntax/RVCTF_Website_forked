@@ -55,7 +55,7 @@ else{
     mysqli_stmt_close($res);
     // Store UserID and UserEmail in session storage
     $_SESSION['loggedin'] = true;
-    $_SESSION['userID'] = $id;
+    $_SESSION['userid'] = $id;
     $_SESSION['userEmail'] = $email;
     $_SESSION['admin'] = $admin;
     // Send user to team register page to join a team

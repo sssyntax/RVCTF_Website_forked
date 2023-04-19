@@ -15,7 +15,7 @@ else{
 require_once "backend/googleLogin.inc.php";
 
 include 'templates/Components/stars.php';
-if ($loggedin) {
+if ($loggedin != False) {
     // Include components 
     switch ($filename) {
         // Logged in pages
@@ -65,6 +65,7 @@ if ($loggedin) {
         break;
         case 'invite':
             include('templates/Login Pages/team_join_popup.tpl.php');
+        break;
         default:
             include('backend/challenge.php');
             include 'templates/Components/header.tpl.php';
@@ -86,7 +87,7 @@ else {
 
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
 try {
-    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", $_SESSION['userID'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
+    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", isset($_SESSION['userid']), isset($_SESSION['userEmail']), isset($_SESSION['admin']),$_SESSION['loggedin']);
 }
 catch(Exception $e) {
     echo "<script>console.log('Session not started')</script>";

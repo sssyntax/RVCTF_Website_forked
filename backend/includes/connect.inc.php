@@ -106,6 +106,7 @@ function GenerateRandomToken($length = 32){
 function storeTokenForUser($conn,$user,$token){
     $token = hash_hmac("sha256",$token,salt);
     $SQL = 'INSERT INTO `tokens`(`token`,`userid`) VALUES (?,?)';
+    
     print_r($token);
     print_r($user);
     $stmt = prepared_query($conn,$SQL,[$token,$user],"si");
@@ -150,7 +151,7 @@ function destroyCookie($conn){
 
 
 function rememberMe($conn) {
-    
+
     $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
     if ($cookie) {
         list ($user, $token, $tokenid,$mac) = explode(':', $cookie);
@@ -158,13 +159,10 @@ function rememberMe($conn) {
             return false;
         }
         $usertoken = fetchTokenByUserName($conn,$user,$tokenid);
-        print_r("<br>".$usertoken);
         if (!$usertoken) return;
-        print_r("<br>".$token);
         if (hash_equals($usertoken, hash_hmac("sha256",$token,salt))) {
-            $_SESSION["logged_in"] = true;
-            $_SESSION["userid"] = $user;
-            // print_r($_SESSION);
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $user;
             return true;
         }
         else{

@@ -9,7 +9,7 @@
     <?php 
     // Reset session details to log user out
         $_SESSION['loggedin'] = false;
-        $_SESSION['userID'] = null;
+        $_SESSION['userid'] = null;
         $_SESSION['userEmail'] = null;
         $_SESSION['admin'] = null;
     ?>

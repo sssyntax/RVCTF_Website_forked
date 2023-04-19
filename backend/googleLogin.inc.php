@@ -20,7 +20,7 @@ function onLogin($conn,$user) {
     $token = GenerateRandomToken(128); // generate a token, should be 128 - 256 bit
     $tokenid = storeTokenForUser($conn, $user, $token);
     $cookie = $user . ':' . $token.':'.$tokenid;
-    $mac = hash_hmac('sha256', $cookie, SECRET_KEY);
+    $mac = hash_hmac('sha256', $cookie, SECRET_KEY); //
     $cookie .= ':' . $mac;
     setcookie('rememberme', $cookie, [
         'expires'=>time() + (10 * 365 * 24 * 60 * 60),
