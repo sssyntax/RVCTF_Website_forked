@@ -20,7 +20,7 @@ function verify_account($conn,$email,$password){
 function verify_login($conn){
     print_r($_SESSION);
     print_r("Hi");
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']===true && isset($_SESSION['userid'])){
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){// && isset($_SESSION['userid'])){
         print_r("ran");
         // Extracting user details from db
         $sql = "SELECT `email`,`teamname`,`points`,`admin` FROM `ctf_users` WHERE `id` = ?";
@@ -35,7 +35,7 @@ function verify_login($conn){
             $_SESSION['points'] = $points;
             return true;
         }
-        return ;
+        return false;
         // It will return the data that is fetched
     }
     else{
