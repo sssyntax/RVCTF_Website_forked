@@ -52,7 +52,7 @@ if(isset($_GET['code'])){
         mysqli_stmt_close($res);
         if ($countof>0){
             onLogin($conn,$id);
-            header("Location:index.php?filename=Home");
+            header("Location:index.php?filename=home");
         }
         else{
             $exploded = explode(" ",rtrim($name," "));

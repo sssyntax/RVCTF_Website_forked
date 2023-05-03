@@ -15,7 +15,7 @@ else{
 require_once "backend/googleLogin.inc.php";
 
 include 'templates/Components/stars.php';
-if ($loggedin != False) {
+if ($loggedin != False or $loggedin != True) {
     // Include components 
     switch ($filename) {
         // Logged in pages
