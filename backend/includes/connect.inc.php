@@ -121,6 +121,7 @@ function storeTokenForUser($conn,$user,$token){
 }
 
 function fetchTokenByUserName($conn,$user,$tokenid){
+    # Finds the user's token in the database
     $SQL = 'SELECT `token` FROM `tokens` WHERE `userid` = ? AND `tokenid` = ?';
     $stmt = prepared_query($conn,$SQL,[$user,$tokenid],"si");
     if (!$stmt) return false;
@@ -153,6 +154,7 @@ function destroyCookie($conn){
 function rememberMe($conn) {
 
     $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
+    // If cookie exists
     if ($cookie) {
         list ($user, $token, $tokenid,$mac) = explode(':', $cookie);
         if (!hash_equals(hash_hmac('sha256', $user . ':' . $token.':'.$tokenid, SECRET_KEY), $mac)) {

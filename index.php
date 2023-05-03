@@ -4,6 +4,7 @@ session_start();
 require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_login($conn);
+//echo sprintf($loggedin);
 print_r($loggedin);
 if (isset($_GET['filename'])){
     $filename = $_GET['filename']; 
@@ -11,11 +12,10 @@ if (isset($_GET['filename'])){
 else{
     $filename = "";
 }
+echo sprintf("<script>console.log('i was here, logged in: %s, filename: %s')</script>", $loggedin, $filename);
 // include stars styling
-require_once "backend/googleLogin.inc.php";
-
-include 'templates/Components/stars.php';
-if ($loggedin != False or $loggedin != True) {
+// include 'templates/Components/stars.php';
+if ($loggedin != False) {
     // Include components 
     switch ($filename) {
         // Logged in pages
@@ -88,6 +88,7 @@ else {
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
 try {
     echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", isset($_SESSION['userid']), isset($_SESSION['userEmail']), isset($_SESSION['admin']),$_SESSION['loggedin']);
+    echo "hello", gettype($_SESSION['userid']);
 }
 catch(Exception $e) {
     echo "<script>console.log('Session not started')</script>";
