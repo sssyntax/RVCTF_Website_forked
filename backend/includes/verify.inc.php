@@ -18,16 +18,19 @@ function verify_account($conn,$email,$password){
 
 // }
 function verify_login($conn){
-    print_r($_SESSION);
-    print_r("Hi");
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){// && isset($_SESSION['userid'])){
-        print_r("ran");
+    // Check if the person is already logged in
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){// && isset($_SESSION['userid'])){;'
+        print_r("User is already logged in\n");
         // Extracting user details from db
         $sql = "SELECT `email`,`teamname`,`points`,`admin` FROM `ctf_users` WHERE `id` = ?";
         $cursor = prepared_query($conn,$sql,[$_SESSION['userid'],],'i');
         $cursor->bind_result($email,$teamname,$points,$admin);
         // If the data fetched is unsuccessful, it will return false
-        if (!($cursor->fetch())) return false;
+        // IE the user is not in the database
+        if (!($cursor->fetch())) {
+            print_r("data fetched unsuccessfully");
+            return false;
+        }      
         else {
             $_SESSION['userEmail'] = $email;
             $_SESSION['admin'] = $admin;
@@ -35,14 +38,16 @@ function verify_login($conn){
             $_SESSION['points'] = $points;
             return true;
         }
-        return false;
         // It will return the data that is fetched
     }
+    // person is not logged in
     else{
-        print_r("Ran");
         // rememberMe will set loggedin & userid
         // When verify_login is recursively called, the condtiiton above will be true
-        if (rememberMe($conn)) return verify_login($conn);
+        if (rememberMe($conn)){
+            print_r("User has a cookie\n");
+            return verify_login($conn);
+        } 
         else return false;
     };
 }
