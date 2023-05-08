@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<head>
-<title>RVCTF Team Invite</title>
     <link rel="stylesheet" href="static/css/team_join_popup.css">
-    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Saira+Stencil+One&display=swap" rel="stylesheet">
 </head>
 <body>
+<?php include 'templates/Components/stars.php';?>
+
     <h1>You have been invited to teamname</h1>
     <div id = "Content">
         <div id="team_leader">Team leader: team leader name</div>

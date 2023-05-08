@@ -57,7 +57,7 @@ div {
 .topic_header {
     text-align: left;
     font-family: header_font;
-    color: rgb(232, 232, 232);
+    color: var(--textColor);
     font-size:40px;
     margin-left:30px;
 }
@@ -68,13 +68,13 @@ div {
 }
 
 .challenge_widget {
-    border: 2px solid #1F51FF;
+    border: 2px solid var(--secondaryColor2);
     border-radius:10px;
     width: 200px;
     height:auto;
     cursor:pointer;
-    background-color:#344047;
-    box-shadow: 0px 0px 10px 2px rgb(255, 255, 255);
+    background-color:var(--primaryColor);
+    box-shadow: 0px 0px 5px 1px var(--secondaryColor2);
     margin-left:5px;
     margin-right:5px;
     margin-bottom: 5px;
@@ -83,24 +83,11 @@ div {
 }
 
 .challenge_widget[data-completed="1"] {
-    background-color:#065b3c;
+    background-color:var(--green);
 }
 
 .challenge_widget:hover {
-    border: 2px solid #1F51FF;
-    border-radius:10px;
-    width: 200px;
-    height:auto;
-    background-color:#20272d;
-    box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
-    margin-left:5px;
-    margin-right:5px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    display:inline-block;
-}
-.challenge_widget[data-completed="1"]:hover {
-    background-color:#065b3c;
+    filter:brightness(1.5);
 }
 .widget_body {
     width:100%;
@@ -110,7 +97,7 @@ div {
 .name_div {
     height:50px;
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid var(--textColor);
 }
 
 .name {
@@ -120,7 +107,7 @@ div {
     font-weight: 600;
     margin-top:2px;
     color:#aeaeae;
-    border-bottom:0.5px solid black;
+    border-bottom:0.5px solid var(--textColor);
     word-wrap:break-word; /*not working*/
 }
 .points_div {
@@ -132,7 +119,7 @@ div {
     font-family:code_mono;
     text-align:center;
     margin-top:1px;
-    border-bottom:0.5px solid black;
+    border-bottom:0.5px solid var(--textColor);
 }
 .author_div {
     height:20px;

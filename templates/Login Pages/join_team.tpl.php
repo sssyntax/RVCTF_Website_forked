@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<head>
+
     <title>RVCTF Join Team</title>
     <link rel="stylesheet" href="static/css/register.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body>
+    <?php include 'templates/Components/stars.php';?>
+
     <div class="header">Join Team</div>
     <div style="height: 600px;">
     <table class="centre_box">

@@ -3,21 +3,17 @@ body{
     height:60vw;
     margin:auto;
     padding:auto;
-    color:white;
     background-image: url(../images/map_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color: rgb(0, 0, 4);
-    font-family: 'Montserrat', sans-serif;
-    color: white;
-    
+    font-family: 'Montserrat', sans-serif;    
 }
 
 #content{
-    background-color:rgba(0,0,139,0.85);
+    background-color:#04121cce;
     padding: 1rem;
-    box-shadow: 1rem 1rem 0.5rem lightblue;
+    box-shadow: 1rem 1rem 0.5rem var(--secondaryColor1);
     border-radius: 10px;
 }
 
@@ -25,9 +21,10 @@ body{
     padding:0.5em;
     width:9em;
     height:1em;
-    background-image: linear-gradient(to right, grey , black);
+    background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
     text-align:center;
     border: 1px solid white;
+    color:var(--primaryColor);
 }
 
 .dropbtn:hover{
@@ -46,9 +43,10 @@ body{
     padding:0.5em;
     width:9em;
     height:1em;
-    background-image: linear-gradient(to right, grey , black);
+    background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
     text-align:center;
     border: 1px solid white;
+    color:var(--primaryColor);
 }
 
 h1{

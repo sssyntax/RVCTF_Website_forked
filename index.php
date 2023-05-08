@@ -12,13 +12,20 @@ if (isset($_GET['filename'])){
 else{
     $filename = "";
 }
-echo sprintf("<script>console.log('i was here, logged in: %s, filename: %s')</script>", $loggedin, $filename);
 // include stars styling
-// include 'templates/Components/stars.php';
+require_once("templates/Components/head.tpl.php");
 if ($loggedin != False) {
     // Include components 
     switch ($filename) {
         // Logged in pages
+        case 'sendinvite':
+            include 'templates/Components/header.tpl.php';
+            include('templates/Login Pages/send_team_invite.tpl.php');
+        break;
+        case 'teamjoin':
+            include 'templates/Components/header.tpl.php';
+            include('templates/Login Pages/team_join_popup.tpl.php');
+        break;
         case 'resources':
             include 'templates/Components/header.tpl.php';
             include('templates/User Pages/resources_page.tpl.php');

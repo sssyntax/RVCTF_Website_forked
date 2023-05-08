@@ -152,7 +152,6 @@ function destroyCookie($conn){
 
 
 function rememberMe($conn) {
-
     $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
     // If cookie exists
     if ($cookie) {
@@ -164,7 +163,7 @@ function rememberMe($conn) {
         if (!$usertoken) return;
         if (hash_equals($usertoken, hash_hmac("sha256",$token,salt))) {
             $_SESSION["loggedin"] = true;
-            $_SESSION["id"] = $user;
+            $_SESSION["userid"] = $user;
             return true;
         }
         else{

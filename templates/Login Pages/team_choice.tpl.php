@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<head>
     <title>RVCTF Team Choice</title>
     <link rel="stylesheet" href="static/css/register.css">
-    <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
 </head>
 <body>
+<?php include 'templates/Components/stars.php';?>
+
     <div class="header">Do you have a team?</div>
     <div style="height: 600px;">
     <table class="centre_box">  
