@@ -1,6 +1,6 @@
 @font-face {
     font-family: bodyText;
-    src: url('static/fonts/VT323-Regular.ttf');
+    src: url('../../static/fonts/VT323-Regular.ttf');
 }
 #rdev-footer {
     display: flex;
