@@ -95,7 +95,6 @@ else {
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
 try {
     echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", isset($_SESSION['userid']), isset($_SESSION['userEmail']), isset($_SESSION['admin']),$_SESSION['loggedin']);
-    echo "hello", gettype($_SESSION['userid']);
 }
 catch(Exception $e) {
     echo "<script>console.log('Session not started')</script>";
