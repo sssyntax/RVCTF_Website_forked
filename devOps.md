@@ -9,7 +9,7 @@ else if (you are done resolving an issue) {
     _CHECK_ your code for bugs
     commit to your branch
     merge your branch with the main branch
-    
+    resolve the issue
 }
 
 else if (there are no more issues OR you dont' feel like resolving issues) {
