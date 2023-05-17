@@ -7,7 +7,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-color: rgb(0, 0, 4);
+    /* background-color: rgb(0, 0, 4); */
     font-family: header_font;
     color: white;
 }
@@ -52,4 +52,9 @@ button:hover {
 .errormsg {
     color:#ff3131;
     display: none;
+}
+
+.main{
+    background-color: lightblue;
+    border-radius: 1em;
 }
