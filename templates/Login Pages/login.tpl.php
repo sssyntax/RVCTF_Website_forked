@@ -11,12 +11,13 @@ require_once "backend/googleLogin.inc.php";
     <title>RVCTF Login</title>
     <link rel="stylesheet" href="static/css/login.css">
 </head>
-<body style="padding-top:50px">
+<body style="padding-top:5%;">
    
         <?php include 'templates/Components/stars.php';?>
 
     <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
-    <div style="height:100px; min-height:75%; margin-top: 30px;">
+    <div style="margin-top: 5%; margin-bottom:5%;">
+    <!-- change margin % to adjust -->
         <table class="content">
             <tr>
                 <td style="width: 25%; text-align: right;">

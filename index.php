@@ -5,7 +5,7 @@ require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
 $loggedin = verify_login($conn);
 //echo sprintf($loggedin);
-print_r($loggedin);
+//print_r($loggedin);
 if (isset($_GET['filename'])){
     $filename = $_GET['filename']; 
 }
