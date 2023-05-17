@@ -17,6 +17,7 @@
                     <span id = 'current-page'>Challenges</span>
                 <?php } ?>
             </td>
+            
             <td>
                 <?php if($filename != "resources") {?>
                     <a href="index.php?filename=resources" class="header_link">Resources</a>
