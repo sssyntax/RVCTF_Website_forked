@@ -1,6 +1,7 @@
 <?php
 require_once "backend/googleLogin.inc.php";
 ?>
+<?php include 'templates/Components/stars.php';?>
  <?php 
     // Reset session details to log user out
         $_SESSION['loggedin'] = false;
@@ -12,9 +13,6 @@ require_once "backend/googleLogin.inc.php";
     <link rel="stylesheet" href="static/css/login.css">
 </head>
 <body style="padding-top:5%;">
-   
-        <?php include 'templates/Components/stars.php';?>
-
     <img src="static/images/RVCTF Neon Logo.png" id="cca_name">
     <div style="margin-top: 5%; margin-bottom:5%;">
     <!-- change margin % to adjust -->

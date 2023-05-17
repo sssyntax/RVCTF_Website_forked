@@ -3,6 +3,7 @@
 session_start();
 require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
+include 'templates/Components/stars.php';
 $loggedin = verify_login($conn);
 //echo sprintf($loggedin);
 //print_r($loggedin);

@@ -145,7 +145,7 @@ CREATE TABLE `ctf_users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `teamname`, `points`, `admin`) VALUES
+INSERT INTO `ctf_users` (`id`, `email`, `password`, `teamname`, `points`, `admin`) VALUES
 (1, 'czhongding@gmail.com', '$2y$10$Es8DXHt0nr54YuIigP1CCuE.RY6wNsSBkGASwwLYib2/hfJYCTnJ2', 'Zhongbob Team', 0, 1),
 (23, 'nqheng@gmail.com', '$2y$10$fFiO5KhoZoNBBESmPBk4oOH6HsDuaXPkdQ/EdCSlbZllbsudk7.3S', 'ilyJP', 4692, 1),
 (24, 'ngqiheng952@gmail.com', '$2y$10$JyZ.eLoO7sJ5cjChqmEsl.6Wm2NlKpm2R2QfyK9TM.HzjVhqw0TO.', 'ilyJP', 69, 0),
@@ -183,7 +183,7 @@ ALTER TABLE `teams`
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE `ctf_users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
@@ -218,7 +218,7 @@ ALTER TABLE `teams`
 --
 -- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `users`
+ALTER TABLE `ctf_users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
