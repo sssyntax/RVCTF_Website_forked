@@ -14,6 +14,6 @@ Official GitHub for RVCTF Website. Please use this github to regesiter any chang
 ALL paths should be relative to index.php
 A tags should use href = "index.php?filename=%" where % is the name of the page you wanna go to
 
-oijfoiwjoawij qoihwoia
+
 
 > A collaboration between RVCTF and RdeV
