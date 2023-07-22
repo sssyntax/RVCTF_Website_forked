@@ -10,7 +10,7 @@ body{
     font-family: 'Montserrat', sans-serif;    
 }
 
-#content{
+#Content{
     background-color:#04121cce;
     padding: 1rem;
     box-shadow: 1rem 1rem 0.5rem var(--secondaryColor1);
@@ -51,4 +51,9 @@ body{
 
 h1{
     font-family: 'Saira Stencil One', cursive;
+}
+
+#team_leader{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
 }

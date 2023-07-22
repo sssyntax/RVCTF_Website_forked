@@ -1,5 +1,5 @@
     <link rel="stylesheet" href="static/css/team_join_popup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Saira+Stencil+One&display=swap" rel="stylesheet">
 </head>
 <body>
 <?php include 'templates/Components/stars.php';?>
