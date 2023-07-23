@@ -1,0 +1,40 @@
+body{
+    background-image: url(../images/map_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+#button{
+    margin: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 0.3rem;
+    box-shadow: 5 5 5 black;
+}
+
+.centre_box{
+    margin: auto;
+    padding: 2rem;
+    background-color: rgba(52, 58, 64, 0.9);
+    width: 40%;
+    text-align: center;
+}
+
+.header{
+    margin: 1rem;
+    font-family: 'Saira Stencil One', cursive; 
+    margin:auto;
+    padding: auto; 
+    font-size: 300%
+}
+
+#groupless-members{
+    background-color: #1d20de;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    color: white;
+}

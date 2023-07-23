@@ -63,7 +63,18 @@ if(isset($_GET['code'])){
         if ($countof>0){
             onLogin($conn,$id);
             echo "id", $id;
-            header("Location:index.php?filename=Home");
+            #those that are invited will be redirected to invite page
+            $sql = "SELECT COUNT(*) FROM pending_invite WHERE user_email = ?";
+            $stmt = prepared_query($conn, $sql, [$email], 's');
+            $times = 0;
+            $stmt->bind_result($times);
+            $stmt->fetch();
+            mysqli_stmt_close($stmt);
+            if ($times != 0){
+                header("Location:index.php?filename=invite");
+            } else{
+                header("Location:index.php?filename=Home");
+            }
         }
         # else add them into the database
         else{

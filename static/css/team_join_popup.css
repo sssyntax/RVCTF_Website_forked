@@ -10,7 +10,7 @@ body{
     font-family: 'Montserrat', sans-serif;    
 }
 
-#content{
+#Content{
     background-color:#04121cce;
     padding: 1rem;
     box-shadow: 1rem 1rem 0.5rem var(--secondaryColor1);
@@ -19,10 +19,10 @@ body{
 
 .dropbtn{
     padding:0.5em;
-    width:9em;
+    width:20em;
     height:1em;
     background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
-    text-align:center;
+    text-align:left;
     border: 1px solid white;
     color:var(--primaryColor);
 }
@@ -41,14 +41,19 @@ body{
 
 #dd_content{
     padding:0.5em;
-    width:9em;
+    width:20em;
     height:1em;
     background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
-    text-align:center;
+    text-align:left;
     border: 1px solid white;
     color:var(--primaryColor);
 }
 
 h1{
     font-family: 'Saira Stencil One', cursive;
+}
+
+#team_leader{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
 }

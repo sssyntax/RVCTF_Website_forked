@@ -43,7 +43,7 @@ function verify_login($conn){
         // rememberMe will set loggedin & userid
         // When verify_login is recursively called, the condtiiton above will be true
         if (rememberMe($conn)){
-            print_r("User has a cookie\n");
+            // print_r("User has a cookie\n");
             return verify_login($conn);
         } 
         else return false;
