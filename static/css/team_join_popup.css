@@ -19,10 +19,10 @@ body{
 
 .dropbtn{
     padding:0.5em;
-    width:9em;
+    width:20em;
     height:1em;
     background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
-    text-align:center;
+    text-align:left;
     border: 1px solid white;
     color:var(--primaryColor);
 }
@@ -41,10 +41,10 @@ body{
 
 #dd_content{
     padding:0.5em;
-    width:9em;
+    width:20em;
     height:1em;
     background-image: linear-gradient(to right, var(--secondaryColor2) , var(--secondaryColor1));
-    text-align:center;
+    text-align:left;
     border: 1px solid white;
     color:var(--primaryColor);
 }

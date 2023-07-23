@@ -74,7 +74,6 @@ else{
                     // Log user in
                     header("Location: ../index.php?filename=challenge");
                 }
-                
             }
             else{
                 // User Login Unsucessful (Password wrong)
