@@ -18,6 +18,12 @@ if ($loggedin != False) {
     // Include components 
     switch ($filename) {
         // Logged in pages
+        case 'editadmin':
+            if ($_SESSION['admin']==1){
+                include 'templates/Components/header.tpl.php';
+                include 'templates/User Pages/editadmin.tpl.php';
+            }
+        break;
         case 'sendinvite':
             include 'templates/Components/header.tpl.php';
             include('templates/Login Pages/send_team_invite.tpl.php');

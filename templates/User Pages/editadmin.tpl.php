@@ -52,7 +52,6 @@
                 for (const [key,value] of Object.entries(data)){
                     formObject.append(key,value)
                 }
-                response = await fetch(destination, { method: "POST", body: formObject })
                 
             //     try{
             //         result = await response.json()
