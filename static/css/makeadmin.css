@@ -50,12 +50,29 @@ input{
     margin: 0.5em;
 }
 
+
 #submit{
-    border: 0.07em solid var(--textColor);
-    background-color:#0a0a23;
-    color: var(--textColor);
     width: 20%;
-    min-width: max-content;
     height: 2.5em;
 }
 
+.submit{
+    border: 0.07em solid var(--textColor);
+    background-color:#0a0a23;
+    color: var(--textColor);
+    min-width: max-content;
+}
+
+p, label{
+    color: white;
+    font-weight: normal;
+    text-align: center;
+}
+
+#confirm{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5em;
+    width: 15%;
+    height: 2em;
+}

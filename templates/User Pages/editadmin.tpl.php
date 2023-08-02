@@ -10,106 +10,117 @@
         <div id = 'header'>
             <h1>Edit Admin</h1>
         </div>
-        <div>
-            <form action='backend/editadmin.php'method='post'>
+        <div id='forms'>
+            <form id = 'editadminform'>
                 <!-- <label for='email'>Email:</label> -->
                 <input type=text id='email' name='email' placeholder='Email' >
-                <input type='submit' id='submit' value='Search'>
+                <input type='submit' id='submit' class = 'submit' value='Search'>
             </form>
-            <form id='confirm'></form> 
-
-            <?php 
-                if (isset($_GET['error'])){
-                    if ($_GET['error'] == '"nullerror"'){
-                        echo '<p style="text-align: center;">Please key in the email.</p>';
-                    }
-                    else if ($_GET['error'] == '"invalidemail"'){
-                        echo '<p style="text-align: center;">Please key in a valid email address.</p>';
-                    }
-                    else if ($_GET['error'] == '"nosuchuser"'){
-                        echo '<p style="text-align: center;">There is no such user, try again.</p>';
-                    }
-                    else if ($_GET['error'] == '"databaseerror"'){
-                        echo '<p style="text-align: center;">Database error.</p>';
-                    }
-                }
-                if (isset($_GET['success'])){
-                    if ($_GET['success'] == '"removed"'){
-                        echo '<p style="text-align: center;"> Success, user is no longer an admin.</p>';
-                    }
-                    if ($_GET['success'] == '"added"'){
-                        echo '<p style="text-align: center;"> Success, user is now an admin.</p>';
-                    }
-                }
-
-
-            ?>
+            <p id='test'></p>
+            <div id='response'></div>
 
             <script>
-            async function postRequest(destination,data,action){
-                let formObject = data instanceof FormData ? data : new FormData()
-                data = data ?? {} 
-                for (const [key,value] of Object.entries(data)){
-                    formObject.append(key,value)
-                }
-                
-            //     try{
-            //         result = await response.json()
-            //     }
-            //     catch (e){
-            //         return ""
-            //     }
-                
-            //     return action ? action(result) : result  
-            // }
-                try {
-                    const response = await fetch(destination, { method: "POST", body: formObject });
-                    console.log("res");
-                    console.log(response)
-                    const result = await response.json();
-                    console.log('res2')
-                    return action ? action(result) : result;
-                } 
-                catch (error) {
-                    // console.log("Error while fetching or parsing response:", error);
-                    return null; // Or return an error object or handle the error in another way
-                }
-            }
+            
+            const form = document.querySelector('#editadminform');
+            form.addEventListener('submit', event => {
+                event.preventDefault();
+                document.querySelector("#response").innerHTML = '';
+                sendemail();
+            });
 
+            var res = ''
+            const confirm = document.createElement('FORM');
+            confirm.setAttribute('id', 'confirmform');
 
-            function confirmform(response) {
-                if (response.confirm){
-                    // Display the confirmation message to the user
-                    const label = document.createElement('label');
-                    label.setAttribute("for", "submit");
-                    label.innerHTML = response.message;
-                    // Create the confirm button
-                    const confirmButton = document.createElement('input');
-                    confirmButton.setAttribute("id", "submit")
-                    confirmButton.setAttribute("type", "submit");
-                    confirmButton.setAttribute("value", "Confirm");
-                    confirmButton. addEventListener("submit", (e)=>{
-                        e.preventdefault();
+            var admin = 0;
+            var emailvar = '';
+            var id = 0;
+
+            //send the editadminform details to editadmin.php
+            async function sendemail(){
+                const formdata = new FormData(form);
+                const data = new URLSearchParams(formdata);
+                const email = await fetch('backend/editadmin.php', {
+                    method: 'POST',
+                    body: data,
+                })
+                res = await email.json();
+
+                //if no email
+                if (res.message == 'nullerror'){
+                    var p = document.createElement('p');
+                    p.innerHTML = 'Please key in the email.';
+                    document.querySelector("#response").appendChild(p);
+
+                //if email is not an email
+                } else if (res.message == 'invalidemail'){
+                    var p = document.createElement('p');
+                    p.innerHTML = 'Please key in a valid email.';
+                    document.querySelector("#response").appendChild(p);
+
+                //if cannot find email in database
+                } else if (res.message == 'nosuchuser'){
+                    var p = document.createElement('p');
+                    p.innerHTML = 'There is no such user.';
+                    document.querySelector("#response").appendChild(p);
+                
+                //add confirm form 
+                } else if (res.confirm == true) {
+                    admin = res.admin;
+                    id = res.id;
+                    emailvar = data.get('email');
+                    confirm.innerHTML = '';
+                    var button = document.createElement('input');
+                    button.setAttribute('type', 'submit');
+                    button.setAttribute('id', 'confirm');
+                    button.setAttribute('value', 'Confirm');
+                    button.setAttribute('class', 'submit');
+                    var label = document.createElement('label');
+                    label.innerHTML = res.message;
+                    label.setAttribute('for', 'confirm');
+                    confirm.addEventListener('submit', event => {
+                        event.preventDefault();
+                        document.querySelector("#response").innerHTML = '';
+                        sendconfirm();
                     });
-                    // Append the confirm button to the container
-                    const container = document.getElementById('confirm');
-                    container.appendChild(label);
-                    container.appendChild(confirmButton);
+                    document.querySelector('#forms').appendChild(confirm);
+                    confirm.appendChild(label);
+                    confirm.appendChild(button);
+                };
+            };
+
+            //send confirmform data to editadmin2.php
+            async function sendconfirm(){
+                document.querySelector("#confirmform").innerHTML = '';
+                const data = new URLSearchParams();
+                data.append('confirm', true);
+                data.append('admin', admin);
+                data.append('email', emailvar);
+                data.append('id', id)
+                const check = await fetch('backend/editadmin2.php', {
+                    method: 'POST',
+                    body: data,
+                });
+                outcome = await check.json();
+
+                //if success
+                if (outcome.success == true){
+                    document.querySelector('#response').innerHTML = '';
+                    var success = document.createElement('p');
+                    success.innerHTML = outcome.message;
+                    success.style.textAlign = 'center';
+                    document.querySelector("#response").appendChild(success);
                 }
-            }
-
-            // Function to send the initial request for confirmation
-            async function sendConfirmation() {
-                // Send the request to the backend using AJAX
-                let response = await postRequest('backend/editadmin.php');
-                console.log('response send conf')
-                console.log(response)
-                // Handle the response from the backend
-                //confirmform(response);
-            }
-
-            // Call the function to initiate the confirmation process
-            sendConfirmation();
+                //if fail
+                else{
+                    document.querySelector('#response').innerHTML = '';
+                    var fail = document.createElement('p');
+                    fail.innerHTML = "Something went wrong, try again.";
+                    fail.style.textAlign = 'center';
+                    document.querySelector("#response").appendChild(fail);
+                }
+            };
+           
             </script>
         </div>
     </div>
