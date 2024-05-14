@@ -234,10 +234,41 @@ input:focus, textarea {
     border-radius: 5px;
 }
 
+.editadmin{
+    background-color: #1F51FF;
+    color: aliceblue;
+    cursor: pointer;
+    margin-left: calc(100vw - 150px);
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 6rem;
+    height: 3rem;
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px 2px rgb(255, 255, 255);
+    border: 2px solid #1F51FF;
+    background-color:#344047;
+}
+
+.editadmin:hover {
+    background-color: #1F51FF;
+    color: aliceblue;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: calc(100vw - 150px);
+    margin-right: 20px;
+    width: 6rem;
+    height: 3rem;
+    border-radius: 30px;
+    box-shadow: 0px 0px 10px 0px rgb(255, 255, 255);
+    border: 2px solid #1F51FF;
+    background-color:#20272d;
+}
+
 
 .add_chal_btn {
     background-color: #1F51FF;
     color: aliceblue;
+    display: inline-block;
     position: fixed;
     cursor: pointer;
     bottom: 23px;
@@ -338,3 +369,6 @@ input:focus, textarea {
 #add_chal_submit_btn:hover {
     background-color: #91a7c0; 
 }
+
+
+

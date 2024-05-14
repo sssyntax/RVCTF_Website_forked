@@ -3,7 +3,10 @@
 </head>
 <body data-admin = <?php echo $_SESSION['admin']; ?>>
 <?php include 'templates/Components/stars.php';?>
-
+    <?php if (isset($_SESSION['admin'])){if($_SESSION['admin']){?>
+        <button class="editadmin" onclick="location.href='index.php?filename=editadmin'">Add admin</button>
+    <?php
+    }}?>
     <?php foreach ($challenges as $key => $lstofvalues){ ?>
         <h1 class="topic_header" ><?php echo $key; ?></h1>
         <div class = "challange_container" id =  "<?php echo $key; ?>">
