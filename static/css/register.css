@@ -26,6 +26,8 @@ body {
     background-color: rgba(52, 58, 64, 0.9);
     height: 100%;
     width: 47%;
+    border-collapse: separate; 
+    border-spacing: 0.5em;
 }
 
 button {
@@ -38,8 +40,8 @@ button {
 }
 
 button:hover {
-    border: 2px solid black;
-    border-radius: 5px;
+    filter:brightness(1.2);
+    backdrop-filter: brightness(1.2);
 }
 
 
@@ -52,4 +54,13 @@ button:hover {
 .errormsg {
     color:#ff3131;
     display: none;
+}
+
+#teamcreate, #teamjoin{
+    width:100%
+}
+
+#team-name, #password{
+    font-size: 0.5em;
+    width:10em
 }

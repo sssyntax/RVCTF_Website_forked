@@ -6,9 +6,8 @@ require "includes/getinfo.inc.php";
 require "includes/verify.inc.php";
 $teamname = $_POST["team_name"];
 $teampassword = $_POST["team_password"];
-$userid = $_SESSION["userID"];
-$email = $_SESSION["userEmail"];
-if (!verify_session()){
+$userid = $_SESSION["userid"];
+if (!verify_login()){
     header("Location: ../index.php?filename=login&criticalerror=true");
     exit();
 }

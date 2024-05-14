@@ -15,6 +15,7 @@ else{
 // include stars styling
 require_once("templates/Components/head.tpl.php");
 if ($loggedin != False) {
+    
     // Include components 
     switch ($filename) {
         // Logged in pages
@@ -22,10 +23,10 @@ if ($loggedin != False) {
             include 'templates/Components/header.tpl.php';
             include('templates/Login Pages/send_team_invite.tpl.php');
         break;
-        case 'teamjoin':
-            include 'templates/Components/header.tpl.php';
-            include('templates/Login Pages/team_join_popup.tpl.php');
-        break;
+        // case 'teamjoin':
+        //     include 'templates/Components/header.tpl.php';
+        //     include('templates/Login Pages/team_join_popup.tpl.php');
+        // break;
         case 'resources':
             include 'templates/Components/header.tpl.php';
             include('templates/User Pages/resources_page.tpl.php');
@@ -59,9 +60,6 @@ if ($loggedin != False) {
         break;
         case 'teamcreation':
             include('templates/Login Pages/create_team.tpl.php');  
-        break;
-        case 'teamjoin':
-            include('templates/Login Pages/join_team.tpl.php');  
         break;
         // Error messages
         case 'teamfail':

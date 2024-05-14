@@ -5,7 +5,6 @@
 <?php include 'templates/Components/stars.php';?>
 
     <div class="header">Do you have a team?</div>
-    <div style="height: 600px;">
     <table class="centre_box">  
         <tr>
             <td>
@@ -22,6 +21,5 @@
             </td>
         </tr>
     </table>
-    </div>
 </body>
 </html>

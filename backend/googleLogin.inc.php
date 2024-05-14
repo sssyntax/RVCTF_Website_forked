@@ -31,7 +31,6 @@ function onLogin($conn,$user) {
 }
 
 if(isset($_GET['code'])){
-    echo sprintf("<script>console.log('kurukuru')</script>");
     session_destroy();
     session_start();
     if(isset($_COOKIE['rememberme'])) {
@@ -59,10 +58,9 @@ if(isset($_GET['code'])){
         $res->fetch();
         mysqli_stmt_close($res);
         # If the person is in the database, just continue
-        print_r("Thing".$countof);
         if ($countof>0){
             onLogin($conn,$id);
-            echo "id", $id;
+            verify_login($conn);
             #those that are invited will be redirected to invite page
             $sql = "SELECT COUNT(*) FROM pending_invite WHERE user_email = ?";
             $stmt = prepared_query($conn, $sql, [$email], 's');

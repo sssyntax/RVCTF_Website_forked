@@ -6,23 +6,22 @@
     <?php include 'templates/Components/stars.php';?>
 
     <div class="header">Join Team</div>
-    <div style="height: 600px;">
     <table class="centre_box">
         <form method = "POST" action = "backend/teamjoin.php">
             <tr>
-                <td>Team Name: <input type="text" name="team_name" width="auto" height="auto"></td>
+                <td>Team Name: <input type="text" id = "team-name" name="team_name" width="auto" height="auto"></td>
             </tr>
             <tr>
-                <td>Password: <input type="password" name="team_password" width="auto" height="auto">
+                <td>Password: <input type="password" id = "password" name="team_password" width="auto" height="auto">
                     <br><span style="font-size: 50%">*please request from team leader</span>
                 </td>
             </tr>
             <?php 
                             if (isset($_GET["error"]) && strpos($_GET["error"], "passworderror") != false) {
                                 echo '
-                            <tr>
-                                <td class = "error_msg">Password incorrect, please try again</td>
-                            </tr>';
+                                <tr>
+                                    <td class = "error_msg">Password incorrect, please try again</td>
+                                </tr>';
                             }
                             ?>
             <tr>
@@ -30,6 +29,5 @@
             </tr>
         </form>
     </table>
-    </div>
 </body>
 </html>

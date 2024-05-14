@@ -1,5 +1,6 @@
 <?php
 require_once "includes/connect.inc.php";
+require_once "includes/getinfo.inc.php";
 $userid = $_SESSION['userid'];
 // Challenges is an associative array (like dicitonary)
 $challenges = [];
@@ -67,17 +68,5 @@ catch(Exception $e) {
 }
 
 // Get the users current number of points
-$sql = "SELECT `points` FROM `ctf_users` WHERE `id` = ?";
-$res = prepared_query($conn,$sql,[$_SESSION['userid']],"i");
-try {
-    // Check if result failed
-    $res -> bind_result($points);
-    $res -> fetch();
-    $_SESSION['points'] = $points;
-}
-catch(Exception $e) {
-    echo $e;
-    $points = 0; 
-}
-mysqli_stmt_close($res);
+$points = getPoints($conn,$userid);
 ?>
