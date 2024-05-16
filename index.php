@@ -15,6 +15,9 @@ else{
 // include stars styling
 require_once("templates/Components/head.tpl.php");
 if ($loggedin != False) {
+    $userid = $_SESSION['userid'];
+    $points = getPoints($conn,$userid);
+    $teamstatus = getTeamStatusFromUserId($conn,$userid);
     
     // Include components 
     switch ($filename) {
@@ -34,10 +37,16 @@ if ($loggedin != False) {
             include 'templates/Components/header.tpl.php';
             include('templates/Login Pages/send_team_invite.tpl.php');
         break;
-        // case 'teamjoin':
-        //     include 'templates/Components/header.tpl.php';
-        //     include('templates/Login Pages/team_join_popup.tpl.php');
-        // break;
+        case 'team':
+            include 'templates/Components/header.tpl.php';
+            if ($teamstatus){
+                include('templates/Team Pages/team.tpl.php');
+                
+            }
+            else{
+                include('templates/Team Pages/team_join_popup.tpl.php');
+            }
+        break;
         case 'resources':
             include 'templates/Components/header.tpl.php';
             include('templates/User Pages/resources_page.tpl.php');
@@ -66,11 +75,11 @@ if ($loggedin != False) {
             break;
         // Team joining & creation
         case 'teamsignup':
-            echo "ran";
             include('templates/Login Pages/team_choice.tpl.php');  
         break;
         case 'teamcreation':
-            include('templates/Login Pages/create_team.tpl.php');  
+            include 'templates/Components/header.tpl.php';
+            include('templates/Team Pages/create_team.tpl.php');  
         break;
         // Error messages
         case 'teamfail':
@@ -103,7 +112,7 @@ else {
 
 // FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
 try {
-    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", isset($_SESSION['userid']), isset($_SESSION['userEmail']), isset($_SESSION['admin']),$_SESSION['loggedin']);
+    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", $_SESSION['userid'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
 }
 catch(Exception $e) {
     echo "<script>console.log('Session not started')</script>";

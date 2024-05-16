@@ -9,44 +9,60 @@
         <h2>Invite a member to your team!</h2>
         <select name="groupless-members" id="groupless-members">
             <?php
-            $sql = "SELECT email FROM ctf_users ORDER BY id ASC";
+            $sql = "SELECT email,id FROM ctf_users ORDER BY id ASC";
             $names = ($conn->query($sql))->fetch_all();
             foreach($names as $name){
-                foreach($name as $nam){
-                    $nam = strtoupper($nam);
-                    echo "<option value = '$nam'>$nam</option>";
-                }
+                $nam = htmlspecialchars(strtoupper($name[0]));
+                $id = $name[1];
+                echo "<option value = '$id'>$nam</option>";
             }
             ?>
         </select>
-        <button value = "invite" id = "button" name = "InviteButton">Send invite</button>
+        <button value = "invite" class = "button" id = "button" name = "InviteButton">Send invite</button>
     </form>
 </body>
 </html>
 <?php
-    if (isset($_POST['InviteButton'])){
-        $user_email = $_POST['groupless-members'];
-        $email = $_SESSION['userEmail'];
-        $teamname = '';
-        $stmt =  prepared_query($conn, "SELECT teamname FROM teams WHERE teamleader = ?", [$email,],"s");
-        $stmt->bind_result($teamname);
-        $stmt->fetch();
-        mysqli_stmt_close($stmt);
-        $sql = "SELECT COUNT(*) FROM pending_invite WHERE user_email = ? AND teamname = ?";
-        $stmt = prepared_query($conn, $sql, [$user_email, $teamname], 'ss');
-        $times = 0;
-        $stmt->bind_result($times);
-        $stmt->fetch();
-        mysqli_stmt_close($stmt);
-        if (strtoupper($user_email) == strtoupper($email)){
-            echo "<script>alert('You cannot invite yourself ._.')</script>";
-        } elseif($times == 0){
-            $sql = "INSERT INTO pending_invite (user_email, teamname) VALUES (?, ?)";
-            $stmt = prepared_query($conn, $sql, [$user_email, $teamname], 'ss');
-            $stmt->close();
-            $conn->close();   
-        } else{
-            echo "<script>alert('You have already invited this person')</script>";
+    function processInvite($conn,$memberid,$userid){
+        if (!$userid === $memberid){
+            echo "<script>alert('You can't invite yourself ._.')";
+            return;         
         }
+
+        $memberInfo = getUserInfo($conn,$memberid);
+        if (!$memberInfo){
+            echo "<script>alert('User not found.')";
+            return;
+        }
+        $memberTeamStatus = getTeamStatusFromUserId($conn,$memberid);
+        $myTeamStatus = getTeamStatusFromUserId($conn,$userid);
+        if ($myTeamStatus['position'] != 'leader'){
+            echo "<script>alert('Only the leader can make invites.')";
+            return;
+        }
+        if ($memberTeamStatus){
+            $team = $memberTeamStatus['teamname'];
+            echo "<script>alert('This user is already in team $team')";
+            return;
+        }
+        $sql = "SELECT * FROM pending_invite WHERE user_email = ? AND team_id = ?";
+        $stmt = prepared_query($conn, $sql, [$memberInfo['email'], $myTeamStatus['teamid']], 'si');
+        $stmt->store_result();
+        if ($stmt->num_rows > 0){
+            echo "<script>alert('Invite already sent to $memberInfo[email]')";
+            return;
+        }
+        $stmt->close();
+        $sql = "INSERT INTO pending_invite (user_email, team_id) VALUES (?, ?)";
+        $email = $memberInfo['email'];
+        $stmt = prepared_query($conn, $sql, [$email, $myTeamStatus['teamid']], 'si');
+        $stmt->close();
+        
+        echo "<script>alert('Invite sent to $email!')";
+    }
+    if (isset($_POST['InviteButton']) && isset($_POST['groupless-members'])){
+        $memberid = $_POST['groupless-members'];
+        processInvite($conn,$memberid,$_SESSION['userid']);
+        
     }
 ?>

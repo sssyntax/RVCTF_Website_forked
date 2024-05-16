@@ -17,8 +17,11 @@ function verify_login($conn){
         $teamstatus = getTeamStatusFromUserId($conn,$_SESSION['userid']);
         $_SESSION['userEmail'] = $email;
         $_SESSION['admin'] = $admin;
-        $_SESSION['teamname'] = $teamstatus['teamname'];
-        $_SESSION['teamposition'] = $teamstatus['position'];
+        if ($teamstatus){
+            $_SESSION['teamname'] = $teamstatus['teamname'];
+            $_SESSION['teamposition'] = $teamstatus['position'];
+        }
+        
         return true;
         
         // It will return the data that is fetched

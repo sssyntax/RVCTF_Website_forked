@@ -1,8 +1,30 @@
 <?php
     require "includes/connect.inc.php";
+    require "includes/verify.inc.php";
     $success = false;
     $message = '';
+    if (!verify_login($conn)){
+        $error = 'notloggedin';
+        $response = array(
+            'confirm' => false,
+            'message' => $error,
+        );
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+    }
 
+    $userid = $_SESSION['userid'];
+    if (!getUserInfo($conn,$userid)['admin']){
+        $error = 'notadmin';
+        $response = array(
+            'confirm' => false,
+            'message' => $error,
+        );
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+    }
     //collect confirmform info
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $confirm = $_POST['confirm'] ?? '';

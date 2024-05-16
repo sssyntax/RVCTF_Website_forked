@@ -5,6 +5,7 @@ var admin = document.getElementsByTagName("BODY")[0].dataset.admin
 var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
+const author_popup = document.getElementById("author_popup");
 var id_popup = document.getElementsByClassName("challengeID");
 var cat_popup = document.getElementById("challengeCat");
 var input_popup_uncompleted = document.getElementById('popup_input_uncompleted') // input td for user to input flag
@@ -18,6 +19,7 @@ var add_chal_close = document.getElementById('add_chal_close');
 var points_span = document.getElementById('points');
 // Get rdev footer element to make sure new categories are inserted before it
 var rdev_footer = document.getElementById('rdev-footer');
+
 
 if (add_chal_close != null) {
   add_chal_close.onclick = function(){
@@ -55,13 +57,15 @@ function popup() {
   }
   // Display challenge popup
   chal_popup.style.display = "block";
-  // Set challenge title and description
+  // Set challenge title and description and author
   desc_popup.innerText = this.dataset.desc
   title_popup.innerText = this.dataset.title
-  // only admins will see this form feature (for deletion)
-  if (admin == 1) {
-    cat_popup.value = this.dataset.cat
-  }
+  author_popup.innerText = this.dataset.author
+  // set the count of users who have solved the challenge
+  document.getElementById('solved_count').innerText = "..."
+  getSolvedCount(this.dataset.id).then((count) => {
+    document.getElementById('solved_count').innerText = count
+  })
   // pass ID value into form for submission
   for (let item of id_popup) {
     item.value = this.dataset.id
@@ -127,7 +131,6 @@ function submitChallenge(form,event){
       // RDev ppl can do the add in new challenges here!
     // Array of all inputs
     let ins = document.getElementsByClassName("add_chal_input");
-    let cat = document.getElementById("add_chal_cat").value;
     let container = document.getElementById(cat);
     let difficultylst = ["Easy","Medium","Hard"]
     // Check if the category does not exist
@@ -202,9 +205,14 @@ function submitChallenge(form,event){
 }
 
 function deleteChallenge(form, event) {
-  // Handle output when new challenge is created
+  const confirmation = confirm("Are you sure you want to delete this challenge?");
   event.preventDefault();
+  if (!confirmation) {
+    return false;
+  }
+  // Handle output when new challenge is created
   var formdata = new FormData(form);
+  console.log(formdata);
   fetch("backend/deletechallenge.php", { method: "POST", body: formdata })
   .then((response) => response.json())
   .then((result) => {
@@ -212,20 +220,18 @@ function deleteChallenge(form, event) {
     popupClose();
     alert(result);
     // Get the category of the challenge to delete
-    let category = document.getElementById(formdata.get('cat'));
-    // Check if the number of challenges in the category is 1
-    if (category.children.length == 1) {
-      // Remove the category from the DOM
-      category.parentElement.removeChild(category.previousElementSibling);
-      document.body.removeChild(category)
-    }
-    // Iterate through all the challenges in the category  
-    for (let challege of category.children) {
-      if (challege.dataset.cat == formdata.get('cat')) {
-        if (challege.dataset.id == formdata.get('id')) {
-          category.removeChild(challege);
-        }
-      }
+    let item = document.querySelector(`[data-id="${formdata.get('id')}"]`);
+    item.parentElement.removeChild(item);
+    if (item.parentElement.children.length == 0) {
+      item.parentElement.parentElement.parentElement.removeChild(item.parentElement.parentElement);
     }
   });
+}
+
+async function getSolvedCount(challengeID){
+  let response = await getRequest("backend/getSolvedCount.php",{challengeID:challengeID})
+  if (response.error){
+    alert(response.error)
+  }
+  return response.data
 }

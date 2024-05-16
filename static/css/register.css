@@ -22,20 +22,19 @@ body {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    font-size: 300%;
     background-color: rgba(52, 58, 64, 0.9);
     height: 100%;
     width: 47%;
     border-collapse: separate; 
     border-spacing: 0.5em;
+    padding: 1em;
 }
 
 button {
     border: 2px solid transparent;
     font-family: header_font;
     color: white;
-    font-size: 150%;
-    background-color: transparent;
+        background-color: transparent;
     cursor: pointer;
 }
 
@@ -62,5 +61,16 @@ button:hover {
 
 #team-name, #password{
     font-size: 0.5em;
-    width:10em
+    width:20em
+}
+
+.teamname{
+    font-size: 2em;
+    font-family: header_font;
+}
+
+
+h2{
+    font-size: 2em;
+    font-family: header_font;
 }

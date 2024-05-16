@@ -17,7 +17,12 @@ while ($row = iimysqli_result_fetch_array($result)){
 }
 mysqli_stmt_close($res);
 // Get all challenges in the database
-$sql = "SELECT `id`, `title`, `author`, `difficulty`, `points`, `category`, `description` FROM `challenges` ORDER BY `category`; ";
+$sql = "SELECT `id`, `title`, `author`, `difficulty`, `points`, `category`, `description`,`solve_count` FROM 
+        `challenges` 
+        LEFT JOIN (
+            SELECT `challengeid`, COUNT(*) as `solve_count` FROM `completedchallenges` GROUP BY `challengeid`
+        ) as `solved` ON `challenges`.`id` = `solved`.`challengeid`
+        ORDER BY `category`, `difficulty` ASC, `solve_count` DESC;";
 $res = mysqli_query($conn, $sql); 
 try {
     // Iterate through all the challenges
@@ -42,31 +47,11 @@ try {
             // Define a new key value pair in the challenges associative array
             $challenges[$row[5]]=[$row];
     }
-    // Rank challenges by difficulty, then points
-    // Iterate through each category in the challenges associative array
-    foreach ($challenges as $key => $array){
-        // Sort each category using a custom comparison function
-        // result stored in $array variable
-        usort($array,function($a,$b){
-            // If the difficulty of the 2 challenges are the same
-            if ($a[4]-$b[4] == 0){
-                // return the difference in points 
-                return $a[3]-$b[3];
-            }
-            else{
-                // return the difference in difficulty 
-                return $a[4]-$b[4];
-            }
-        });
-    // update the challenges array with the sorted category array
-    $challenges[$key] = $array;
-    }
+
 }
 }
 catch(Exception $e) {
     echo $e;
 }
 
-// Get the users current number of points
-$points = getPoints($conn,$userid);
 ?>

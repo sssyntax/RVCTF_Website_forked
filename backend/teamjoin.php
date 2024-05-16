@@ -1,9 +1,9 @@
 <?php
 // Start session to access session data
 session_start();    
-require "includes/connect.inc.php";
-require "includes/getinfo.inc.php";
-require "includes/verify.inc.php";
+require_once "includes/connect.inc.php";
+require_once "includes/getinfo.inc.php";
+require_once "includes/verify.inc.php";
 $teamname = $_POST["team_name"];
 $teampassword = $_POST["team_password"];
 $userid = $_SESSION["userid"];

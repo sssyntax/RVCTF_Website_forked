@@ -8,3 +8,4 @@
     <link rel="stylesheet" href="static/css/footer.css">
     <link rel="stylesheet" href="static/css/global.css">
     <link rel="icon" type="image/x-icon" href="../../static/images/favicon.ico">
+    <script src = "static/js/default.js"></script>

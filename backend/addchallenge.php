@@ -1,7 +1,7 @@
 <?php
 session_start();
-require "includes/connect.inc.php";
-require "includes/verify.inc.php";
+require_once "includes/connect.inc.php";
+require_once "includes/verify.inc.php";
 $difficultylst = ["Easy","Medium","Hard"];
 if (verify_session()){
     // Check if fields are filled

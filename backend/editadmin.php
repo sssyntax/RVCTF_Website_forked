@@ -1,6 +1,7 @@
 <?php
     //Connect to the database
-    require "includes/connect.inc.php";
+    require_once "includes/connect.inc.php";
+    require_once "includes/verify.inc.php";
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Get the email from the form data
@@ -25,8 +26,29 @@
             echo $jsonData;
             exit();
         }
+    
+    if (!verify_login($conn)){
+        $error = 'notloggedin';
+        $response = array(
+            'confirm' => false,
+            'message' => $error,
+        );
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+    }
 
-
+    $userid = $_SESSION['userid'];
+    if (!getUserInfo($conn,$userid)['admin']){
+        $error = 'notadmin';
+        $response = array(
+            'confirm' => false,
+            'message' => $error,
+        );
+        header("Content-Type: application/json");
+        echo json_encode($response);
+        exit();
+    }
     //check if user exists, and if so, if theyre admin or not 
     $sql = "SELECT `id`, `admin` FROM `ctf_users` WHERE `email` = ?";
     $res = prepared_query($conn, $sql, [$email], 's');

@@ -7,6 +7,8 @@ require_once "backend/googleLogin.inc.php";
         $_SESSION['userid'] = null;
         $_SESSION['userEmail'] = null;
         $_SESSION['admin'] = null;
+    // set remember me cookie to expire
+        setcookie('rememberme', '', time() - 3600);
     ?>
     <title>RVCTF Login</title>
     <link rel="stylesheet" href="static/css/login.css">

@@ -18,7 +18,7 @@ body{
     margin: auto;
     padding: 2rem;
     background-color: rgba(52, 58, 64, 0.9);
-    width: 40%;
+    width: 60%;
     text-align: center;
 }
 
@@ -37,4 +37,17 @@ body{
     padding: 0;
     width: 80%;
     color: white;
+}
+
+#groupless-members{
+    font-family: 'Montserrat', sans-serif;
+    background-color: rgba(52, 58, 64, 0.9);
+    color: white;
+    font-size: 1.5em;
+    height: fit-content;
+    width: 100%;
+    padding:0.5em 1em;
+    font-family: 'Montserrat', sans-serif;
+    border: 2px solid var(--secondaryColor2);
+    text-align: center;
 }
