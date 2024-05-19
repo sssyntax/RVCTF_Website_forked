@@ -24,7 +24,7 @@
 }
 
 body{
-    color:var(--textColor)
+    color:var(--textColor);
 }
 
 .button{
@@ -59,7 +59,6 @@ body{
 }
 
 .button--secondary{
-    font-family: 'Montserrat', sans-serif;
     background-color: rgba(52, 58, 64, 0.9);
     color: white;
     font-size: 1.5em;

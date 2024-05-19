@@ -33,6 +33,17 @@ if ($loggedin != False) {
                 include('templates/User Pages/challenge_page.tpl.php');
             }
         break;
+        case 'createChallenge':
+            if ($_SESSION['admin']==1){
+                include 'templates/Components/header.tpl.php';
+                include('templates/User Pages/create_challenge.tpl.php');
+            }
+            else{
+                include('backend/challenge.php');
+                include 'templates/Components/header.tpl.php';
+                include('templates/User Pages/challenge_page.tpl.php');
+            }
+        break;
         case 'sendinvite':
             include 'templates/Components/header.tpl.php';
             include('templates/Login Pages/send_team_invite.tpl.php');

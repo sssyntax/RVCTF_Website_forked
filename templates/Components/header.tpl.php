@@ -49,7 +49,7 @@
         <tr>
             
             <td colspan = 2>
-                My Points: <?php echo $points?>
+                My Points: <span id = "points"><?php echo $points?></span>
             </td>
         </tr>
     </table>

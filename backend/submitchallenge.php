@@ -1,74 +1,64 @@
 <?php
 // Start session & access session details
 session_start();
-$userID = intval($_SESSION["userID"]);
-$email = $_SESSION["userEmail"];
+$userID = intval($_SESSION["userid"]);
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
 // Check if the user is logged in
-if (verify_session()) {
+function verifyAnswer($conn,$challengeId,$answer){
+    $sql = "SELECT `solution` FROM `challenges` WHERE `id` = ?;";
+    $res = prepared_query($conn,$sql,[$challengeId],'i');
+    $res -> bind_result($solution);
+    $res -> fetch();
+    mysqli_stmt_close($res);
+    $salt = "3Y_J2ACWccfmI8ve?(q_fkLl";
+    $encrypted = sha1($salt.$answer);
+    if (hash_equals($encrypted,$solution)){
+        return true;
+    }
+    return false;
+}
+
+function insertAnswer($conn,$challengeId,$userId){
+    $sql = "INSERT INTO `completedchallenges`(`userid`, `challengeid`, `timestamp`) VALUES (?, ?, ?)";
+    $res =  prepared_query($conn,$sql,[$userId, $challengeId, time()],'iii');
+    if (!$res){
+        return false;
+    }
+    mysqli_stmt_close($res);
+    return true;
+}
+if (verify_login($conn)) {
+    $userinfo = getUserInfo($conn, $userID);
     // Check if fields are set
     if (isset($_POST['id']) && isset($_POST["answer"])) {
         // Grab details about challenge
         $id = intval($_POST['id']);
         $answer = $_POST["answer"];
-        // Query database for challenge
-        $sql = "SELECT `solution`, `points` FROM `challenges` WHERE `id` = ?";
-        $res =  prepared_query($conn,$sql,[$id],'i');
-        $res -> bind_result($solution, $points);
-        $res -> fetch();
-        mysqli_stmt_close($res);
-        //DO NOT SHARE THIS SALT
-        $salt = "3Y_J2ACWccfmI8ve?(q_fkLl";
-        // Hash the submitted answer 
-        $encrypted = sha1($salt.$answer);
-        // Check if hashed answer is equal to the stored solution
-        if ($encrypted == $solution) {
-            // Sucess variable tracks any errors, changed when errors encountered
-            $success = true;
-            // Add completion record to completion database
-            $sql = "INSERT INTO `completedchallenges`(`userid`, `challengeid`, `timestamp`) VALUES (?, ?, ?)";
-            $res =  prepared_query($conn,$sql,[$userID, $id, time()],'iii');
-            // Query is unsucessful
-            if (!$res){
-                echo json_encode(array("Database error", 0), JSON_FORCE_OBJECT);
-                $success = false;
-                exit();
+        if (verifyAnswer($conn,$id,$answer)){
+            if (insertAnswer($conn,$id,$userID)){
+                $points = getPoints($conn,$userID);
+                onSuccess($conn,"Challenge Completed",[
+                    "points" => $points]);
             }
-            mysqli_stmt_close($res);
-            // Award the user the points
-            $sql = "UPDATE `ctf_users` SET `points` = `points` + ? WHERE `id` = ?";
-            $res =  prepared_query($conn,$sql,[$points, $userID],'ii');
-            // Award the team the points
-            $sql = "UPDATE `teams` SET `points` = `points` + ? WHERE `teamname` = ?;";
-            $res =  prepared_query($conn,$sql,[$points, $_SESSION['teamname']],'is');
-            // Query is unsucessful
-            if (!$res){
-                echo json_encode(array("Database error", 0), JSON_FORCE_OBJECT);
-                $success = false;
-                exit();
+            else{
+                onError($conn,"Please check your connection");
             }
-            mysqli_stmt_close($res);
-            // No errors encountered
-            if ($success) {
-                echo json_encode(array("Correct answer :)", $points), JSON_FORCE_OBJECT);
-            }
-        } 
-        else {
-            echo json_encode(array('Wrong answer :(', 0), JSON_FORCE_OBJECT);
         }
+        else{
+            onError($conn,"Incorrect Answer");
+        }
+        
     }
     // Not all fields filled, return error
     else if (!isset($_POST['id'])) {
-        echo json_encode(array("Please refresh the page", 0), JSON_FORCE_OBJECT);
+        onError($conn, "Please refresh the page");
     }
     else {
-        echo json_encode(array("Please type in a flag", 0), JSON_FORCE_OBJECT);
+        onError($conn, "Please enter a flag");
     }
 }
 // Prompt user to login
 else{
-    echo json_encode(array("Please log in again", 0), JSON_FORCE_OBJECT);
-    header("Location: ../index.php?filename=login");
+    onError($conn,"Please login again");
 }
-?>
