@@ -22,24 +22,25 @@ body {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    font-size: 300%;
     background-color: rgba(52, 58, 64, 0.9);
     height: 100%;
     width: 47%;
+    border-collapse: separate; 
+    border-spacing: 0.5em;
+    padding: 1em;
 }
 
 button {
     border: 2px solid transparent;
     font-family: header_font;
     color: white;
-    font-size: 150%;
-    background-color: transparent;
+        background-color: transparent;
     cursor: pointer;
 }
 
 button:hover {
-    border: 2px solid black;
-    border-radius: 5px;
+    filter:brightness(1.2);
+    backdrop-filter: brightness(1.2);
 }
 
 
@@ -52,4 +53,24 @@ button:hover {
 .errormsg {
     color:#ff3131;
     display: none;
+}
+
+#teamcreate, #teamjoin{
+    width:100%
+}
+
+#team-name, #password{
+    font-size: 0.5em;
+    width:20em
+}
+
+.teamname{
+    font-size: 2em;
+    font-family: header_font;
+}
+
+
+h2{
+    font-size: 2em;
+    font-family: header_font;
 }

@@ -35,30 +35,12 @@ class iimysqli_result
 
 function iimysqli_stmt_get_result($stmt)
 {
-    /**    EXPLANATION:
-     * We are creating a fake "result" structure to enable us to have
-     * source-level equivalent syntax to a query executed via
-     * mysqli_query().
-     *
-     *    $stmt = mysqli_prepare($conn, "");
-     *    mysqli_bind_param($stmt, "types", ...);
-     *
-     *    $param1 = 0;
-     *    $param2 = 'foo';
-     *    $param3 = 'bar';
-     *    mysqli_execute($stmt);
-     *    $result _mysqli_stmt_get_result($stmt);
-     *        [ $arr = _mysqli_result_fetch_array($result);
-     *            || $assoc = _mysqli_result_fetch_assoc($result); ]
-     *    mysqli_stmt_close($stmt);
-     *    mysqli_close($conn);
-     *
-     * At the source level, there is no difference between this and mysqlnd.
-     **/
     $metadata = mysqli_stmt_result_metadata($stmt);
     $ret = new iimysqli_result;
-    if (!$ret) return NULL;
-
+    if (!$ret)
+        return NULL;
+    $fields = $metadata->fetch_fields();
+    $ret->fields = $fields;
     $ret->nCols = mysqli_num_fields($metadata);
     $ret->stmt = $stmt;
 
@@ -89,6 +71,32 @@ function iimysqli_result_fetch_array(&$result)
 
 
 
+function iimysqli_result_fetch_assoc_array(&$result)
+{
+    $ret = array();
+    $code = "return mysqli_stmt_bind_result(\$result->stmt ";
+    $fields = $result->fields;
+    for ($i = 0; $i < $result->nCols; $i++) {
+        $ret[$fields[$i]->name] = NULL;
+        $code .= ", \$ret['" . $fields[$i]->name . "']";
+    }
+    ;
+
+    $code .= ");";
+    if (!eval($code)) {
+        return NULL;
+    }
+    ;
+
+    // This should advance the "$stmt" cursor.
+    if (!mysqli_stmt_fetch($result->stmt)) {
+        return NULL;
+    }
+    ;
+
+    // Return the array we built.
+    return $ret;
+}
 function GenerateRandomToken($length = 32){
     if(!isset($length) || intval($length) <= 8 ){
       $length = 32;
@@ -171,5 +179,20 @@ function rememberMe($conn) {
         }
     }
 
+}
+
+function onError($conn,$error,$additionalData = []) {
+    
+    $data = array_merge(["error"=>$error],$additionalData); 
+    echo json_encode($data, JSON_FORCE_OBJECT);
+    mysqli_close($conn);
+    exit();
+}
+
+function onSuccess($conn,$success,$additionalData = []){
+    $data = array_merge(["success"=>$success],$additionalData);
+    echo json_encode($data, JSON_FORCE_OBJECT);
+    mysqli_close($conn);
+    exit();
 }
 ?>

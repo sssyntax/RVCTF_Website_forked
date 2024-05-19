@@ -1,6 +1,4 @@
 body{
-    width:50vw;
-    height:60vw;
     margin:auto;
     padding:auto;
     background-image: url(../images/map_background.jpg);
@@ -13,11 +11,20 @@ body{
 #Content{
     background-color:#04121cce;
     padding: 1rem;
-    box-shadow: 1rem 1rem 0.5rem var(--secondaryColor1);
+    box-shadow: 0 0 0.5rem var(--secondaryColor1);
     border-radius: 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    gap:1em;
 }
 
-.dropbtn{
+.dropdown{
+    width:100%;
+}
+
+/* .dropbtn{
     padding:0.5em;
     width:20em;
     height:1em;
@@ -25,7 +32,7 @@ body{
     text-align:left;
     border: 1px solid white;
     color:var(--primaryColor);
-}
+} */
 
 .dropbtn:hover{
     cursor:pointer;
@@ -33,10 +40,6 @@ body{
 
 #dropdown-content{
     display:none;
-}
-
-.dropdown{
-    margin:0.5rem;
 }
 
 #dd_content{
@@ -51,6 +54,7 @@ body{
 
 h1{
     font-family: 'Saira Stencil One', cursive;
+    text-align: center;
 }
 
 #team_leader{

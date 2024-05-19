@@ -1,0 +1,68 @@
+
+
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-image: url(../images/map_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    /* background-color: rgb(0, 0, 4); */
+    color: var(--textColor);
+}
+h1{
+    text-align: center;
+    margin:0.25em 0;
+    margin-bottom:0.25em;
+    font-size: 3em;
+}
+h2{
+    text-align: center;
+    margin:0.25em 0;
+    margin-bottom:0.25em;
+    font-size: 2em;
+
+}
+.teaminfo{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+input{
+    font-family: 'Montserrat', sans-serif;
+    display: inline;
+    margin: 0.5em;
+}
+
+
+.members {
+    font-family: header_font;
+    background-color: rgba(52, 58, 64, 0.9);
+    color: white;
+    font-size: 1.5em;
+    height: fit-content;
+    width: 66%;
+    padding:0.5em 1em;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.kick{
+    font-size: 1em;
+    width:100%;
+    box-sizing: border-box;
+    margin:0;
+    border-radius: 0;
+}
+
+.place,.username,.points{
+    margin:0.25em;
+    text-align: center;
+
+}
+
+.actions a{
+text-decoration: none;
+}

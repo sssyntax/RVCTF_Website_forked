@@ -2,7 +2,7 @@
 session_start();
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
-if (verify_session()){
+if (verify_login($conn)){
     // Check if the user is an admin
     if ($_SESSION['admin'] == 1) {
         // Get the ID of the challenge

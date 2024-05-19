@@ -5,6 +5,7 @@ var admin = document.getElementsByTagName("BODY")[0].dataset.admin
 var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
+const author_popup = document.getElementById("author_popup");
 var id_popup = document.getElementsByClassName("challengeID");
 var cat_popup = document.getElementById("challengeCat");
 var input_popup_uncompleted = document.getElementById('popup_input_uncompleted') // input td for user to input flag
@@ -18,6 +19,7 @@ var add_chal_close = document.getElementById('add_chal_close');
 var points_span = document.getElementById('points');
 // Get rdev footer element to make sure new categories are inserted before it
 var rdev_footer = document.getElementById('rdev-footer');
+
 
 if (add_chal_close != null) {
   add_chal_close.onclick = function(){
@@ -55,13 +57,15 @@ function popup() {
   }
   // Display challenge popup
   chal_popup.style.display = "block";
-  // Set challenge title and description
+  // Set challenge title and description and author
   desc_popup.innerText = this.dataset.desc
   title_popup.innerText = this.dataset.title
-  // only admins will see this form feature (for deletion)
-  if (admin == 1) {
-    cat_popup.value = this.dataset.cat
-  }
+  author_popup.innerText = this.dataset.author
+  // set the count of users who have solved the challenge
+  document.getElementById('solved_count').innerText = "..."
+  getSolvedCount(this.dataset.id).then((count) => {
+    document.getElementById('solved_count').innerText = count
+  })
   // pass ID value into form for submission
   for (let item of id_popup) {
     item.value = this.dataset.id
@@ -74,137 +78,39 @@ function addChal(){
 
 
 
-function submitAnswer(form,event){
+async function submitAnswer(form,event){
   event.preventDefault()
   var formdata = new FormData(form)
   console.log(formdata)
-  try {
-    fetch("backend/submitchallenge.php", { method: "POST", body: formdata })
-  .then(response => response.json()) // wait for the asynchronous fetch 
-  .then(result => { // wait for the asynchronous json() method
-    // reset all buttons and popups
-    chal_popup.style.display = "none"
-    input_popup_uncompleted.style.display = 'none'; // reset the input td
-    input_popup_uncompleted.children[0].children[1].value = ""; // reset the flag input's value to ""
-    input_popup_completed.style.display = 'none'; // reset the completion td
-    // Alert user that they got the answer correct (1st item is the msg)
-    alert(result[0]) 
-    // answer is correct
-    if (result[0] == "Correct answer :)") {
-      // disable challenge for user
-      // Search for correct button to disable
-      for (let i=0; i<chal_btns.length; i++) {
-        // Check if the button's title is the same as the popup's title
-        if (chal_btns[i].dataset.title == title_popup.textContent) {
-          // indicate under data that challenge is compeleted
-          chal_btns[i].dataset.completed = 1;
-          // For the css to register the change
-          chal_btns[i].children[0].dataset.completed = 1;
-          }
-      }
-      // update points 
-      points_span.innerText = parseInt(points_span.innerText) + parseInt(result[1]);
-    }
-      
-  })
+  var response = await postRequest("backend/submitchallenge.php",formdata)
+  if (response.success){
+    alert("Correct Flag!")
+    // Close the popup
+    popupClose();
+    // Update the points
+    points_span.innerText = response.points
+    const currentChallenge = document.querySelector(`[data-id="${formdata.get('id')}"] .challenge_widget`)
+    currentChallenge.dataset.completed = 1
   }
-  catch (error) {
-    alert(error)
+  else{
+    alert(response.error)
   }
+
   return false  
   
 }
 
-function submitChallenge(form,event){
-  // Handle output when new challenge is created
-  event.preventDefault()
-  var formdata = new FormData(form)
-  fetch("backend/addchallenge.php", { method: "POST", body: formdata })
-  .then(response => response.json()) // wait for the asynchronous fetch
-  .then(result => {
-    alert(result[0])
-    if (result[0] == "Success"){
-      // RDev ppl can do the add in new challenges here!
-    // Array of all inputs
-    let ins = document.getElementsByClassName("add_chal_input");
-    let cat = document.getElementById("add_chal_cat").value;
-    let container = document.getElementById(cat);
-    let difficultylst = ["Easy","Medium","Hard"]
-    // Check if the category does not exist
-    if (container == null) {
-      // Create a new container
-      let title = document.createElement('h1');
-      title.textContent = cat;
-      title.classList.add('topic_header')
-      // create a new container
-      container = document.createElement('div');
-      container.id = cat;
-      // add the new elements into the DOM
-      document.body.insertBefore(title, rdev_footer);
-      document.body.insertBefore(container, rdev_footer);
-    }
-    // Create new button element
-    let btn = document.createElement("button");
-    // Set metadata for button
-    btn.dataset.desc = ins[5].value;
-    btn.dataset.title = ins[0].value;
-    btn.dataset.completed = 0;
-    btn.dataset.id = result[1];
-    btn.classList.add("challenge_btn");
-    btn.onclick = popup;
 
-    // create the table containing all the challenge
-    let table = document.createElement("table");
-    table.classList.add("challenge_widget");
-    let tbody = document.createElement("tbody"); 
-    tbody.classList.add("widget_body");
-
-    // Create name data row
-    let nameRow = document.createElement("tr");
-    nameRow.classList.add("name_div");
-    let nameData = document.createElement("td");
-    nameData.classList.add("name");
-    nameData.textContent = ins[0].value;
-    nameRow.appendChild(nameData);
-
-    // Create points data row
-    let pointsRow = document.createElement("tr");
-    pointsRow.classList.add("points_div");
-    let pointsData = document.createElement("td");
-    pointsData.classList.add("points");
-    pointsData.textContent = `${ins[2].value} | ${difficultylst[ins[3].value]}`
-    pointsRow.appendChild(pointsData);
-
-    // Create author data row
-    let authorRow = document.createElement("tr");
-    authorRow.classList.add("author_div");
-    let authorData = document.createElement("td");
-    authorData.classList.add("author");
-    authorData.textContent = ins[0].value
-    authorRow.appendChild(authorData);
-
-    // Append the 3 rows to the table
-    tbody.appendChild(nameRow);
-    tbody.appendChild(pointsRow);
-    tbody.appendChild(authorRow);
-    table.appendChild(tbody);
-    btn.appendChild(table);
-    container.appendChild(btn);
-    // reset all buttons and popups
-    chal_popup.style.display = "none";
-    for (let item of ins){
-      item.value = '';
-    }
-    add_chal_box.style.display = "none";
-      }
-  })
-  return false
-}
 
 function deleteChallenge(form, event) {
-  // Handle output when new challenge is created
+  const confirmation = confirm("Are you sure you want to delete this challenge?");
   event.preventDefault();
+  if (!confirmation) {
+    return false;
+  }
+  // Handle output when new challenge is created
   var formdata = new FormData(form);
+  console.log(formdata);
   fetch("backend/deletechallenge.php", { method: "POST", body: formdata })
   .then((response) => response.json())
   .then((result) => {
@@ -212,20 +118,18 @@ function deleteChallenge(form, event) {
     popupClose();
     alert(result);
     // Get the category of the challenge to delete
-    let category = document.getElementById(formdata.get('cat'));
-    // Check if the number of challenges in the category is 1
-    if (category.children.length == 1) {
-      // Remove the category from the DOM
-      category.parentElement.removeChild(category.previousElementSibling);
-      document.body.removeChild(category)
-    }
-    // Iterate through all the challenges in the category  
-    for (let challege of category.children) {
-      if (challege.dataset.cat == formdata.get('cat')) {
-        if (challege.dataset.id == formdata.get('id')) {
-          category.removeChild(challege);
-        }
-      }
+    let item = document.querySelector(`[data-id="${formdata.get('id')}"]`);
+    item.parentElement.removeChild(item);
+    if (item.parentElement.children.length == 0) {
+      item.parentElement.parentElement.parentElement.removeChild(item.parentElement.parentElement);
     }
   });
+}
+
+async function getSolvedCount(challengeID){
+  let response = await getRequest("backend/getSolvedCount.php",{challengeID:challengeID})
+  if (response.error){
+    alert(response.error)
+  }
+  return response.data
 }
