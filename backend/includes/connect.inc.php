@@ -11,7 +11,7 @@ define("CSRF_TOKEN_SECRET",'wxVy4t0EpypTDfPsEhqXfU92wsjnFce1bLMtbDyKWpbiVXGUp1D'
 // TO EDIT LOCALLY, UNCOMMENT THIS
 $servername = "localhost"; // for default: 127.0.0.1 
 $username = "ylrdxapi_rvctf"; // for x10: pjjabycm_ctfdb | for others: root
-$password = "HY4!Yt*G*?Zj"; // for x10: q6sFckv3 
+$password = "Fc7qHrLx81{H"; // for x10: q6sFckv3 
 $db_name = "ylrdxapi_rvctf"; // for x10: pjjabycm_ctfdb 
 $conn = new mysqli($servername,$username,$password,$db_name);
 function prepared_query($mysqli, $sql, $params, $types = "")
