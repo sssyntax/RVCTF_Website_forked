@@ -12,12 +12,10 @@ $client->setRedirectUri(redirecturl);
 $client->addScope("profile");
 $client->addScope("email");
 $googleUrl = $client->createAuthUrl();
-echo sprintf("<script>console.log('google URL: %s')</script>", $googleUrl);
 $_REQUEST["dummy"] = "dummy_var";
 function onLogin($conn,$user) {
     // Function to set the cookie
     $_SESSION['userid'] = $user;
-    print_r("userid:".$_SESSION['userid']);
     $token = GenerateRandomToken(128); // generate a token, should be 128 - 256 bit
     $tokenid = storeTokenForUser($conn, $user, $token);
     $cookie = $user . ':' . $token.':'.$tokenid;
