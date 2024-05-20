@@ -81,8 +81,7 @@ if ($loggedin != False) {
                 include('templates/Login Pages/login.tpl.php');
             break;
         case 'login':
-            echo "Yes";
-                include('templates/Login Pages/login.tpl.php');
+            include('templates/Login Pages/login.tpl.php');
             break;
         // Team joining & creation
         case 'teamsignup':

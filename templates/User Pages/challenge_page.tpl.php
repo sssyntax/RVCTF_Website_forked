@@ -12,11 +12,11 @@
         <div class = "challange_container" id =  "<?php echo $key; ?>">
         <?php foreach ($lstofvalues as $value){ ?>
         <button class="challenge_btn" 
-        data-desc = "<?php echo $value[6]; ?>" 
-                                    data-title = "<?php echo $value[1]; ?>" 
-                                    data-id = "<?php echo $value[0]; ?>" 
-                                    data-cat = "<?php echo $value[5]; ?>" 
-                                    data-completed = <?php echo $value[8]; ?>
+        data-desc = "<?= htmlspecialchars($value[6]); ?>" 
+                                    data-title = "<?= htmlspecialchars($value[1]); ?>" 
+                                    data-id = "<?= htmlspecialchars($value[0]) ?>" 
+                                    data-cat = "<?= htmlspecialchars($value[5]) ?>" 
+                                    data-completed = <?= htmlspecialchars($value[8]) ?>
                                     data-author = <?= htmlspecialchars($value[2]); ?>>
             <table class="challenge_widget" data-completed = <?php echo $value[8]; ?>>
                 <tbody class="widget_body">

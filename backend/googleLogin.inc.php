@@ -86,8 +86,6 @@ if(isset($_GET['code'])){
                 $res->fetch();
                 mysqli_stmt_close($res);
 
-                print_r("Hello");
-                print_r($id);
                 # set the cookie & session details
                 onLogin($conn,$id);
                 header("Location:index.php?filename=teamsignup");
