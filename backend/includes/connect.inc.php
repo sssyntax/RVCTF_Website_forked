@@ -28,6 +28,16 @@ function prepared_query($mysqli, $sql, $params, $types = "")
     return $stmt;
 }
 
+function fetchDataFromQuery($conn, $sql, $params, $types) {
+    $stmt = prepared_query($conn, $sql, $params, $types);
+    $result = iimysqli_stmt_get_result($stmt);
+    $data = [];
+    while ($row = iimysqli_result_fetch_assoc_array($result)) {
+        $data[] = $row;
+    }
+    mysqli_stmt_close($stmt);
+    return $data;
+}
 class iimysqli_result
 {
     public $stmt, $nCols;

@@ -68,9 +68,14 @@ div {
     display:inline-block;
 }
 
-.challenge_widget[data-completed="1"] {
-    background-color:var(--green);
+.challenge_btn[data-teamcompleted="1"] .challenge_widget {
+    background-color: var(--green);
 }
+
+.challenge_btn[data-individualcompleted="1"] .challenge_widget {
+    opacity:0.8
+}
+
 
 .challenge_widget:hover {
     filter:brightness(1.5);

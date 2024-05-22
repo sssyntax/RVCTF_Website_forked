@@ -1,133 +1,94 @@
 <?php
-// start session
+// Start session
 session_start();
 require_once "backend/includes/connect.inc.php";
 require_once "backend/includes/verify.inc.php";
+
+// Verify login status
 $loggedin = verify_login($conn);
-//echo sprintf($loggedin);
-// print_r($loggedin);
-if (isset($_GET['filename'])){
-    $filename = $_GET['filename']; 
+
+// Check if filename is set in GET request
+$filename = isset($_GET['filename']) ? $_GET['filename'] : "";
+function includePage($page, $data = [],$includeHeader = true) {
+    foreach ($data as $key => $value) {
+        $$key = $value;  // Create variable with name as key and value as value
+    }
+    if ($includeHeader) include 'templates/Components/header.tpl.php' ;
+    include 'templates/' . $page;
 }
-else{
-    $filename = "";
-}
-// include stars styling
+// Include head template
 require_once("templates/Components/head.tpl.php");
-if ($loggedin != False) {
+
+if ($loggedin) {
+    // User is logged in
     $userid = $_SESSION['userid'];
-    $points = getPoints($conn,$userid);
-    $teamstatus = getTeamStatusFromUserId($conn,$userid);
+    $points = getPoints($conn, $userid);
+    $teamstatus = getTeamStatusFromUserId($conn, $userid);
+    $userInfo = getUserInfo($conn, $userid);
+    $isAdmin = $userInfo['admin'];
     
-    // Include components 
+    $data = [
+        'points' => $points,
+        'teamstatus' => $teamstatus,
+        'userInfo' => $userInfo,
+        'isAdmin' => $isAdmin,
+        'filename' => $filename,
+        'conn' => $conn,
+        'userid' => $userid
+    ];
+    
+    
     switch ($filename) {
-        // Logged in pages
         case 'editadmin':
-            if ($_SESSION['admin']==1){
-                include 'templates/Components/header.tpl.php';
-                include 'templates/User Pages/editadmin.tpl.php';
-            }
-            else{
-                include('backend/challenge.php');
-                include 'templates/Components/header.tpl.php';
-                include('templates/User Pages/challenge_page.tpl.php');
-            }
-        break;
+            $isAdmin ? includePage('User Pages/editadmin.tpl.php',$data) : 
+                        includePage('User Pages/challenge_page.tpl.php',$data);
+            break;
+        
         case 'createChallenge':
-            if ($_SESSION['admin']==1){
-                include 'templates/Components/header.tpl.php';
-                include('templates/User Pages/create_challenge.tpl.php');
-            }
-            else{
-                include('backend/challenge.php');
-                include 'templates/Components/header.tpl.php';
-                include('templates/User Pages/challenge_page.tpl.php');
-            }
-        break;
+            $isAdmin ? includePage('User Pages/create_challenge.tpl.php',$data) : 
+                        includePage('User Pages/challenge_page.tpl.php',$data);
+            break;
+        
         case 'sendinvite':
-            include 'templates/Components/header.tpl.php';
-            include('templates/Login Pages/send_team_invite.tpl.php');
-        break;
+            includePage('Team Pages/send_team_invite.tpl.php',$data);
+            break;
+        
         case 'team':
-            include 'templates/Components/header.tpl.php';
-            if ($teamstatus){
-                include('templates/Team Pages/team.tpl.php');
-                
-            }
-            else{
-                include('templates/Team Pages/team_join_popup.tpl.php');
-            }
-        break;
-        case 'resources':
-            include 'templates/Components/header.tpl.php';
-            include('templates/User Pages/resources_page.tpl.php');
-        break;
+            $teamstatus? includePage('Team Pages/team.tpl.php',$data) : 
+                        includePage('Team Pages/team_join_popup.tpl.php',$data);
+            break;
+        
         case 'leaderboard':
-            if ($_SESSION['admin'] == 1) {
-                include('backend/leaderboard.php');
-                include 'templates/Components/header.tpl.php';
-                include('templates/User Pages/leaderboard.tpl.php');
-            }
-            else {
-                // Send user to challenge page if they are not admin
-                include('backend/challenge.php');
-                include 'templates/Components/header.tpl.php';
-                include('templates/User Pages/challenge_page.tpl.php');
-            }
-        break;
+            $isAdmin ? includePage('User Pages/leaderboard.tpl.php',$data) 
+            : includePage('User Pages/challenge_page.tpl.php',$data);
+            break;
+        
         case 'logout':
-                // Reset the entire session
-                session_reset();
-                include('templates/Login Pages/login.tpl.php');
+            session_reset();
+            includePage('Login Pages/login.tpl.php', $data,false);
             break;
+        
         case 'login':
-            echo "Yes";
-                include('templates/Login Pages/login.tpl.php');
+            includePage('Login Pages/login.tpl.php', $data,false);
             break;
-        // Team joining & creation
+        
         case 'teamsignup':
-            include('templates/Login Pages/team_choice.tpl.php');  
-        break;
+            includePage('Login Pages/team_choice.tpl.php', $data,false);
+            break;
+        
         case 'teamcreation':
-            include 'templates/Components/header.tpl.php';
-            include('templates/Team Pages/create_team.tpl.php');  
-        break;
-        // Error messages
-        case 'teamfail':
-            include('templates/Login Pages/join_team_msg.tpl.php');  
-        break;
-        case 'teamcreationfail':
-            include('templates/Login Pages/create_team_msg.tpl.php');
-        break;
-        case 'invite':
-            include('templates/Login Pages/team_join_popup.tpl.php');
-        break;
+            includePage('Team Pages/create_team.tpl.php',$data);
+            break;
+        
         default:
-            include('backend/challenge.php');
-            include 'templates/Components/header.tpl.php';
-            include('templates/User Pages/challenge_page.tpl.php');
+            includePage('User Pages/challenge_page.tpl.php', $data);
+            break;
     }
-}
-// User not logged in
-else {
-    // Reset the entire session
+} else {
+    // User not logged in
     session_reset();
-    switch ($filename) {
-        case 'signup':
-            include('templates/Login Pages/signup.tpl.php');  
-        break;    
-        default:
-            include('templates/Login Pages/login.tpl.php');
-    }
+    includePage('Login Pages/login.tpl.php', [],false);
 }
 
-// FOR DEBUGGING PURPOSES, COMMENT OUT BEFORE LAUNCH
-try {
-    echo sprintf("<script>console.log('Curr ID: %s | Curr email: %s | Admin: %s | Logged in: %s')</script>", $_SESSION['userid'], $_SESSION['userEmail'], $_SESSION['admin'],$_SESSION['loggedin']);
-}
-catch(Exception $e) {
-    echo "<script>console.log('Session not started')</script>";
-}
-// Add in footer component
+// Add footer component
 include('templates/Components/footer.tpl.php');
-?>

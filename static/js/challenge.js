@@ -58,7 +58,7 @@ function popup() {
   // Display challenge popup
   chal_popup.style.display = "block";
   // Set challenge title and description and author
-  desc_popup.innerText = this.dataset.desc
+  desc_popup.innerHTML = this.dataset.desc
   title_popup.innerText = this.dataset.title
   author_popup.innerText = this.dataset.author
   // set the count of users who have solved the challenge
