@@ -86,8 +86,12 @@ if ($loggedin) {
     }
 } else {
     // User not logged in
+    $data = [
+        'filename' => $filename,
+        'conn' => $conn
+    ];
     session_reset();
-    includePage('Login Pages/login.tpl.php', [],false);
+    includePage('Login Pages/login.tpl.php', $data,false);
 }
 
 // Add footer component

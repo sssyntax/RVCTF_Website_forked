@@ -2,7 +2,7 @@
 define("SECRET_KEY","uoqcy169(361");
 define("salt","vnljh19d1996v");
 define("CSRF_TOKEN_SECRET",'wxVy4t0EpypTDfPsEhqXfU92wsjnFce1bLMtbDyKWpbiVXGUp1D');
-
+define("FLAG_SALT","3Y_J2ACWccfmI8ve?(q_fkLl");
 //THIS NEEDS TO CHANGE IF YOU ARE USING SERVER
 // $servername = "localhost"; // for default: 127.0.0.1 
 // $username = "pjjabycm_ctfdb"; // for x10: pjjabycm_ctfdb | for others: root
@@ -28,8 +28,11 @@ function prepared_query($mysqli, $sql, $params, $types = "")
     return $stmt;
 }
 
-function fetchDataFromQuery($conn, $sql, $params, $types) {
+function fetchDataFromQuery($conn, $sql, $params, $types,$errorMessage = "Error in fetching data") {
     $stmt = prepared_query($conn, $sql, $params, $types);
+    if (!$stmt){
+        onError($conn,$errorMessage);
+    }
     $result = iimysqli_stmt_get_result($stmt);
     $data = [];
     while ($row = iimysqli_result_fetch_assoc_array($result)) {
@@ -38,6 +41,20 @@ function fetchDataFromQuery($conn, $sql, $params, $types) {
     mysqli_stmt_close($stmt);
     return $data;
 }
+
+function executeQuery($conn, $sql, $params, $types,$returnId = false,$errorMessage = "Error in executing query") {
+    $stmt = prepared_query($conn, $sql, $params, $types);
+    if (!$stmt){
+        onError($conn,$errorMessage);
+    }
+    if ($returnId) {
+        $id = $stmt->insert_id;
+        mysqli_stmt_close($stmt);
+        return $id;
+    }
+    mysqli_stmt_close($stmt);
+}
+
 class iimysqli_result
 {
     public $stmt, $nCols;
@@ -123,14 +140,14 @@ function GenerateRandomToken($length = 32){
 }
 function storeTokenForUser($conn,$user,$token){
     $token = hash_hmac("sha256",$token,salt);
-    $SQL = 'INSERT INTO `tokens`(`token`,`userid`) VALUES (?,?)';
+    $SQL = 'INSERT INTO `tokens`(`token`,`user_id`) VALUES (?,?)';
     
     print_r($token);
     print_r($user);
     $stmt = prepared_query($conn,$SQL,[$token,$user],"si");
     if (!$stmt) return false;
     mysqli_stmt_close($stmt);
-    $SQL = "SELECT MAX(`tokenid`) FROM `tokens` WHERE `token` = ? AND `userid` = ?";
+    $SQL = "SELECT MAX(`token_id`) FROM `tokens` WHERE `token` = ? AND `user_id` = ?";
     $stmt = prepared_query($conn,$SQL,[$token,$user],"si");
     if (!$stmt) return false;
     $res = iimysqli_stmt_get_result($stmt);
@@ -140,7 +157,7 @@ function storeTokenForUser($conn,$user,$token){
 
 function fetchTokenByUserName($conn,$user,$tokenid){
     # Finds the user's token in the database
-    $SQL = 'SELECT `token` FROM `tokens` WHERE `userid` = ? AND `tokenid` = ?';
+    $SQL = 'SELECT `token` FROM `tokens` WHERE `user_id` = ? AND `token_id` = ?';
     $stmt = prepared_query($conn,$SQL,[$user,$tokenid],"si");
     if (!$stmt) return false;
     $res = iimysqli_stmt_get_result($stmt);
@@ -161,7 +178,7 @@ function destroyCookie($conn){
     list ($user, $token, $tokenid,$mac) = explode(':', $cookie);
     if (!hash_equals(hash_hmac('sha256', $user . ':' . $token.':'.$tokenid, SECRET_KEY), $mac)) return false;
     
-    $SQL = 'DELETE FROM `tokens` WHERE `userid` = ? AND `tokenid` = ?';
+    $SQL = 'DELETE FROM `tokens` WHERE `user_id` = ? AND `token_id` = ?';
     $stmt = prepared_query($conn,$SQL,[$user,$tokenid],"ii");
     mysqli_stmt_close($stmt);
     setcookie("rememberme", "", time()-3600,"/");

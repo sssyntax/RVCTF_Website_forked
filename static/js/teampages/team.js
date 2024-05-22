@@ -4,11 +4,11 @@ async function disband(){
     var confirmation = confirm("Are you sure you want to disband this team?");
     if(confirmation){
         const response = await postRequest('backend/disband.php',{})
-        if(response == "Success"){
+        if(response.success){
             alert("Team has been disbanded.")
             window.location.href = "index.php?filename=teamcreation"
         }
-        else alert(response)
+        else alert(response.error)
     }
 } 
 

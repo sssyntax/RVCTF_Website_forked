@@ -102,7 +102,7 @@ async function submitAnswer(form,event){
 
 
 
-function deleteChallenge(form, event) {
+async function deleteChallenge(form, event) {
   const confirmation = confirm("Are you sure you want to delete this challenge?");
   event.preventDefault();
   if (!confirmation) {
@@ -110,20 +110,22 @@ function deleteChallenge(form, event) {
   }
   // Handle output when new challenge is created
   var formdata = new FormData(form);
-  console.log(formdata);
-  fetch("backend/deletechallenge.php", { method: "POST", body: formdata })
-  .then((response) => response.json())
-  .then((result) => {
-    // Close the popup
+  var response = await postRequest("backend/deletechallenge.php", formdata);
+  if (response.error) {
+    alert(response.error);
+    return false;
+  }
+  else{
     popupClose();
-    alert(result);
-    // Get the category of the challenge to delete
+    alert(response.success);
     let item = document.querySelector(`[data-id="${formdata.get('id')}"]`);
-    item.parentElement.removeChild(item);
     if (item.parentElement.children.length == 0) {
       item.parentElement.parentElement.parentElement.removeChild(item.parentElement.parentElement);
     }
-  });
+    item.parentElement.removeChild(item);
+    return true;
+  }
+  
 }
 
 async function getSolvedCount(challengeID){

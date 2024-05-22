@@ -3,6 +3,7 @@
 </head>
 
 <body>
+  <?php include 'backend/leaderboard.php'?>
 <?php include 'templates/Components/stars.php';?>
 
       <table class="table">
@@ -24,7 +25,7 @@
                         <h2>
                           <?php 
                           // Only get the front part of the email as username
-                          echo $team['teamname']; ?>
+                          echo $team['team_name']; ?>
                           <span class="number">
                             <?php echo $team['points']; ?>
                           </span>
