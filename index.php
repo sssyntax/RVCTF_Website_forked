@@ -39,6 +39,10 @@ if ($loggedin) {
     
     
     switch ($filename) {
+        case 'adminPanel':
+            $isAdmin ? includePage('User Pages/adminPanel.tpl.php',$data) : 
+                        includePage('User Pages/challenge_page.tpl.php',$data);
+            break;
         case 'editadmin':
             $isAdmin ? includePage('User Pages/editadmin.tpl.php',$data) : 
                         includePage('User Pages/challenge_page.tpl.php',$data);

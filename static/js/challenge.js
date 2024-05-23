@@ -107,8 +107,9 @@ async function submitAnswer(form,event){
     popupClose();
     // Update the points
     points_span.innerText = response.points
-    const currentChallenge = document.querySelector(`[data-id="${formdata.get('id')}"] .challenge_widget`)
-    currentChallenge.dataset.completed = 1
+    const currentChallenge = document.querySelector(`[data-id="${formdata.get('id')}"]`)
+    currentChallenge.dataset.individualcompleted = 1
+    currentChallenge.dataset.teamcompleted = 1
   }
   else{
     alert(response.error)

@@ -6,7 +6,7 @@
     <?php include 'templates/Components/stars.php'; ?>
     <?php include 'backend/teamjoin.php'; ?>
     <?php if ($invite) { ?>
-        <h1>You have been invited to <?= htmlspecialchars($invite['teamname']) ?></h1>
+        <h1>You have been invited to <?= htmlspecialchars($invite['team_name']) ?></h1>
         <div id="Content">
             <h2 id="team_leader">Team leader: <?= htmlspecialchars($invite['teamleader']) ?><br>
                 (<?= htmlspecialchars($invite['teamleaderemail']) ?>)</h2>
@@ -16,13 +16,13 @@
                     <?php
                     foreach ($invite["members"] as $teammember) {
                         $teammember = htmlspecialchars($teammember['username']);
-                        echo "<div id = 'dd_content'>$teammember</div>";
+                        echo "<div id = 'dd_content' class = 'button--secondary'>$teammember</div>";
                     }
                     ?>
                 </div>
             </div>
             <form method="POST">
-                <input type="hidden" name="teamid" value="<?= $invite['teamid'] ?>">
+                <input type="hidden" name="teamid" value="<?= $invite['team_id'] ?>">
                 <button class="button button-medium accept " name="actionAccept" type="submit" value="Accept">Accept</button>
                 <button class="button button-medium reject" name="actionDecline" type="submit" value="Decline">Decline</button>
             </form>

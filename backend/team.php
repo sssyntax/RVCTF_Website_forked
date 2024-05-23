@@ -20,7 +20,8 @@ $role = $teamstatus['position'];
 $sql = "
     SELECT username,
         COALESCE(SUM(points), 0) AS total,
-        team_name
+        team_name,
+        ctf_users.id AS userid
     FROM teamates
     LEFT JOIN ctf_users ON teamates.user_id = ctf_users.id
     LEFT JOIN completedchallenges ON completedchallenges.user_id = ctf_users.id

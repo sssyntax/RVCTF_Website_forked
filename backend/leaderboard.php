@@ -32,4 +32,26 @@ while ($row = mysqli_fetch_assoc($result)) {
     // Add the row to the array of all users 
     array_push($teams, $row);
 }
+
+$sql = "SELECT username, team_name, SUM(points) AS points 
+    FROM ( 
+        SELECT u.id as user_id, c.id as challenge_id, c.points, team_name,username FROM ctf_users u 
+        JOIN completedchallenges uc ON u.id = uc.user_id 
+        JOIN challenges c ON uc.challenge_id = c.id 
+        JOIN teamates t ON u.id = t.user_id 
+        JOIN teams ON t.team_id = teams.team_id 
+        GROUP BY user_id, challenge_id 
+    ) AS user_challenges 
+    ORDER BY points DESC;
+";
+
+$users = [];
+$result = mysqli_query($conn, $sql);
+// Save data into an associatve array (like python dictionary)
+// Iterate through every single row in the result to convert to associative array
+while ($row = mysqli_fetch_assoc($result)) {
+    // Add the row to the array of all users
+    array_push($users, $row);
+}
+
 ?>

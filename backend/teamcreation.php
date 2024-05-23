@@ -30,21 +30,18 @@ $res->fetch();
 mysqli_stmt_close($res);
 
 if ($count >= 1) {
-    header("Location: ../index.php?filename=teamcreationfail&teamleader=" . $teamleader);
-    exit();
+    onError($conn, "Team name already exists. Try a different name.");
 }
 
 if (!verify_login($conn)) {
-    header("Location: ../index.php?filename=login&criticalerror=true");
-    exit();
+    onError($conn, "Please login again");
 }
 
 $userinfo = getUserInfo($conn, $userid);
 $teamExists = getTeamStatusFromUserId($conn, $userid);
 
 if ($teamExists) {
-    header("Location: ../index.php?filename=challenge&alrhave=true");
-    exit();
+    onError($conn, "User is already part of a team");
 }
 
 // Create new team with current user as team leader
@@ -55,6 +52,5 @@ $teamid = mysqli_insert_id($conn);
 addUserToTeam($conn, $userid, $teamid);
 $_SESSION['teamid'] = $teamid;
 
-header("Location: ../index.php?filename=challenge");
-exit();
+onSuccess($conn, "Team created successfully");
 ?>

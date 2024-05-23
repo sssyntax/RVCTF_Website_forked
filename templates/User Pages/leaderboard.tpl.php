@@ -5,8 +5,8 @@
 <body>
   <?php include 'backend/leaderboard.php'?>
 <?php include 'templates/Components/stars.php';?>
-
-      <table class="table">
+<h2 style = "text-align:center;">Team Ranks</h2>
+      <table class="table team">
         <tr>
           <td>
             <ul class="leader">
@@ -28,6 +28,37 @@
                           echo $team['team_name']; ?>
                           <span class="number">
                             <?php echo $team['points']; ?>
+                          </span>
+                        </h2>
+                    </li>
+                  <?php $index++;}?>
+            </ul>
+          </td>
+        </tr>
+      </table>
+      <h2 style = "text-align:center;">Individual Ranks</h2>
+      <table class="table individual">
+        <tr>
+          <td>
+            <ul class="leader">
+                  <?php 
+                  $index = 1;
+                  foreach($users as $user){ ?>
+                    <li id = 
+                    <?php if ($index == 1) {
+                      echo "decoration";
+                      } else if ($index == 2) {
+                        echo "decoration2";
+                      } else if ($index == 3) {
+                        echo "decoration3";
+                      } ?>>
+                        <span class='list_num'><?php echo $index; ?></span>
+                        <h2>
+                          <?php 
+                          // Only get the front part of the email as username
+                          echo $user['username']; ?>(<?= $user['team_name'] ?>)
+                          <span class="number">
+                            <?php echo $user['points']; ?>
                           </span>
                         </h2>
                     </li>

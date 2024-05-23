@@ -20,8 +20,8 @@ function verifyAnswer($conn, $challengeId, $answer) {
 }
 
 function insertAnswer($conn, $challengeId, $userId) {
-    $sql = "INSERT INTO `completedchallenges`(`user_id`, `challenge_id`, `timestamp`) VALUES (?, ?, ?)";
-    return executeQuery($conn, $sql, [$userId, $challengeId, time()], 'iii', false, "Failed to insert answer");
+    $sql = "INSERT IGNORE INTO `completedchallenges`(`user_id`, `challenge_id`, `timestamp`) VALUES (?, ?, ?)";
+    return executeQuery($conn, $sql, [$userId, $challengeId, time()], 'iii', true, "Failed to insert answer");
 }
 
 if (!verify_login($conn)) {
@@ -55,4 +55,3 @@ if (verifyAnswer($conn, $id, $answer)) {
 } else {
     onError($conn, "Incorrect Answer");
 }
-?>
