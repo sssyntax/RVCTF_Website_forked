@@ -1,83 +1,45 @@
 <?php
-    require "includes/connect.inc.php";
-    require "includes/verify.inc.php";
-    $success = false;
-    $message = '';
-    if (!verify_login($conn)){
-        $error = 'notloggedin';
-        $response = array(
-            'confirm' => false,
-            'message' => $error,
-        );
-        header("Content-Type: application/json");
-        echo json_encode($response);
-        exit();
-    }
+require "includes/connect.inc.php";
+require "includes/verify.inc.php";
+header("Content-Type: application/json");
 
-    $userid = $_SESSION['userid'];
-    if (!getUserInfo($conn,$userid)['admin']){
-        $error = 'notadmin';
-        $response = array(
-            'confirm' => false,
-            'message' => $error,
-        );
-        header("Content-Type: application/json");
-        echo json_encode($response);
-        exit();
-    }
-    //collect confirmform info
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $confirm = $_POST['confirm'] ?? '';
-        $admin = $_POST['admin'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $id = $_POST['id'] ?? '';
+if (!verify_login($conn)) {
+    onError($conn, 'notloggedin');
+}
 
-        $sql = "UPDATE `ctf_users` SET `admin` = ? WHERE `id` = ?";
-        
-        //update database
-        if (isset($confirm) and $confirm == true){
-            if ($admin == 0){
-                $res = prepared_query($conn, $sql, [1, $id], 'ii');
-                if ($res == false){
-                    $message = 'databaseerror';
-                }
-                else {
-                    $sql2 = "SELECT `admin` FROM `ctf_users` WHERE id = ?";
-                    $res2 = prepared_query($conn, $sql2, [$id], 'i');
-                    $res2 -> bind_result($check);
-                    $res2 -> fetch();
-                    if ($check == 1){
-                        $success = true;
-                        $message = "$email is now an admin.";
-                    }
-                }
-                mysqli_stmt_close($res2);
-            }
+$userid = $_SESSION['userid'];
+$userInfo = getUserInfo($conn, $userid);
+if (!$userInfo['admin']) {
+    onError($conn, 'notadmin');
+}
 
-            else if ($admin == 1){
-                $res = prepared_query($conn, $sql, [0, $id], 'ii');
-                if ($res == false){
-                    $message = 'databaseerror';
-                }
-                else {
-                    $sql2 = "SELECT `admin` FROM `ctf_users` WHERE id = ?";
-                    $res2 = prepared_query($conn, $sql2, [$id], 'i');
-                    $res2 -> bind_result($check);
-                    $res2 -> fetch();
-                    if ($check == 0){
-                        $success = true;
-                        $message = "$email is no longer an admin.";
-                    }
-                }
-                mysqli_stmt_close($res2);
-            }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    onError($conn, 'Invalid request method');
+}
 
-            //send success and admin status back to tpl
-            $response = array(
-                'success' => $success,
-                'message' => $message,
-            );
-            header("Content-Type: application/json");
-            echo json_encode($response);
-        }
-    }
+$confirm = getPostParam('confirm');
+$admin = getPostParam('admin');
+$email = getPostParam('email');
+$id = getPostParam('id');
+
+if ($confirm != true){
+    onError($conn, 'Invalid confirmation value');
+}
+
+$newAdminStatus = ($admin == 0) ? 1 : 0;
+$sql = "UPDATE `ctf_users` SET `admin` = ? WHERE `id` = ?";
+$res = executeQuery($conn, $sql, [$newAdminStatus, $id], 'ii', false, 'databaseerror');
+
+$sql2 = "SELECT `admin` FROM `ctf_users` WHERE id = ?";
+$result = fetchDataFromQuery($conn, $sql2, [$id], 'i', 'Failed to fetch updated admin status');
+
+if (empty($result)) {
+    onError($conn, 'databaseerror');
+}
+
+$check = $result[0]['admin'];
+$success = ($check == $newAdminStatus);
+$message = ($newAdminStatus == 1) ? "$email is now an admin." : "$email is no longer an admin.";
+
+onSuccess($conn, $success, ['message' => $message]);
+

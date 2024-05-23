@@ -2,47 +2,96 @@
 session_start();
 require_once "includes/connect.inc.php";
 require_once "includes/verify.inc.php";
-$difficultylst = ["Easy","Medium","Hard"];
-if (verify_login($conn)){
-    // Check if fields are filled
-    $userInfo = getUserInfo($conn,$_SESSION['userid']);
-    if (!$userInfo['admin']){
-        echo json_encode(["error"=>"Not Admin"], JSON_FORCE_OBJECT);
-        exit();
+function uploadFilesToDatabase($conn,$files,$challengeId){
+    $sql = "INSERT INTO `additional_materials` (`file_name`, `challenge_id`) VALUES (?, ?)";
+    foreach ($files as $file) {
+        executeQuery($conn, $sql, [$file, $challengeId], 'si');
     }
-    if (isset($_POST['title'])&&isset($_POST['author'])&&isset($_POST['points'])&&isset($_POST['difficulty'])&&isset($_POST['category'])&&isset($_POST['desc'])&&isset($_POST['solution'])){
-        $title = $_POST['title'];
-        $author =$_POST['author'];
-        $points = $_POST['points'];
-        $difficulty = array_search($_POST['difficulty'], $difficultylst);
-        $category = $_POST['category'];
-        $desc = htmlspecialchars($_POST['desc']);
-        $solution = $_POST['solution'];
+}
+function uploadFilesToServer($conn, $files, $challengeId, $targetDir = "../challengeMaterials/") {
+    // Helper functions
 
-        $salt = "3Y_J2ACWccfmI8ve?(q_fkLl"; //DO NOT SHARE THIS SALT
-        $encrypted = sha1($salt.$solution);
-        $sql = "INSERT INTO `challenges` (`title`, `author`, `points`, `difficulty`, `category`, `description`, `solution`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $res =  prepared_query($conn,$sql,[$title,$author,$points,$difficulty,$category,$desc,$encrypted],'ssiisss');
-        if ($res){
-            mysqli_stmt_close($res);
-            $sql = "SELECT `id` FROM `challenges` WHERE `title` = ? AND `description` = ?; ";
-            $res = prepared_query($conn, $sql, [$title, $desc], 'ss');
-            $res -> bind_result($id);
-            $res -> fetch();
-            echo json_encode(["success"=>1], JSON_FORCE_OBJECT);
-            mysqli_stmt_close($res);
+    function newFileName($targetDir, $fileName) {
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $fileBaseName = pathinfo($fileName, PATHINFO_FILENAME);
+        $uniqueFileName = $fileName;
+        $counter = 1;
+
+        while (file_exists($targetDir . $uniqueFileName)) {
+            $uniqueFileName = $fileBaseName . '_' . $counter . '.' . $fileExtension;
+            $counter++;
         }
-        else{
-            echo json_encode(["error"=>"Please Check your Connection"], JSON_FORCE_OBJECT);
-            mysqli_stmt_close($res);
+
+        return $uniqueFileName;
+    }
+    $newFiles = [];
+    for ($i = 0; $i < count($files['name']); $i++) {
+        $file = [
+            'name' => $files['name'][$i],
+            'type' => $files['type'][$i],
+            'tmp_name' => $files['tmp_name'][$i],
+            'error' => $files['error'][$i],
+            'size' => $files['size'][$i],
+        ];
+
+        $uniqueFileName = newFileName($targetDir, $file['name']);
+        $targetFilePath = $targetDir . $uniqueFileName;
+        $newFiles[] = $uniqueFileName;
+
+        // Check for any errors in the uploaded file
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            onError($conn, "Error Uploading File: " . $file['name']);
         }
+
+        // Check if the file is empty
+        if (empty($file["name"])) {
+            onError($conn, "Error Uploading File: " . $file['name']);
+        }
+
+        // Ensure the upload directory exists
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        // Move the uploaded file to the target directory
+        if (!move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+            onError($conn, "Error Uploading File: " . $file['name']);
+        }
+
     }
-    // Not all fields filled
-    else{
-        echo json_encode(["error"=>"Funny little hacker"], JSON_FORCE_OBJECT);
-    }
+    uploadFilesToDatabase($conn, $newFiles,$challengeId);
 }
-else{
-    echo json_encode(array("Relogin", 0), JSON_FORCE_OBJECT);
+
+$difficultylst = ["Easy", "Medium", "Hard"];
+
+if (!verify_login($conn)) {
+    onError($conn, "Relogin required");
 }
-?>
+
+$userInfo = getUserInfo($conn, $_SESSION['userid']);
+if (!$userInfo['admin']) {
+    onError($conn, "Not Admin");
+}
+
+$title = getPostParam('title');
+$author = getPostParam('author');
+$points = getPostParam('points');
+$difficulty = getPostParam('difficulty');
+$category = getPostParam('category');
+$desc = getPostParam('desc');
+$solution = getPostParam('solution');
+
+if (!$title || !$author || !$points || $difficulty === false || !$category || !$desc || !$solution) {
+    onError($conn, "All fields are required");
+}
+
+$encrypted = sha1(FLAG_SALT . $solution);
+
+$sql = "INSERT INTO `challenges` (`title`, `author`, `points`, `difficulty`, `category`, `description`, `solution`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$insertId = executeQuery($conn, $sql, [$title, $author, $points, $difficulty, $category, $desc, $encrypted], 'ssiisss',true);
+
+if (isset($_FILES['files'])) {
+    uploadFilesToServer($conn, $_FILES['files'], $insertId);
+}
+
+onSuccess($conn, 1);

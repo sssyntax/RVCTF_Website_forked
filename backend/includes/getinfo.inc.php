@@ -1,16 +1,16 @@
 <?php
 function getTeamStatusFromUserId($conn, $userId){
     $sql = "SELECT 
-                teams.teamname, 
+                teams.team_name, 
                 CASE 
                     WHEN teams.teamleader_id = ? THEN 'leader'
                     ELSE 'member'
                 END AS status,
-                teams.teamid
+                teams.team_id
             FROM 
                 teams 
             JOIN 
-                teamates ON teamates.team_id = teams.teamid
+                teamates ON teamates.team_id = teams.team_id
             WHERE 
                 teamates.user_id = ?;
             ";
@@ -23,12 +23,13 @@ function getTeamStatusFromUserId($conn, $userId){
 
 function getPoints($conn,$userid){
     $sql = "SELECT SUM(challenges.points) FROM completedchallenges 
-            JOIN challenges ON completedchallenges.challengeid = challenges.id 
-            WHERE completedchallenges.userid = ?";
+            JOIN challenges ON completedchallenges.challenge_id = challenges.id 
+            WHERE completedchallenges.user_id = ?";
     $res = prepared_query($conn,$sql,[$userid],"i");
     $res -> bind_result($points);
     $res -> fetch();
     mysqli_stmt_close($res);
+    $points = $points ? $points : 0;
     return $points;
 }
 
@@ -39,5 +40,13 @@ function getUserInfo($conn,$userid){
     if (!($res -> fetch())) return false;
     mysqli_stmt_close($res);
     return ["username"=>$username,"email"=>$email,"admin"=>$admin];
+}
+
+function getPostParam($param) {
+    return isset($_POST[$param]) ? htmlspecialchars($_POST[$param]) : null;
+}
+
+function getGetParam($param) {
+    return isset($_GET[$param]) ? htmlspecialchars($_GET[$param]) : null;
 }
 ?>

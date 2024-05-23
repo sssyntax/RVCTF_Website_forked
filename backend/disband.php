@@ -2,22 +2,20 @@
 require_once "includes/connect.inc.php";
 require_once "includes/verify.inc.php";
 header('Content-Type: application/json');
+
 if (!verify_login($conn)) {
-    echo json_encode("You are not logged in.");
-    exit();
+    onError($conn, "You are not logged in.");
 }
 
 $userid = $_SESSION['userid'];
 $teamstatus = getTeamStatusFromUserId($conn, $userid);
 
 if ($teamstatus['position'] != "leader") {
-    echo json_encode("Only the leader may disband the team.");
-    exit();
+    onError($conn, "Only the leader may disband the team.");
 }
 
 $teamid = $teamstatus['teamid'];
-$sql = "DELETE FROM teams WHERE teamid = ?";
-prepared_query($conn, $sql, [$teamid], "i");
+$sql = "DELETE FROM teams WHERE team_id = ?";
+executeQuery($conn, $sql, [$teamid], "i", false, "Failed to disband the team");
 
-echo json_encode("Success");
-
+onSuccess($conn, "Success");

@@ -6,10 +6,9 @@
 
     <h1 class="header">Create Team</h1>
     <?php if (!getTeamStatusFromUserId($conn,$userid)){?>
-    <form method = "POST" action = "backend/teamcreation.php">
+    <form method = "POST" onsubmit="submitForm(event)">
     
     <table id = "teamcreate-table" class="centre_box">
-        
             <tr>
                 <td class = "teamname">
                     Team Name: 
@@ -25,5 +24,6 @@
     <?php } else {?>
         <h2 class = "align-text-center">You are already in a team</h2>
     <?php }?>
+    <script src="static/js/teampages/teamcreation.js"></script>
 </body>
 </html>

@@ -57,8 +57,20 @@
                             type="text" placeholder="Solution"></td>
                 </tr>
                 <tr class="add_chal_tr" id="add_chal_link_tr">
+                    <td class="add_chal_td">Additional Files:</td>
+                    <td class="add_chal_td_input">
+                        <div class = "button add_chal_input">
+                            <input name="files[]" class="file_upload" id="add_chal_link"
+                                type="file" placeholder="Additional Files" multiple>
+                            <div class = "file_names">
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="add_chal_tr" id="add_chal_link_tr">
                     <td class="add_chal_td" colspan="2">
-                        <input type="submit" class = "button" id="add_chal_submit_btn" value="Submit">
+                            <input type="submit" class = "button" id="add_chal_submit_btn" value="Submit">
                     </td>
                 </tr>
             </table>
