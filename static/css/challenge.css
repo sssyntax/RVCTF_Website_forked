@@ -270,3 +270,8 @@ input:focus, textarea {
     background: none;
     cursor: pointer;
 }
+
+#file_names{
+    flex-direction: column;
+    gap:0.1em;
+}

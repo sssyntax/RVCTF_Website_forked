@@ -23,6 +23,11 @@
                 <div id="desc_popup" style='overflow: scroll;height: 20ch;display:block;'>
 
                 </div>
+                <div id="file_names" style='display: none;'>
+                    <h3>Additional Materials</h3>
+                    <ul id="file_names_list">
+                    </ul>
+                </div>
                 <div>
                     Author: <span id="author_popup"></span>
                 </div>

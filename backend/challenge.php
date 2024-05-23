@@ -3,8 +3,8 @@ require_once "includes/connect.inc.php";
 require_once "includes/getinfo.inc.php";
 
 $challenges = [];
-$completed = [];
 $difficultylst = ["Easy", "Medium", "Hard"];
+$separator = '|'; // Define a unique separator for file names
 
 // Get all challenges in the database
 $sql = "
@@ -18,7 +18,8 @@ $sql = "
         c.points, 
         c.category, 
         c.description, 
-        COALESCE(s.solve_count, 0) AS solve_count
+        COALESCE(s.solve_count, 0) AS solve_count,
+        COALESCE(a.file_names, '') AS file_names
     FROM `challenges` c
     LEFT JOIN (
         SELECT `challenge_id`, COUNT(*) AS `solve_count` 
@@ -39,20 +40,28 @@ $sql = "
         FROM `completedchallenges` 
         WHERE `user_id` = ?
     ) v ON c.id = v.challenge_id
+    LEFT JOIN (
+        SELECT `challenge_id`, GROUP_CONCAT(`file_name` SEPARATOR '{$separator}') AS file_names
+        FROM `additional_materials`
+        GROUP BY `challenge_id`
+    ) a ON c.id = a.challenge_id
     ORDER BY c.category, c.difficulty ASC, s.solve_count DESC
 ";
 
-// $res = mysqli_query($conn, $sql);
 $results = fetchDataFromQuery($conn, $sql, [$userid, $userid], "ii");
+
 foreach ($results as $row) {
     // Check if challenge has been completed
     $row['completed'] = $row['teamsolved'] || $row['individualsolved'] ? 1 : 0;
 
+    // Split file names into an array
+    $row['file_names'] = !empty($row['file_names']) ? explode($separator, $row['file_names']) : [];
+    $row['file_names'] = array_map('htmlspecialchars', $row['file_names']);
+    $row['file_names'] = json_encode($row['file_names']);
     // Add the challenge to the list of challenges
     if (!isset($challenges[$row['category']])) {
         $challenges[$row['category']] = [];
     }
     $challenges[$row['category']][] = $row;
-}   
+}
 
-// The connection should remain open for further operations, if needed

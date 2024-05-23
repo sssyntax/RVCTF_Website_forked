@@ -10,6 +10,7 @@ function createChallengeButton($value, $difficultylst,$inTeam=false) {
     $points = htmlspecialchars($value["points"]);
     $difficulty = htmlspecialchars($difficultylst[$value["difficulty"]]);
     $solved_by = htmlspecialchars($value["solve_count"]);
+    $file_names = $value["file_names"];
 
     return <<<HTML
 <button class="challenge_btn" 
@@ -21,6 +22,7 @@ function createChallengeButton($value, $difficultylst,$inTeam=false) {
         data-author="$author"
         data-teamcompleted="$teamCompleted"
         data-individualcompleted = "$individualCompleted"
+        data-filenames = '$file_names'
         >
     <table class="challenge_widget" >
         <tbody class="widget_body">

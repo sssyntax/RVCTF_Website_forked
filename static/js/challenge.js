@@ -44,7 +44,15 @@ function popupClose() {
   // reset the value of the flag input
   input_popup_uncompleted.value = '';
 }
-
+function addFile($fileName){
+  var fileList = document.getElementById('file_names');
+  const fileDownload = document.createElement('a');
+  fileDownload.href = `challengeMaterials/${$fileName}`;
+  fileDownload.download = $fileName;
+  fileDownload.innerText = $fileName;
+  console.log(fileDownload)
+  fileList.appendChild(fileDownload);
+}
 function popup() {
   // check if the challenge is completed
   if (this.dataset.completed == 1) {
@@ -61,6 +69,16 @@ function popup() {
   desc_popup.innerHTML = this.dataset.desc
   title_popup.innerText = this.dataset.title
   author_popup.innerText = this.dataset.author
+  // Set Additional Material Downloads
+  const fileNames = JSON.parse(this.dataset.filenames);
+  const fileList = document.getElementById('file_names');
+  if (fileNames.length > 0) fileList.style.display = 'flex';
+  else fileList.style.display = 'none';
+
+  fileList.innerHTML = '';
+  for (let fileName of fileNames) {
+    addFile(fileName);
+  }
   // set the count of users who have solved the challenge
   document.getElementById('solved_count').innerText = "..."
   getSolvedCount(this.dataset.id).then((count) => {

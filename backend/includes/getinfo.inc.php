@@ -29,6 +29,7 @@ function getPoints($conn,$userid){
     $res -> bind_result($points);
     $res -> fetch();
     mysqli_stmt_close($res);
+    $points = $points ? $points : 0;
     return $points;
 }
 
