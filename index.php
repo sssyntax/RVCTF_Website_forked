@@ -47,7 +47,10 @@ if ($loggedin) {
             $isAdmin ? includePage('User Pages/editadmin.tpl.php',$data) : 
                         includePage('User Pages/challenge_page.tpl.php',$data);
             break;
-        
+        case 'addpoints':
+            $isAdmin ? includePage('User Pages/admin_points.tpl.php',$data) : 
+                        includePage('User Pages/challenge_page.tpl.php',$data);
+            break;
         case 'createChallenge':
             $isAdmin ? includePage('User Pages/create_challenge.tpl.php',$data) : 
                         includePage('User Pages/challenge_page.tpl.php',$data);
