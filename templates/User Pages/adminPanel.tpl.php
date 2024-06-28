@@ -8,7 +8,10 @@
     <a href = "index.php?filename=editadmin" >
         <input type = "button" class = "button" value = "Edit Admin" style = "width:fit-content;margin:auto;display:block;">
     </a><br>
+    <a href = "index.php?filename=addpoints" >
+        <input type = "button" class = "button" value = "Add Points" style = "width:fit-content;margin:auto;display:block;">
+    </a><br>
     <a href = "index.php?filename=createChallenge">
         <input type = "button" class = "button" value = "Create Challenge" style = "width:fit-content;margin:auto;display:block;"> 
     </a>
-</body>
+</body> 
