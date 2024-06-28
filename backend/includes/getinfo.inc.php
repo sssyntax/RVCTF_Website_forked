@@ -22,8 +22,9 @@ function getTeamStatusFromUserId($conn, $userId){
 }
 
 function getPoints($conn,$userid){
-    $sql = "SELECT SUM(challenges.points) FROM completedchallenges 
-            JOIN challenges ON completedchallenges.challenge_id = challenges.id 
+    $sql = "SELECT SUM(challenges.points) + SUM(admin_points.points) FROM completedchallenges 
+            JOIN challenges ON completedchallenges.challenge_id = challenges.id
+            JOIN admin_points ON admin_points.user_id = completedchallenges.user_id 
             WHERE completedchallenges.user_id = ?";
     $res = prepared_query($conn,$sql,[$userid],"i");
     $res -> bind_result($points);

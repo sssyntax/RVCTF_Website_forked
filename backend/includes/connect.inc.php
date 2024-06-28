@@ -29,6 +29,17 @@ function prepared_query($mysqli, $sql, $params, $types = "")
 }
 
 function fetchDataFromQuery($conn, $sql, $params, $types,$errorMessage = "Error in fetching data") {
+    if ($params == []) {
+        $stmt = $conn->query($sql);
+        if (!$stmt){
+            onError($conn,$errorMessage);
+        }
+        $data = [];
+        while ($row = $stmt->fetch_assoc()) {
+            $data[] = $row;
+        }
+        return $data;
+    } 
     $stmt = prepared_query($conn, $sql, $params, $types);
     if (!$stmt){
         onError($conn,$errorMessage);

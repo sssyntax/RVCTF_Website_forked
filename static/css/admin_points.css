@@ -1,0 +1,34 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+    background-image: url(../images/map_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    /* background-color: rgb(0, 0, 4); */
+    color: var(--textColor);
+}
+
+.content{
+    width:80vw;
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+}
+
+.users{
+    margin-top:1em;
+
+}
+
+.users, .users th,.users td, .users tr {
+    border: 1px solid var(--secondaryColor2);
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1em;
+    background: rgba(52, 58, 64, 0.9);
+}
+
+.users td, .users th {
+    padding: 0.5em;
+    text-align: center;
+}
