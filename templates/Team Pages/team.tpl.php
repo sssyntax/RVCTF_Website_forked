@@ -10,10 +10,17 @@
     <div class = "teaminfo">
         <h1><?= htmlspecialchars($teamname) ?></h1>
         <h2>Points: <?= htmlspecialchars($totalpoints) ?></h2>
-        <div class = 'actions'>
-            <input value = "DISBAND" class = "button disband" type="button">
-            <a href = "index.php?filename=sendinvite"><input value = "INVITE" class = "button invite" type="button"></a>
-        </div>
+        <?php if ($teamstatus['position'] == 'leader'){?>
+            <div class = 'actions'>
+                <input value = "DISBAND" class = "button disband" type="button">
+                <a href = "index.php?filename=sendinvite"><input value = "INVITE" class = "button invite" type="button"></a>
+            </div>
+        <?php } else {?>
+            <div class = 'actions'>
+                <input value = "LEAVE" class = "button leave" type="button">
+            </div>
+        <?php } ?>
+        
         <table class = "members">
         <colgroup>
             <col span="1" style="width: 10%;">
@@ -34,7 +41,14 @@
                     <td class = 'place'><?= $placing +1 ?></td>
                     <td class = "username"><?= htmlspecialchars($teamate['username']) ?></td>
                     <td class = "points"><?= htmlspecialchars($teamate['total']) ?></td>
-                    <td><input value = "KICK" class = "kick button2" type="button"></td>
+                    <td>
+                    <?php if ($teamstatus['position'] == 'leader'){?>    
+                    <input 
+                        data-userid = "<?= htmlspecialchars($teamate['userid']) ?>"
+                        data-user = "<?= htmlspecialchars($teamate['username']) ?>"
+                    value = "KICK" class = "kick button2" type="button">
+                    <?php } ?>
+                    </td>
                 </tr>
             <?php } ?>
         </table>

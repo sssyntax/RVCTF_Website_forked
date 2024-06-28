@@ -44,7 +44,15 @@ function popupClose() {
   // reset the value of the flag input
   input_popup_uncompleted.value = '';
 }
-
+function addFile($fileName){
+  var fileList = document.getElementById('file_names');
+  const fileDownload = document.createElement('a');
+  fileDownload.href = `challengeMaterials/${$fileName}`;
+  fileDownload.download = $fileName;
+  fileDownload.innerText = $fileName;
+  console.log(fileDownload)
+  fileList.appendChild(fileDownload);
+}
 function popup() {
   // check if the challenge is completed
   if (this.dataset.completed == 1) {
@@ -58,9 +66,19 @@ function popup() {
   // Display challenge popup
   chal_popup.style.display = "block";
   // Set challenge title and description and author
-  desc_popup.innerText = this.dataset.desc
+  desc_popup.innerHTML = this.dataset.desc
   title_popup.innerText = this.dataset.title
   author_popup.innerText = this.dataset.author
+  // Set Additional Material Downloads
+  const fileNames = JSON.parse(this.dataset.filenames);
+  const fileList = document.getElementById('file_names');
+  if (fileNames.length > 0) fileList.style.display = 'flex';
+  else fileList.style.display = 'none';
+
+  fileList.innerHTML = '';
+  for (let fileName of fileNames) {
+    addFile(fileName);
+  }
   // set the count of users who have solved the challenge
   document.getElementById('solved_count').innerText = "..."
   getSolvedCount(this.dataset.id).then((count) => {
@@ -89,8 +107,9 @@ async function submitAnswer(form,event){
     popupClose();
     // Update the points
     points_span.innerText = response.points
-    const currentChallenge = document.querySelector(`[data-id="${formdata.get('id')}"] .challenge_widget`)
-    currentChallenge.dataset.completed = 1
+    const currentChallenge = document.querySelector(`[data-id="${formdata.get('id')}"]`)
+    currentChallenge.dataset.individualcompleted = 1
+    currentChallenge.dataset.teamcompleted = 1
   }
   else{
     alert(response.error)
@@ -102,7 +121,7 @@ async function submitAnswer(form,event){
 
 
 
-function deleteChallenge(form, event) {
+async function deleteChallenge(form, event) {
   const confirmation = confirm("Are you sure you want to delete this challenge?");
   event.preventDefault();
   if (!confirmation) {
@@ -110,20 +129,22 @@ function deleteChallenge(form, event) {
   }
   // Handle output when new challenge is created
   var formdata = new FormData(form);
-  console.log(formdata);
-  fetch("backend/deletechallenge.php", { method: "POST", body: formdata })
-  .then((response) => response.json())
-  .then((result) => {
-    // Close the popup
+  var response = await postRequest("backend/deletechallenge.php", formdata);
+  if (response.error) {
+    alert(response.error);
+    return false;
+  }
+  else{
     popupClose();
-    alert(result);
-    // Get the category of the challenge to delete
+    alert(response.success);
     let item = document.querySelector(`[data-id="${formdata.get('id')}"]`);
-    item.parentElement.removeChild(item);
     if (item.parentElement.children.length == 0) {
       item.parentElement.parentElement.parentElement.removeChild(item.parentElement.parentElement);
     }
-  });
+    item.parentElement.removeChild(item);
+    return true;
+  }
+  
 }
 
 async function getSolvedCount(challengeID){

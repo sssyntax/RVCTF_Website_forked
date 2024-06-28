@@ -3,7 +3,8 @@ require_once (dirname(__FILE__).'/getinfo.inc.php');
 
 function verify_login($conn){
     // Check if the person is already logged in
-    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){// && isset($_SESSION['userid'])){;'
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true &&
+        isset($_SESSION['userid'])){// && isset($_SESSION['userid'])){;'
         // Extracting user details from db
         $sql = "SELECT `email`,`admin` FROM `ctf_users` WHERE `id` = ?";
         $cursor = prepared_query($conn,$sql,[$_SESSION['userid'],],'i');
@@ -35,7 +36,7 @@ function verify_login($conn){
     };
 }
 function verify_team($conn,$teamname,$password){
-    $sql = "SELECT `teampassword` FROM `teams` WHERE `teamname` = ?";
+    $sql = "SELECT `teampassword` FROM `teams` WHERE `team_name` = ?";
     $result = prepared_query($conn,$sql,[$teamname],"s");
     $result -> bind_result($encrypted);
     $result -> fetch();

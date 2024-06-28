@@ -1,24 +1,41 @@
 <?php
-$sql = "SELECT username,SUM(points) as total,teamname  FROM teamates
-        JOIN ctf_users ON teamates.user_id = ctf_users.id
-        JOIN completedchallenges ON completedchallenges.userid = ctf_users.id
-        JOIN challenges ON completedchallenges.challengeid = challenges.id
-        JOIN teams ON teamates.team_id = teams.teamid
-        WHERE teamates.team_id = ?
-        GROUP BY ctf_users.id
-        ORDER BY total DESC;
-        ";
-$teamstatus = getTeamStatusFromUserId($conn,$userid);
-$teamid =$teamstatus['teamid'];
+require_once "includes/connect.inc.php";
+require_once "includes/verify.inc.php";
+
+if (!verify_login($conn)) {
+    onError($conn, "Please login again");
+}
+
+$userid = $_SESSION['userid'];
+$teamstatus = getTeamStatusFromUserId($conn, $userid);
+
+if (!$teamstatus) {
+    onError($conn, "User is not part of a team");
+}
+
+$teamid = $teamstatus['teamid'];
 $teamname = $teamstatus['teamname'];
 $role = $teamstatus['position'];
-$res = prepared_query($conn,$sql,[$teamid],"i");
-$cursor = iimysqli_stmt_get_result($res);
-$teamates = [];
-$totalpoints = 0;
-while ($row = iimysqli_result_fetch_assoc_array($cursor)){
-    array_push($teamates,$row);
-    $totalpoints += $row['total'];
 
-}
-mysqli_stmt_close($res);
+$sql = "
+    SELECT username,
+        COALESCE(SUM(points), 0) AS total,
+        team_name,
+        ctf_users.id AS userid
+    FROM teamates
+    LEFT JOIN ctf_users ON teamates.user_id = ctf_users.id
+    LEFT JOIN completedchallenges ON completedchallenges.user_id = ctf_users.id
+    LEFT JOIN challenges ON completedchallenges.challenge_id = challenges.id
+    LEFT JOIN teams ON teamates.team_id = teams.team_id
+    WHERE teamates.team_id = ?
+    GROUP BY ctf_users.id, username, team_name
+    ORDER BY total DESC;
+";
+
+$teamates = fetchDataFromQuery($conn, $sql, [$teamid], 'i', "Failed to fetch team members");
+
+$totalpoints = array_reduce($teamates, function($carry, $item) {
+    return $carry + $item['total'];
+}, 0);
+
+

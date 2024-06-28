@@ -66,3 +66,7 @@ input{
 .actions a{
 text-decoration: none;
 }
+
+.members td{
+    padding: 0.5em 0;
+}
