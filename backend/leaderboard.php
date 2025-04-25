@@ -8,9 +8,9 @@ if (!verify_login($conn)) {
 
 $userInfo = getUserInfo($conn, $_SESSION['userid']);
 $isAdmin = $userInfo['admin'];
-if (!$isAdmin) {
-    onError($conn, "You are not an admin.");
-}
+//if (!$isAdmin) {
+//    onError($conn, "You are not an admin.");
+//}
 
 
 $teams = [];
