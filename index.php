@@ -66,8 +66,9 @@ if ($loggedin) {
             break;
         
         case 'leaderboard':
-            $isAdmin ? includePage('User Pages/leaderboard.tpl.php',$data) 
-            : includePage('User Pages/challenge_page.tpl.php',$data);
+            //$isAdmin ? includePage('User Pages/leaderboard.tpl.php',$data) 
+            //: includePage('User Pages/challenge_page.tpl.php',$data);
+            includePage('User Pages/leaderboard.tpl.php',$data);
             break;
         
         case 'logout':

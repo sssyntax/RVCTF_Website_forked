@@ -76,3 +76,28 @@ p, label{
     width: 15%;
     height: 2em;
 }
+
+
+#admin-buttons {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.admin-button {
+    display: inline-block;
+    background-color: #343a40;
+    color: white;
+    padding: 12px 24px;
+    margin: 20px;
+    font-size: 24px;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 2px rgb(255, 255, 255);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.admin-button:hover {
+    background-color: #495057;
+    transform: scale(1.05);
+}

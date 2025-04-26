@@ -90,8 +90,10 @@ $encrypted = sha1(FLAG_SALT . $solution);
 $sql = "INSERT INTO `challenges` (`title`, `author`, `points`, `difficulty`, `category`, `description`, `solution`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $insertId = executeQuery($conn, $sql, [$title, $author, $points, $difficulty, $category, $desc, $encrypted], 'ssiisss',true);
 
-if (isset($_FILES['files'])) {
+//if (isset($_FILES['files'])) {
+//    uploadFilesToServer($conn, $_FILES['files'], $insertId);
+//}
+if (isset($_FILES['files']) && !empty($_FILES['files']['name'][0])) {
     uploadFilesToServer($conn, $_FILES['files'], $insertId);
 }
-
 onSuccess($conn, 1);

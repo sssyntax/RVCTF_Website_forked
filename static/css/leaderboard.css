@@ -22,42 +22,53 @@ body {
     vertical-align: middle;
 }
 
-#decoration,
-#decoration2,
-#decoration3 {
-    background-color: #d4af37;
+#decoration {
+    background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
 }
 
 #decoration2 {
-    background-color: #A9B0B4;
+    background: radial-gradient(ellipse farthest-corner at right bottom, #ffffff 0%, #d9d9d9 8%, #a1a1a1 30%, #7f7f7f 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #ffffff 0%, #e6e6e6 8%, #c0c0c0 25%, #7f7f7f 62.5%, #5a5a5a 100%);
+    color: black;
 }
 
-#decoration3 {
-    background-color: #aa8c2c;
+#decoration3{
+    background: radial-gradient(ellipse farthest-corner at right bottom,#ffcc99 0%,#d9985d 8%,#b87333 30%,#8c5a29 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top,#ffe0cc 0%,#e0aa6c 8%,#b87333 25%,#8c5a29 62.5%,#5a2e1f 100%);
 }
 
 .leader {
     list-style-type: none;
     padding: 0;
-    margin: 0 auto;
+    margin: 0 auto; /* center horizontally */
     width: 420px;
-    height: 390px;
+    height: auto; /* allow height to grow */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center inside */
+    justify-content: center; /* center inside */
+    margin-top: 50px; /* optional spacing */
 }
+
+/* Optional: center "Individual Ranks" or "Team Ranks" if needed */
+h2 {
+    text-align: center;
+}
+
 
 li {
     background-color: #fff;
+    border: 2px solid black; /* <<< ADDED */
     border-radius: 0.4rem;
     margin: 2rem;
     padding: 1rem;
     width: 100%;
-    box-shadow: 0 5px 5px rgba(black, 0.1);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .list_num {
     float: left;
     line-height: 40px;
     font-size: 18px;
-    color: rgba(black, 0.65);
+    color: rgba(0, 0, 0, 0.65); /* FIXED */
     font-weight: bold;
     width: 20px;
     text-align: right;
@@ -79,14 +90,14 @@ td {
 .number {
     float: right;
     font-weight: bold;
-    color: rgba(black, 0.65);
+    color: rgba(0, 0, 0, 0.65); /* FIXED */
     transition: color 0.3s;
 }
 
 input {
     border: 2px solid transparent;
     font-family: header_font;
-    color: white;
+    color: black;
     font-size: 2.5rem;
     background-color: transparent;
     cursor: pointer;
@@ -100,5 +111,42 @@ input:hover {
     border-radius: 5px;
 }
 
+/* optional: add mobile styling later */
+@media only screen and (max-device-width: 736px) {
+}
 
-@media only screen and (max-device-width: 736px) {}
+/* Make everything use Montserrat font */
+.leader li, .leader h2, .leader .number, .leader .list_num {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Top 3: WHITE text color */
+.leader li:nth-child(-n+3) h2,
+.leader li:nth-child(-n+3) .number,
+.leader li:nth-child(-n+3) .list_num {
+    color: white;
+    font-weight: 600;
+}
+
+/* 4th and lower: BLACK text color */
+.leader li:nth-child(n+4) {
+    background-color: white;
+    color: black;
+}
+
+.leader li:nth-child(n+4) h2,
+.leader li:nth-child(n+4) .number,
+.leader li:nth-child(n+4) .list_num {
+    color: black;
+    font-weight: 600;
+}
+
+#team-ranks-header, #individual-ranks-header {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
