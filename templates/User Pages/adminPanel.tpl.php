@@ -1,5 +1,3 @@
-
-
 <title>Admin Panel</title>
 <link rel="stylesheet" href="static/css/makeadmin.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,6 +8,7 @@
     <?php include 'templates/Components/stars.php';?>
     <div id="admin-buttons">
         <a href="index.php?filename=editadmin" class="admin-button">Edit Admin</a>
+        <a href="index.php?filename=addpoints" class="admin-button">Add Points</a> <!-- 🆕 Added this -->
         <a href="index.php?filename=createChallenge" class="admin-button">Create Challenge</a>
     </div>
 </body>
