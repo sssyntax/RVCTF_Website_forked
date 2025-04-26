@@ -41,7 +41,7 @@ $sql = "
         WHERE `user_id` = ?
     ) v ON c.id = v.challenge_id
     LEFT JOIN (
-        SELECT `challenge_id`, GROUP_CONCAT(`file_name` SEPARATOR '{$separator}') AS file_names
+        SELECT `challenge_id`, file_name AS file_names
         FROM `additional_materials`
         GROUP BY `challenge_id`
     ) a ON c.id = a.challenge_id
