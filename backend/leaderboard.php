@@ -17,16 +17,20 @@ $ctf_config = mysqli_fetch_assoc($result);
 
 $now = time();
 $freeze_time = $ctf_config['end_time'] - 1800; // 30 minutes before end
+$should_freeze = ($now >= $freeze_time && $now <= $ctf_config['end_time']) || $ctf_config['freeze_override'] == 1;
+
 $freeze = false;
-if (($now >= $freeze_time && $now <= $ctf_config['end_time']) || $ctf_config['freeze_override'] == 1) {
+if ($should_freeze) {
     $freeze = true;
 }
 
-// ----------------------- AUTO FREEZE TEAM POINTS -------------------------
-if ($freeze && $ctf_config['freeze_done'] == 0) {
-    // Only freeze once
+// ----------------------- FRESH FREEZE SNAPSHOT ONCE -------------------------
+if ($should_freeze && $ctf_config['freeze_done'] == 0) {
+    // Clear old frozen points
+    mysqli_query($conn, "UPDATE teams SET frozen_points = 0");
+    mysqli_query($conn, "UPDATE ctf_users SET frozen_points = 0");
 
-    // Recalculate and update frozen_points for all teams
+    // 🛡 Recalculate and update frozen points for all teams (DISTINCT solves)
     $sql_teams = "SELECT team_id FROM teams";
     $result_teams = mysqli_query($conn, $sql_teams);
     while ($row_team = mysqli_fetch_assoc($result_teams)) {
@@ -35,12 +39,12 @@ if ($freeze && $ctf_config['freeze_done'] == 0) {
         $sql2 = "
         SELECT SUM(c.points) AS total_points
         FROM challenges c
-        JOIN (
+        WHERE c.id IN (
             SELECT DISTINCT cc.challenge_id
             FROM completedchallenges cc
             JOIN teamates t ON cc.user_id = t.user_id
             WHERE t.team_id = ?
-        ) AS team_solves ON c.id = team_solves.challenge_id
+        )
         ";
 
         $stmt2 = $conn->prepare($sql2);
@@ -56,16 +60,35 @@ if ($freeze && $ctf_config['freeze_done'] == 0) {
         $stmt3->execute();
     }
 
+    // Recalculate and update frozen points for all users
+    $sql_users = "
+    SELECT u.id, SUM(c.points) AS total_points
+    FROM ctf_users u
+    JOIN completedchallenges uc ON u.id = uc.user_id
+    JOIN challenges c ON uc.challenge_id = c.id
+    GROUP BY u.id
+    ";
+
+    $result_users = mysqli_query($conn, $sql_users);
+    while ($row_user = mysqli_fetch_assoc($result_users)) {
+        $user_id = $row_user['id'];
+        $user_points = $row_user['total_points'] ?? 0;
+
+        $update_user_sql = "UPDATE ctf_users SET frozen_points = ? WHERE id = ?";
+        $stmt_user = $conn->prepare($update_user_sql);
+        $stmt_user->bind_param("ii", $user_points, $user_id);
+        $stmt_user->execute();
+    }
+
     // Mark freeze as completed
-    $sql_done = "UPDATE ctf_config SET freeze_done = 1 WHERE id = 1";
-    mysqli_query($conn, $sql_done);
+    mysqli_query($conn, "UPDATE ctf_config SET freeze_done = 1 WHERE id = 1");
 }
 
 // ----------------------- TEAMS -------------------------
 $teams = [];
 
 if ($freeze) {
-    // During freeze: use frozen points from teams, filter only teams with points > 0
+    // During freeze: use frozen points for teams
     $sql = "
     SELECT team_name, frozen_points AS points
     FROM teams
@@ -105,7 +128,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 $users = [];
 
 if ($freeze) {
-    // During freeze: use frozen points for users, filter only users with points > 0
+    // During freeze: use frozen points for users
     $sql = "
     SELECT u.username, teams.team_name, u.frozen_points AS points
     FROM ctf_users u
