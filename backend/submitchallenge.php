@@ -1,5 +1,4 @@
 <?php
-// Start session & access session details
 session_start();
 $userID = intval($_SESSION["userid"]);
 
@@ -24,6 +23,26 @@ function insertAnswer($conn, $challengeId, $userId) {
     return executeQuery($conn, $sql, [$userId, $challengeId, time()], 'iii', true, "Failed to insert answer");
 }
 
+function getTeamID($conn, $userId) {
+    $sql = "SELECT team_id FROM teamates WHERE user_id = ?";
+    $result = fetchDataFromQuery($conn, $sql, [$userId], 'i', "Failed to fetch team ID");
+    return $result[0]['team_id'] ?? null;
+}
+
+function teamHasSolved($conn, $teamId, $challengeId) {
+    $sql = "SELECT 1 FROM team_solves WHERE team_id = ? AND challenge_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $teamId, $challengeId);
+    $stmt->execute();
+    $stmt->store_result();
+    return $stmt->num_rows > 0;
+}
+
+function insertTeamSolve($conn, $teamId, $challengeId) {
+    $sql = "INSERT IGNORE INTO `team_solves`(`team_id`, `challenge_id`, `solve_time`) VALUES (?, ?, CURRENT_TIMESTAMP)";
+    return executeQuery($conn, $sql, [$teamId, $challengeId], 'ii', true, "Failed to record team solve");
+}
+
 if (!verify_login($conn)) {
     onError($conn, "Please login again");
 }
@@ -45,13 +64,28 @@ if (!$answer) {
     onError($conn, "Please enter a flag");
 }
 
+// Verify answer
 if (verifyAnswer($conn, $id, $answer)) {
-    if (insertAnswer($conn, $id, $userID)) {
-        $points = getPoints($conn, $userID);
-        onSuccess($conn, "Challenge Completed", ["points" => $points]);
+    $teamID = getTeamID($conn, $userID);
+    
+    if (!$teamID) {
+        onError($conn, "You are not in a team.");
+    }
+    
+    if (teamHasSolved($conn, $teamID, $id)) {
+        // Team already solved it — no points for user
+        onSuccess($conn, "Challenge already completed by your team! No points awarded.");
     } else {
-        onError($conn, "Please check your connection");
+        // Team has NOT solved it
+        if (insertAnswer($conn, $id, $userID)) {
+            insertTeamSolve($conn, $teamID, $id); // Record for team
+            $points = getPoints($conn, $userID);
+            onSuccess($conn, "Challenge Completed", ["points" => $points]);
+        } else {
+            onError($conn, "Please check your connection");
+        }
     }
 } else {
     onError($conn, "Incorrect Answer");
 }
+?>
