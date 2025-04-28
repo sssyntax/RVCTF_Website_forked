@@ -24,5 +24,12 @@
             <button type="submit" name="action" value="freeze" class="admin-button" style="background-color: #ffcc00;">Force Freeze Leaderboard</button>
             <button type="submit" name="action" value="unfreeze" class="admin-button" style="background-color: #00cc66;">Unfreeze Leaderboard</button>
         </form>
+        <!-- 🔥 Casual Mode Button -->
+        <form method="post" action="backend/casual_mode_toggle.php" style="margin-top: 20px;">
+            <button type="submit" name="action" value="enable" class="admin-button" style="background-color: #3399ff;">Enter Casual Mode</button>
+        </form>
+
     </div>
 </body>
+
+
