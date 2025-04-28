@@ -1,6 +1,19 @@
 <?php
-require_once __DIR__ . "/includes/connect.inc.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+require_once __DIR__ . "/includes/connect.inc.php";
+require_once __DIR__ . "/includes/verify.inc.php";
+
+if (!verify_login($conn)) {
+    onError($conn, "You are not logged in.");
+}
+
+$userInfo = getUserInfo($conn, $_SESSION['userid']);
+if ($userInfo['admin'] == 0) {
+    onError($conn, "You do not have permission.");
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
