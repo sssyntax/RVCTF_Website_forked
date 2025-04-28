@@ -3,24 +3,24 @@ function calculateLogarithmicDecay($solveCount, $difficulty, $isFirstBlood = fal
     // Set min, max, and initial points based on difficulty
     if ($difficulty === 'easy') {
         $minPoints = 50;
-        $maxPoints = 150;
-        $initialPoints = 150;
+        $maxPoints = 100;
+        $initialPoints = 100;
         $firstBloodBonus = 10;
     } elseif ($difficulty === 'medium') {
-        $minPoints = 150;
-        $maxPoints = 250;
-        $initialPoints = 250;
+        $minPoints = 100;
+        $maxPoints = 150;
+        $initialPoints = 150;
         $firstBloodBonus = 20;
     } elseif ($difficulty === 'hard') {
-        $minPoints = 300;
-        $maxPoints = 400;
-        $initialPoints = 400;
+        $minPoints = 250;
+        $maxPoints = 300;
+        $initialPoints = 300;
         $firstBloodBonus = 30;
     } else {
         // Default fallback
-        $minPoints = 150;
-        $maxPoints = 250;
-        $initialPoints = 250;
+        $minPoints = 100;
+        $maxPoints = 150;
+        $initialPoints = 150;
         $firstBloodBonus = 20;
     }
 
