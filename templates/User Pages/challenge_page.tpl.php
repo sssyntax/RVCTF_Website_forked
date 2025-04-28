@@ -1,24 +1,40 @@
 <?php
-require_once "backend/includes/connect.inc.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Fetch CTF timing info
-$sql = "SELECT start_time, end_time FROM ctf_config WHERE id = 1";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/rvctf/backend/includes/connect.inc.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/rvctf/backend/includes/verify.inc.php";
+
+if (!verify_login($conn)) {
+    header("Location: /rvctf/index.php?filename=login");
+    exit();
+}
+
+$userInfo = getUserInfo($conn, $_SESSION['userid']);
+$isAdmin = $userInfo['admin'];
+
+// Fetch CTF config
+$sql = "SELECT start_time, end_time, casual_mode FROM ctf_config WHERE id = 1";
 $result = mysqli_query($conn, $sql);
 $ctf_config = mysqli_fetch_assoc($result);
 
 $now = time();
 $start_time = $ctf_config['start_time'];
 $end_time = $ctf_config['end_time'];
+$casual_mode = $ctf_config['casual_mode'];
 
-$ctf_not_started = $now < $start_time;
-$ctf_ended = $now > $end_time;
+$ctf_not_started = !$casual_mode && ($now < $start_time);
+$ctf_ended = !$casual_mode && ($now > $end_time);
 $ctf_running = !$ctf_not_started && !$ctf_ended;
 
-// Casual Mode (4h window active)
-$casual_mode = (($end_time - $start_time) <= 14400);
-
-// Calculate time left if needed
 $time_left = max(0, $end_time - $now);
+
+// Lock status
+$ctf_locked = false;
+if ($ctf_not_started && !$isAdmin) {
+    $ctf_locked = true;
+}
 ?>
 
 <title>Challenges</title>
@@ -44,28 +60,26 @@ $time_left = max(0, $end_time - $now);
     animation: pulse 2s infinite;
     text-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 30px #00c3ff;
 }
-
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.6; }
     100% { opacity: 1; }
 }
-
 </style>
 </head>
 
 <body>
 
-<?php if ($ctf_not_started): ?>
-    <div class="ctf-message">🚀 CTF has not started yet. Stay tuned! 🚀</div>
+<?php if ($ctf_locked): ?>
+    <div class="ctf-message">🚀 The CTF has not started yet. Please wait for the event to begin! 🚀</div>
 
 <?php elseif ($ctf_ended): ?>
     <div class="ctf-message">🏁 CTF has ended! Thank you for participating. 🏁</div>
 
-<?php elseif ($ctf_running): ?>
+<?php else: ?>
 
     <?php if (!$casual_mode): ?>
-    <!-- Timer only shows if real CTF running (not casual mode) -->
+    <!-- Timer only shows if real CTF running (NOT casual mode) -->
     <div id="ctf-timer">
         Time Remaining: <span id="timer-countdown"></span>
     </div>
