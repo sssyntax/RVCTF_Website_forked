@@ -1,6 +1,4 @@
-<?php
-require_once "backend/googleLogin.inc.php";
-?>
+
  <?php 
     // Reset session details to log user out
         $_SESSION['loggedin'] = false;
@@ -9,6 +7,9 @@ require_once "backend/googleLogin.inc.php";
         $_SESSION['admin'] = null;
     // set remember me cookie to expire
         setcookie('rememberme', '', time() - 3600);
+    ?>
+    <?php
+        require_once "backend/googleLogin.inc.php";
     ?>
     <title>RVCTF Login</title>
     <link rel="stylesheet" href="static/css/login.css">
