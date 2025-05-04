@@ -1,19 +1,16 @@
 <?php
+// require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
+define("SERVERNAME", "localhost");
+define("DB_USER", "root");
+define("DB_PASS", "");
+define("DB_NAME", "ctfdb");
+
 define("SECRET_KEY","uoqcy169(361");
 define("salt","vnljh19d1996v");
 define("CSRF_TOKEN_SECRET",'wxVy4t0EpypTDfPsEhqXfU92wsjnFce1bLMtbDyKWpbiVXGUp1D');
 define("FLAG_SALT","3Y_J2ACWccfmI8ve?(q_fkLl");
-//THIS NEEDS TO CHANGE IF YOU ARE USING SERVER
-// $servername = "localhost"; // for default: 127.0.0.1 
-// $username = "pjjabycm_ctfdb"; // for x10: pjjabycm_ctfdb | for others: root
-// $password = "q6sFckv3"; // for x10: q6sFckv3 
-// $db_name = "pjjabycm_ctfdb"; // for x10: pjjabycm_ctfdb 
-// TO EDIT LOCALLY, UNCOMMENT THIS
-$servername = "127.0.0.1"; // for default: 127.0.0.1 
-$username = "root"; // for x10: pjjabycm_ctfdb | for others: root
-$password = ""; // for x10: q6sFckv3 
-$db_name = "ctfdb"; // for x10: pjjabycm_ctfdb 
-$conn = new mysqli($servername,$username,$password,$db_name);
+
+$conn = new mysqli(SERVERNAME,DB_USER,DB_PASS,DB_NAME);
 function prepared_query($mysqli, $sql, $params, $types = "")
 {
     $stmt = $mysqli->prepare($sql);
@@ -229,6 +226,7 @@ function onError($conn,$error,$additionalData = []) {
 
 function onSuccess($conn,$success,$additionalData = []){
     $data = array_merge(["success"=>$success],$additionalData);
+    error_log(">>> onSuccess CALLED with: " . json_encode($data));
     echo json_encode($data, JSON_FORCE_OBJECT);
     mysqli_close($conn);
     exit();

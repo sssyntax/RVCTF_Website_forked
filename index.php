@@ -7,12 +7,12 @@ require_once "backend/includes/verify.inc.php";
 // Verify login status
 $loggedin = verify_login($conn);
 // FORCED LOGIN BYPASS (LOCAL ONLY)
-//if (!$loggedin) {
- //   $_SESSION['loggedin'] = true;
- //   $_SESSION['userid'] = 19; // or any valid userid from your ctfdb
- //   $_SESSION['admin'] = 1;  // 1 if you want admin rights
- //   $loggedin = true;
-//}
+if (!$loggedin) {
+   $_SESSION['loggedin'] = true;
+   $_SESSION['userid'] = 39; // or any valid userid from your ctfdb
+   $_SESSION['admin'] = 1;  // 1 if you want admin rights
+   $loggedin = true;
+}
 
 // Check if filename is set in GET request
 $filename = isset($_GET['filename']) ? $_GET['filename'] : "";

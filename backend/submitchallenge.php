@@ -4,6 +4,7 @@ $userID = intval($_SESSION["userid"]);
 
 require "includes/connect.inc.php";
 require "includes/verify.inc.php";
+require_once "first_blood_checker.php"; // ✅ include the refactored first blood checker
 
 function verifyAnswer($conn, $challengeId, $answer) {
     $sql = "SELECT `solution` FROM `challenges` WHERE `id` = ?";
@@ -35,7 +36,9 @@ function teamHasSolved($conn, $teamId, $challengeId) {
     $stmt->bind_param("ii", $teamId, $challengeId);
     $stmt->execute();
     $stmt->store_result();
-    return $stmt->num_rows > 0;
+    $exists = $stmt->num_rows > 0;
+    $stmt->close();
+    return $exists;
 }
 
 function insertTeamSolve($conn, $teamId, $challengeId) {
@@ -79,6 +82,14 @@ if (verifyAnswer($conn, $id, $answer)) {
         // Team has NOT solved it
         if (insertAnswer($conn, $id, $userID)) {
             insertTeamSolve($conn, $teamID, $id); // Record for team
+
+            // ✅ Check and set first blood immediately after solve
+            $firstBloodResult = checkAndSetFirstBlood($conn, $id);
+            if ($firstBloodResult['status']) {
+                // Optionally log or notify about first blood here
+                // logEvent("First blood awarded for challenge {$id} by user {$firstBloodResult['first_blood_userid']}");
+            }
+
             $points = getPoints($conn, $userID);
             onSuccess($conn, "Challenge Completed", ["points" => $points]);
         } else {

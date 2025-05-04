@@ -1,53 +1,55 @@
 <?php
-function calculateLogarithmicDecay($solveCount, $difficulty, $isFirstBlood = false, $decayFactor = 30) {
-    // Set min, max, and initial points based on difficulty
-    if ($difficulty === 'easy') {
+require_once "getsolvedcount2.php";
+require_once "get_difficulty.php";
+
+function calculateLogarithmicDecay($solveCount, $difficulty, $decayFactor = 5) {
+    if ($difficulty === 0) {
         $minPoints = 50;
-        $maxPoints = 100;
         $initialPoints = 100;
-        $firstBloodBonus = 10;
-    } elseif ($difficulty === 'medium') {
+    } elseif ($difficulty === 1) {
         $minPoints = 100;
-        $maxPoints = 150;
         $initialPoints = 150;
-        $firstBloodBonus = 20;
-    } elseif ($difficulty === 'hard') {
+    } elseif ($difficulty === 2) {
         $minPoints = 250;
-        $maxPoints = 300;
         $initialPoints = 300;
-        $firstBloodBonus = 30;
     } else {
-        // Default fallback
         $minPoints = 100;
-        $maxPoints = 150;
         $initialPoints = 150;
-        $firstBloodBonus = 20;
     }
 
-    // Calculate decay
     $decayAmount = log($solveCount + 1) * $decayFactor;
     $currentPoints = $initialPoints - $decayAmount;
-    
-    // First blood bonus
-    if ($isFirstBlood) {
-        $currentPoints += $firstBloodBonus;
-    }
 
-    // Only clamp minimum points
-    if ($currentPoints < $minPoints) {
-        return $minPoints;
-    } else {
-        return round($currentPoints); // no max clamp anymore
-    }
+    return max($minPoints, round($currentPoints));
 }
 
-// test point decay
-$solveCount = 5;
-$difficulty = 'medium';
-$isFirstBlood = true;
+function updateChallengePoints($conn, $challengeID) {
+    $solveCount = getSolvedCount($conn, $challengeID);
+    $difficulty = getDifficulty($conn, $challengeID);
 
-$currentPoints = calculateLogarithmicDecay($solveCount, $difficulty, $isFirstBlood);
+    // First blood bonus based on difficulty
+    if ($difficulty === 0) {
+        $firstBloodBonus = 10;
+    } elseif ($difficulty === 1) {
+        $firstBloodBonus = 20;
+    } elseif ($difficulty === 2) {
+        $firstBloodBonus = 30;
+    } else {
+        $firstBloodBonus = 20;
+    }
 
-echo "Current Points: $currentPoints";
+    $currentPoints = calculateLogarithmicDecay($solveCount, $difficulty);
 
-?>
+    $sql = "UPDATE challenges SET points = ?, first_blood_bonus = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Failed to prepare update statement: " . $conn->error);
+    }
+    $stmt->bind_param("iii", $currentPoints, $firstBloodBonus, $challengeID);
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update challenge points and first blood bonus: " . $stmt->error);
+    }
+    $stmt->close();
+
+    return ["new_points" => $currentPoints, "first_blood_bonus" => $firstBloodBonus];
+}
