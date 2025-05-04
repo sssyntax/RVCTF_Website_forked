@@ -1,4 +1,10 @@
 <?php
+// <<<<<<< flag_rvsh
+// // require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
+// define("SERVERNAME", "localhost");
+// define("DB_USER", "root");
+// define("DB_PASS", "");
+// define("DB_NAME", "ctfdb");
 require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
 define("SECRET_KEY","uoqcy169(361");
 define("salt","vnljh19d1996v");
@@ -221,6 +227,7 @@ function onError($conn,$error,$additionalData = []) {
 
 function onSuccess($conn,$success,$additionalData = []){
     $data = array_merge(["success"=>$success],$additionalData);
+    error_log(">>> onSuccess CALLED with: " . json_encode($data));
     echo json_encode($data, JSON_FORCE_OBJECT);
     mysqli_close($conn);
     exit();

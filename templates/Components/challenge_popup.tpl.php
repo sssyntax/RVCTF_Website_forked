@@ -16,6 +16,9 @@
                 ; ?>
                 <br>
                 <span style="font-size:0.8em;font-weight:normal;">Solved By <span id="solved_count"></span></span>
+                <br>
+                <!-- Added first blood here -->
+                <span style="font-size:0.8em;font-weight:normal;">First Blood: <span id="firstblood_popup"></span></span>
             </td>
         </tr>
         <tr class="popup_desc_tr">

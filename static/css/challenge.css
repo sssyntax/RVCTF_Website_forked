@@ -70,11 +70,20 @@ div {
 
 .challenge_btn[data-teamcompleted="1"] .challenge_widget {
     background-color: var(--green);
+    opacity:0.8
 }
 
 .challenge_btn[data-individualcompleted="1"] .challenge_widget {
     opacity:0.8
 }
+
+
+
+
+
+
+
+
 
 
 .challenge_widget:hover {
@@ -259,19 +268,3 @@ input:focus, textarea {
 
 
 
-
-.delete:hover{
-    filter:brightness(0.8);
-    backdrop-filter: brightness(0.8);
-}
-
-.delete{
-    border:none;
-    background: none;
-    cursor: pointer;
-}
-
-#file_names{
-    flex-direction: column;
-    gap:0.1em;
-}

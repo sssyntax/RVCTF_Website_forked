@@ -1,10 +1,11 @@
 <?php
-function createChallengeButton($value, $difficultylst,$inTeam=false) {
+function createChallengeButton($value, $difficultylst, $inTeam = false) {
     $desc = htmlspecialchars($value["description"]);
     $title = htmlspecialchars($value["title"]);
     $id = htmlspecialchars($value["id"]);
     $cat = htmlspecialchars($value["category"]);
-    $teamCompleted = $inTeam ? htmlspecialchars($value["teamsolved"]): htmlspecialchars($value["individualsolved"]);
+   // $teamCompleted = $inTeam ? htmlspecialchars($value["teamsolved"]) : htmlspecialchars($value["individualsolved"]);
+    $teamCompleted = htmlspecialchars($value["teamsolved"]);
     $individualCompleted = htmlspecialchars($value["individualsolved"]);
     $author = htmlspecialchars($value["author"]);
     $points = htmlspecialchars($value["points"]);
@@ -12,19 +13,21 @@ function createChallengeButton($value, $difficultylst,$inTeam=false) {
     $solved_by = htmlspecialchars($value["solve_count"]);
     $file_names = $value["file_names"];
 
+    // NEW: Proper completed logic (team or individual)
+    $completed = ($value["teamsolved"] || $value["individualsolved"]) ? 1 : 0;
+
     return <<<HTML
 <button class="challenge_btn" 
         data-desc="$desc" 
         data-title="$title" 
         data-id="$id" 
         data-cat="$cat" 
-        data-completed="$teamCompleted" 
+        data-completed="$completed" 
         data-author="$author"
         data-teamcompleted="$teamCompleted"
-        data-individualcompleted = "$individualCompleted"
-        data-filenames = '$file_names'
-        >
-    <table class="challenge_widget" >
+        data-individualcompleted="$individualCompleted"
+        data-filenames='$file_names'>
+    <table class="challenge_widget">
         <tbody class="widget_body">
             <tr class="name_div">
                 <td class="name">$title</td>
@@ -40,3 +43,4 @@ function createChallengeButton($value, $difficultylst,$inTeam=false) {
 </button>
 HTML;
 }
+?>
