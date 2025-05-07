@@ -138,14 +138,37 @@ if ($freeze) {
     ORDER BY points DESC;
     ";
 } else {
-    // Live calculation
+    // Live calculation with double points + admin points + first blood bonuses
     $sql = "
-    SELECT u.username, teams.team_name, SUM(c.points) AS points 
+    SELECT 
+        u.username,
+        teams.team_name,
+        (
+            COALESCE(SUM(
+                CASE 
+                    WHEN c.double_points = 1 THEN c.points * 2
+                    ELSE c.points
+                END
+            ), 0) 
+            + COALESCE(SUM(a.points), 0)
+            + COALESCE((
+                SELECT SUM(c2.first_blood_bonus)
+                FROM challenges c2
+                JOIN completedchallenges cc2 ON cc2.challenge_id = c2.id
+                WHERE cc2.user_id = u.id
+                AND cc2.timestamp = (
+                    SELECT MIN(cc3.timestamp)
+                    FROM completedchallenges cc3
+                    WHERE cc3.challenge_id = c2.id
+                )
+            ), 0)
+        ) AS points
     FROM ctf_users u
     JOIN completedchallenges uc ON u.id = uc.user_id
     JOIN challenges c ON uc.challenge_id = c.id
     JOIN teamates t ON u.id = t.user_id
     JOIN teams ON t.team_id = teams.team_id
+    LEFT JOIN admin_points a ON a.user_id = u.id
     GROUP BY u.id
     ORDER BY points DESC;
     ";

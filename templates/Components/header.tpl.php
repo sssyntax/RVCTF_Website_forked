@@ -1,18 +1,49 @@
 <?php 
 $pages = array("resources", "leaderboard", "team");
 
-// Dynamic points pull from DB
-$query = "SELECT SUM(points) as total_points
-          FROM completedchallenges cc
-          JOIN challenges c ON cc.challenge_id = c.id
-          WHERE cc.user_id = ?";
-$stmt = $conn->prepare($query);
+// Dynamic points pull from DB (with double points + admin points + first blood bonuses)
+$sql = "
+    SELECT 
+        COALESCE(SUM(
+            CASE 
+                WHEN c.double_points = 1 THEN c.points * 2
+                ELSE c.points
+            END
+        ), 0) AS challenge_points,
+        COALESCE(SUM(a.points), 0) AS admin_points
+    FROM completedchallenges cc
+    JOIN challenges c ON cc.challenge_id = c.id
+    LEFT JOIN admin_points a ON a.user_id = cc.user_id
+    WHERE cc.user_id = ?
+";
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userid);
 $stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-$realPoints = $row['total_points'] ?? 0;
+$stmt->bind_result($challengePoints, $adminPoints);
+$stmt->fetch();
+$stmt->close();
+
+// Get sum of first blood bonuses (only once per challenge, if user was first)
+$sql_bonus = "SELECT COALESCE(SUM(c.first_blood_bonus), 0)
+              FROM challenges c
+              JOIN completedchallenges cc ON cc.challenge_id = c.id
+              WHERE cc.user_id = ?
+              AND cc.timestamp = (
+                  SELECT MIN(cc2.timestamp)
+                  FROM completedchallenges cc2
+                  WHERE cc2.challenge_id = c.id
+              )";
+$stmt_bonus = $conn->prepare($sql_bonus);
+$stmt_bonus->bind_param("i", $userid);
+$stmt_bonus->execute();
+$stmt_bonus->bind_result($firstBloodBonus);
+$stmt_bonus->fetch();
+$stmt_bonus->close();
+
+// Final total
+$realPoints = ($challengePoints ?: 0) + ($adminPoints ?: 0) + ($firstBloodBonus ?: 0);
 ?>
+
 
 <div id='header-container'>
     <div id='header-social-media'>
