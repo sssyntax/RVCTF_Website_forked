@@ -1,10 +1,11 @@
 <?php
-// require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
-define("SERVERNAME", "localhost");
-define("DB_USER", "root");
-define("DB_PASS", "");
-define("DB_NAME", "ctfdb");
-
+// <<<<<<< flag_rvsh
+// // require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
+// define("SERVERNAME", "localhost");
+// define("DB_USER", "root");
+// define("DB_PASS", "");
+// define("DB_NAME", "ctfdb");
+require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
 define("SECRET_KEY","uoqcy169(361");
 define("salt","vnljh19d1996v");
 define("CSRF_TOKEN_SECRET",'wxVy4t0EpypTDfPsEhqXfU92wsjnFce1bLMtbDyKWpbiVXGUp1D');

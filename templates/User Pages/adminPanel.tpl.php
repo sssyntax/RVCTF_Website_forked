@@ -7,7 +7,6 @@
 
 <body>
     <?php include 'templates/Components/stars.php';?>
-
     <div id="admin-buttons" display="flex" style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
         <div style="margin-top: 40px; display: flex; gap: 10px;">
             <a href="index.php?filename=editadmin" class="admin-button">Edit Admin</a>
@@ -51,5 +50,9 @@
 
     </div>
 </body>
-
-
+    <div id="admin-buttons">
+        <a href="index.php?filename=editadmin" class="admin-button">Edit Admin</a>
+     <!--   <a href="index.php?filename=addpoints" class="admin-button">Add Points</a>  🆕 Added this -->
+        <a href="index.php?filename=createChallenge" class="admin-button">Create Challenge</a>
+    </div>
+</body>
