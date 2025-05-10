@@ -59,11 +59,8 @@ $sql = "
         GROUP BY challenge_id
     ) am ON c.id = am.challenge_id
     ORDER BY c.category, c.difficulty ASC, sc.solve_count DESC
-        SELECT `challenge_id`, file_name AS file_names
-        FROM `additional_materials`
-        GROUP BY `challenge_id`
-    ) a ON c.id = a.challenge_id
-    ORDER BY c.category, c.difficulty ASC, s.solve_count DESC";
+";
+
 
 $results = fetchDataFromQuery($conn, $sql, [$teamid, $userid], "ii");
 
