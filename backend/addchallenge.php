@@ -2,6 +2,8 @@
 session_start();
 require_once "includes/connect.inc.php";
 require_once "includes/verify.inc.php";
+require_once "point_decay.php"; // <-- make sure to include the file if it's separate
+
 function uploadFilesToDatabase($conn,$files,$challengeId){
     $sql = "INSERT INTO `additional_materials` (`file_name`, `challenge_id`) VALUES (?, ?)";
     foreach ($files as $file) {
@@ -89,6 +91,9 @@ $encrypted = sha1(FLAG_SALT . $solution);
 
 $sql = "INSERT INTO `challenges` (`title`, `author`, `points`, `difficulty`, `category`, `description`, `solution`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $insertId = executeQuery($conn, $sql, [$title, $author, $points, $difficulty, $category, $desc, $encrypted], 'ssiisss',true);
+
+// Update points and first blood bonus after creation
+updateChallengePoints($conn, $insertId);
 
 //if (isset($_FILES['files'])) {
 //    uploadFilesToServer($conn, $_FILES['files'], $insertId);

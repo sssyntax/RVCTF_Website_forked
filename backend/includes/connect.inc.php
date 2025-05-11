@@ -1,5 +1,11 @@
 <?php
-require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
+// // this needs to be commented out for the code to work
+// require_once __DIR__."/../../../private/rvctf_passwords.inc.php";
+// // this needs to be present when hosting on localhost
+// define("SERVERNAME", "localhost");
+// define("DB_USER", "root");
+// define("DB_PASS", "");
+// define("DB_NAME", "ctfdb");
 define("SECRET_KEY","uoqcy169(361");
 define("salt","vnljh19d1996v");
 define("CSRF_TOKEN_SECRET",'wxVy4t0EpypTDfPsEhqXfU92wsjnFce1bLMtbDyKWpbiVXGUp1D');
@@ -221,6 +227,7 @@ function onError($conn,$error,$additionalData = []) {
 
 function onSuccess($conn,$success,$additionalData = []){
     $data = array_merge(["success"=>$success],$additionalData);
+    error_log(">>> onSuccess CALLED with: " . json_encode($data));
     echo json_encode($data, JSON_FORCE_OBJECT);
     mysqli_close($conn);
     exit();

@@ -3,8 +3,14 @@
 </head>
 
 <body>
-  <?php include 'backend/leaderboard.php'?>
-  <?php include 'templates/Components/stars.php';?>
+  <?php include 'backend/leaderboard.php'; ?>
+  <?php include 'templates/Components/stars.php'; ?>
+
+  <?php if ($freeze) { ?>
+    <div style="text-align:center; color: #ff6666; font-size: 2rem; margin-top: 20px; font-family: 'VT323', monospace;">
+      🚨 Scoreboard is currently frozen! Final results will be revealed after CTF ends. 🚨
+    </div>
+  <?php } ?>
 
   <h2 id="team-ranks-header">Team Ranks</h2>
   <table class="table team">
@@ -24,8 +30,7 @@
             } ?>>
               <span class='list_num'><?php echo $index; ?></span>
               <h2>
-                <?php 
-                echo $team['team_name']; ?>
+                <?php echo $team['team_name']; ?>
                 <span class="number">
                   <?php echo $team['points']; ?>
                 </span>
@@ -55,8 +60,7 @@
             } ?>>
               <span class='list_num'><?php echo $index; ?></span>
               <h2>
-                <?php 
-                echo $user['username']; ?> (<?= $user['team_name'] ?>)
+                <?php echo $user['username']; ?> (<?= $user['team_name'] ?>)
                 <span class="number">
                   <?php echo $user['points']; ?>
                 </span>

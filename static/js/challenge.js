@@ -6,6 +6,8 @@ var chal_popup = document.getElementById("popup");
 var title_popup = document.getElementById("title_popup");
 var desc_popup = document.getElementById("desc_popup");
 const author_popup = document.getElementById("author_popup");
+// first blood popup
+var firstblood_popup = document.getElementById("firstblood_popup");
 var id_popup = document.getElementsByClassName("challengeID");
 var cat_popup = document.getElementById("challengeCat");
 var input_popup_uncompleted = document.getElementById('popup_input_uncompleted') // input td for user to input flag
@@ -69,6 +71,23 @@ function popup() {
   desc_popup.innerHTML = this.dataset.desc
   title_popup.innerText = this.dataset.title
   author_popup.innerText = this.dataset.author
+
+  // Fetch first blood username using the new function
+  const challengeID = this.dataset.id;
+
+  getFirstBlood(challengeID)
+    .then(function(result) {
+      if (result && result.firstblood_username) {
+        firstblood_popup.innerText = result.firstblood_username;
+      } else {
+        firstblood_popup.innerText = 'No First Blood';
+      }
+    })
+    .catch(function(error) {
+      console.error("Error fetching first blood:", error);
+      firstblood_popup.innerText = 'No First Blood';
+    });
+    
   // Set Additional Material Downloads
   const fileNames = JSON.parse(this.dataset.filenames);
   const fileList = document.getElementById('file_names');
@@ -120,7 +139,6 @@ async function submitAnswer(form,event){
 }
 
 
-
 async function deleteChallenge(form, event) {
   const confirmation = confirm("Are you sure you want to delete this challenge?");
   event.preventDefault();
@@ -153,4 +171,14 @@ async function getSolvedCount(challengeID){
     alert(response.error)
   }
   return response.data
+}
+
+async function getFirstBlood(challengeID) {
+  let response = await getRequest("backend/get_first_blood_user.php", { challengeID: challengeID });
+  if (response.error) {
+    alert(response.error);
+    return null;  // Returning null if there's an error
+  }
+  console.log(response.data);  // Check the data returned
+  return response.data;
 }
