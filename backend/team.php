@@ -34,14 +34,17 @@ $sql = "
 ";
 $teamates = fetchDataFromQuery($conn, $sql, [$teamid], 'i', "Failed to fetch team members");
 
-// ✅ NEW: Fetch total team points properly using unique solves
+// ✅ NEW: Fetch total team points based on completedChallenges instead of team_solves
 $sql_team_points = "
-    SELECT SUM(c.points) AS total_points
-    FROM challenges c
-    JOIN team_solves ts ON c.id = ts.challenge_id
-    WHERE ts.team_id = ?
+    SELECT SUM(ch.points) AS total_points
+    FROM (
+        SELECT DISTINCT cc.challenge_id, cc.user_id
+        FROM completedchallenges cc
+        JOIN teamates t ON cc.user_id = t.user_id
+        WHERE t.team_id = ?
+    ) uniq
+    JOIN challenges ch ON uniq.challenge_id = ch.id
 ";
-$result_team_points = fetchDataFromQuery($conn, $sql_team_points, [$teamid], 'i', "Failed to fetch team points");
+$result_team_points = fetchDataFromQuery($conn, $sql_team_points, [$teamid], 'i', "Failed to fetch team points from user solves");
 $totalpoints = $result_team_points[0]['total_points'] ?? 0;
-
 ?>
